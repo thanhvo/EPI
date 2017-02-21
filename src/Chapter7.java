@@ -119,8 +119,55 @@ public class Chapter7 {
 		assertEquals(getMedian(three),3);
 		assertEquals(getMedian(four),3);*/
 		assertEquals(getMedian(zero),0);
-		assertEquals(getMedian(zero1),0);
-		
+		assertEquals(getMedian(zero1),0);		
+	}
+	
+	Node common(Node h1, Node h2) {
+		if (h1 == null || h2 == null)
+			return null;
+		int len1 =1, len2 = 1;
+		Node n1 = h1, n2 = h2;
+		while(n1 != null) {
+			n1 = n1.next;
+			len1++;
+		}
+		while(n2 != null) {
+			n2 = n2.next;
+			len2++;
+		}
+		n1 = h1; n2 = h2;
+		if(len1 > len2) {
+			for(int i = 0; i < len1 - len2; i++)
+				n1 = n1.next;
+		} else {
+			for (int i =0; i < len2 - len1; i++)
+				n2 = n2.next;
+		}
+		while(n1 != n2) {
+			n1 = n1.next;
+			n2 = n2.next;
+		}
+		return n1;
+	}
+	
+	@Test
+	public void test_common() {
+		Node zero = new Node(0);
+		Node one = new Node(1);
+		Node two = new Node(2);
+		Node three = new Node(3);
+		Node four = new Node(4);
+		Node five = new Node(5);
+		Node six = new Node(6);
+		Node seven = new Node(7);
+		zero.next = two;
+		two.next = seven;
+		one.next = three;
+		three.next = four;
+		four.next = five;
+		five.next = six;
+		//assertEquals(common(zero,one).val, 4);
+		assertEquals(common(zero,one),null);
 	}
 	
 }

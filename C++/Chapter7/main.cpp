@@ -155,6 +155,52 @@ void test_median() {
     assert(find_median_sorted_circular_linked_list(zero)==2.5);
     assert(find_median_sorted_circular_linked_list(one)==2.5);
     assert(find_median_sorted_circular_linked_list(four)==2.5);    
+}
+
+template <typename T>
+int count_len(shared_ptr<node_t<T>> L) {
+    int len = 0;
+    while(L) {
+        len++;
+        L = L->next;
+    }
+    return len;
+}
+
+template <typename T>
+void advance_list_by_k(shared_ptr<node_t<T>> &L, int k) {
+    while (k--)
+        L = L->next;
+}
+
+template <typename T>
+shared_ptr<node_t<T>> overlapping_no_cycle_lists(
+    shared_ptr<node_t<T>> L1, shared_ptr<node_t<T>> L2) {
+    int L1_len = count_len<T>(L1);
+    int L2_len = count_len<T>(L2);
+    advance_list_by_k(L1_len > L2_len ? L1 : L2, abs(L1_len - L2_len));
+    while(L1 && L2 && L1 != L2) {
+        L1 = L1->next;
+        L2 = L2->next;
+    }
+    return L1;
+}
+
+void test_overlapping_lists() {
+    shared_ptr<node_t<int> > zero(make_shared<node_t<int>>(0));
+    shared_ptr<node_t<int> > one(make_shared<node_t<int>>(1));
+    shared_ptr<node_t<int> > two(make_shared<node_t<int>>(2));
+    shared_ptr<node_t<int> > three(make_shared<node_t<int>>(3));
+    shared_ptr<node_t<int> > four(make_shared<node_t<int>>(4));
+    shared_ptr<node_t<int> > five(make_shared<node_t<int>>(5));
+    shared_ptr<node_t<int> > six(make_shared<node_t<int>>(6));
+    zero->next = two;
+    one->next = three;
+    two->next = four;
+    three->next = four;
+    four->next = five;
+    five->next = six;
+    assert(overlapping_no_cycle_lists(zero, one)->data == 4);
 }   
 
 int main(int argc, char **argv)
@@ -162,5 +208,6 @@ int main(int argc, char **argv)
 	test_has_cycle();
     test_median();
     test_merge_lists();
+    test_overlapping_lists();
 	return 0;
 }
