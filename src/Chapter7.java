@@ -12,7 +12,7 @@ class Node {
 
 public class Chapter7 {
 	
-	Node has_cycle(Node head) {
+	Node has_cycle_using_set(Node head) {
 		Set<Node> set = new HashSet<Node>();
 		Node node = head;
 		while(node != null) {
@@ -24,7 +24,7 @@ public class Chapter7 {
 		return node;		
 	}
 	
-	Node has_cycle_2(Node head) {
+	Node has_cycle(Node head) {
 		Node fast= head, slow = head;
 		while(slow != null && slow.next != null && 
 			  fast != null && fast.next != null && 
@@ -66,13 +66,13 @@ public class Chapter7 {
 		three.next = four;
 		four.next = five;
 		five.next = three;
-		Node n = has_cycle(head);
+		Node n = has_cycle_using_set(head);
 		assertEquals(n.val, 3);
-		Node n2 = has_cycle_2(head);
+		Node n2 = has_cycle(head);
 		assertEquals(n2.val, 3);
 		five.next = null;
+		assertEquals(has_cycle_using_set(head), null);
 		assertEquals(has_cycle(head), null);
-		assertEquals(has_cycle_2(head), null);
 	}
 	
 	int getMedian(Node node) {
@@ -104,10 +104,16 @@ public class Chapter7 {
 		Node four = new Node(4);
 		Node five = new Node(5);
 		Node six = new Node(6);
+		
+		/* Test case 1: all items in the list are identical */
 		zero.next = zero1;
 		zero1.next = zero2;
 		zero2.next = zero;
-		/*zero.next = one;
+		assertEquals(getMedian(zero),0);
+		assertEquals(getMedian(zero1),0);
+		
+		/* Test case 2 */
+		zero.next = one;
 		one.next = two;
 		two.next = three;
 		three.next = four;
@@ -117,12 +123,11 @@ public class Chapter7 {
 		assertEquals(getMedian(zero),3);
 		assertEquals(getMedian(one),3);
 		assertEquals(getMedian(three),3);
-		assertEquals(getMedian(four),3);*/
-		assertEquals(getMedian(zero),0);
-		assertEquals(getMedian(zero1),0);		
+		assertEquals(getMedian(four),3);
+				
 	}
 	
-	Node common(Node h1, Node h2) {
+	Node overlapping_no_cycle_lists(Node h1, Node h2) {
 		if (h1 == null || h2 == null)
 			return null;
 		int len1 =1, len2 = 1;
@@ -150,8 +155,24 @@ public class Chapter7 {
 		return n1;
 	}
 	
+	Node overlapping_lists(Node h1, Node h2) {
+		Node s1 = has_cycle(h1);
+		Node s2 = has_cycle(h2);
+		if (s1 != null && s2 != null) {
+			return overlapping_no_cycle_lists(h1, h2);
+		} else if (s1 != null && s2 != null) {
+			Node temp = s2;
+			do {
+				temp = temp.next;
+			} while (temp != s1 && temp != s2);
+			if (temp == s1)
+				return s1;			
+		}
+		return null;
+	}
+	
 	@Test
-	public void test_common() {
+	public void test_overlapping_lists() {
 		Node zero = new Node(0);
 		Node one = new Node(1);
 		Node two = new Node(2);
@@ -160,14 +181,33 @@ public class Chapter7 {
 		Node five = new Node(5);
 		Node six = new Node(6);
 		Node seven = new Node(7);
+		Node eight = new Node(8);
+		Node nine = new Node(9);
+		
+		/* Test case 1: two lists do not overlap */
 		zero.next = two;
 		two.next = seven;
 		one.next = three;
 		three.next = four;
 		four.next = five;
+		five.next = six;		
+		assertEquals(overlapping_no_cycle_lists(zero,one),null);
+		
+		/* Test case 2 */
+		two.next = four;
+		assertEquals(overlapping_no_cycle_lists(zero,one).val, 4);
+		
+		/*Test case 3: two lists overlap */ 
+		zero.next = one;
+		one.next = five;
 		five.next = six;
-		//assertEquals(common(zero,one).val, 4);
-		assertEquals(common(zero,one),null);
+		six.next = seven;
+		seven.next = eight;
+		eight.next = nine;
+		nine.next = five;
+		two.next = three;
+		three.next = nine;
+		assertEquals(overlapping_lists(zero, two).val, 5);
 	}
 	
 }

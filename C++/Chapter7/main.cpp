@@ -186,7 +186,24 @@ shared_ptr<node_t<T>> overlapping_no_cycle_lists(
     return L1;
 }
 
+template <typename T>
+shared_ptr<node_t<T>> overlapping_lists(
+    shared_ptr<node_t<T>> L1, shared_ptr<node_t<T>> L2) {
+    shared_ptr<node_t<T>> s1 = has_cycle(L1), s2 = has_cycle(L2);
+    if (!s1 && !s2) {
+        return overlapping_no_cycle_lists(L1, L2);
+    } else if (s1 && s2) {
+        shared_ptr<node_t<T>> temp = s2;
+        do {
+            temp = temp->next;            
+        } while(temp != s1 && temp != s2);
+        return temp == s1 ? s1 : nullptr;
+    }
+    return nullptr;
+}
+
 void test_overlapping_lists() {
+    
     shared_ptr<node_t<int> > zero(make_shared<node_t<int>>(0));
     shared_ptr<node_t<int> > one(make_shared<node_t<int>>(1));
     shared_ptr<node_t<int> > two(make_shared<node_t<int>>(2));
@@ -194,6 +211,11 @@ void test_overlapping_lists() {
     shared_ptr<node_t<int> > four(make_shared<node_t<int>>(4));
     shared_ptr<node_t<int> > five(make_shared<node_t<int>>(5));
     shared_ptr<node_t<int> > six(make_shared<node_t<int>>(6));
+    shared_ptr<node_t<int> > seven(make_shared<node_t<int>>(7));
+    shared_ptr<node_t<int> > eight(make_shared<node_t<int>>(8));
+    shared_ptr<node_t<int> > nine(make_shared<node_t<int>>(9));
+    
+    /* Test case 1: 2 lists with no cycle */
     zero->next = two;
     one->next = three;
     two->next = four;
@@ -201,7 +223,20 @@ void test_overlapping_lists() {
     four->next = five;
     five->next = six;
     assert(overlapping_no_cycle_lists(zero, one)->data == 4);
-}   
+    
+    /* Test case 2: 2 lists both have cycles */
+    zero->next = one;
+    one->next = five;
+    five->next = six;
+    six->next = seven;
+    seven->next = eight;
+    eight->next = nine;
+    nine->next = five;
+    two->next = three;
+    three->next = nine;
+    assert(overlapping_lists(zero, one)->data == 5);
+    
+}
 
 int main(int argc, char **argv)
 {
