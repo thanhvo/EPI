@@ -7,3 +7,5 @@ C++/.codelite
 *.mk
 *.workspace
 *Chapter7.txt
+*.tags
+C++/EPI.txt
