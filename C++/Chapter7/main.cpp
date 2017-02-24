@@ -300,6 +300,58 @@ void test_even_odd_merge() {
     print(even_odd_merge(zero));
 }
 
+template <typename T>
+void remove_kth_last(shared_ptr<node_t<T>> &L, const int &k) {
+    shared_ptr<node_t<T>> ahead = L;
+    int num = k;
+    while(ahead && num) {
+        num--;
+        ahead = ahead->next;
+    }
+    if (num) {
+        throw length_error("Not enough node in the list");
+    }
+    shared_ptr<node_t<T>> pre = nullptr, curr = L;
+    while (ahead) {
+        pre = curr;
+        curr = curr->next;
+        ahead = ahead->next;
+    }
+    if (pre) 
+        pre->next = curr->next;
+    else 
+        L = curr->next;
+}
+
+void test_remove_kth_last() {
+    shared_ptr<node_t<int> > zero(make_shared<node_t<int>>(0));
+    shared_ptr<node_t<int> > one(make_shared<node_t<int>>(1));
+    shared_ptr<node_t<int> > two(make_shared<node_t<int>>(2));
+    shared_ptr<node_t<int> > three(make_shared<node_t<int>>(3));
+    shared_ptr<node_t<int> > four(make_shared<node_t<int>>(4));
+    shared_ptr<node_t<int> > five(make_shared<node_t<int>>(5));
+    shared_ptr<node_t<int> > six(make_shared<node_t<int>>(6));
+    shared_ptr<node_t<int> > seven(make_shared<node_t<int>>(7));
+    shared_ptr<node_t<int> > eight(make_shared<node_t<int>>(8));
+    shared_ptr<node_t<int> > nine(make_shared<node_t<int>>(9));
+    shared_ptr<node_t<int> > ten(make_shared<node_t<int>>(10));
+    
+    zero->next = one;
+    one->next = two;
+    two->next = three;
+    three->next = four;
+    four->next = five;
+    five->next = six;
+    six->next = seven;
+    seven->next = eight;
+    eight->next = nine;
+    nine->next = ten;
+    
+    print(zero);
+    remove_kth_last(zero, 5);
+    print(zero);
+}
+
 int main(int argc, char **argv)
 {
 	test_has_cycle();
@@ -307,5 +359,6 @@ int main(int argc, char **argv)
     test_merge_lists();
     test_overlapping_lists();
     test_even_odd_merge();
+    test_remove_kth_last();
 	return 0;
 }

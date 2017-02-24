@@ -282,4 +282,57 @@ public class Chapter7 {
 		print(even_odd_merge(zero));
 	}
 	
+	Node remove_kth_last(Node head, int k) throws Exception{
+		Node ahead = head;
+		while (ahead != null && k != 0) {
+			ahead = ahead.next;
+			k--;
+		}
+		if (k != 0) 
+			throw new Exception("Not enough node in the list");
+		Node pre = null, curr = head;
+		while (ahead != null) {
+			pre = curr;
+			curr = curr.next;
+			ahead = ahead.next;
+		}
+		if (pre != null) {
+			pre.next = curr.next;
+			return head;
+		}
+		else 
+			return head.next;			
+	}
+	
+	@Test
+	public void test_remove_kth_last() throws Exception{
+		System.out.println("Testing remove kth last");
+		Node zero = new Node(0);
+		Node one = new Node(1);
+		Node two = new Node(2);
+		Node three = new Node(3);
+		Node four = new Node(4);
+		Node five = new Node(5);
+		Node six = new Node(6);
+		Node seven = new Node(7);
+		Node eight = new Node(8);
+		Node nine = new Node(9);
+		Node ten = new Node(10);
+		
+		zero.next = one;
+		one.next = two;
+		two.next = three;
+		three.next = four;
+		four.next = five;
+		five.next = six;
+		six.next = seven;
+		seven.next = eight;
+		eight.next = nine;
+		nine.next = ten;
+		
+		print(zero);
+		print(remove_kth_last(zero, 5));
+		print(remove_kth_last(zero, 10));
+	}
+	
 }
