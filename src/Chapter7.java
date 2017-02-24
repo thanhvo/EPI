@@ -158,7 +158,7 @@ public class Chapter7 {
 	Node overlapping_lists(Node h1, Node h2) {
 		Node s1 = has_cycle(h1);
 		Node s2 = has_cycle(h2);
-		if (s1 != null && s2 != null) {
+		if (s1 == null && s2 == null) {
 			return overlapping_no_cycle_lists(h1, h2);
 		} else if (s1 != null && s2 != null) {
 			Node temp = s2;
@@ -208,6 +208,78 @@ public class Chapter7 {
 		two.next = three;
 		three.next = nine;
 		assertEquals(overlapping_lists(zero, two).val, 5);
+	}
+	
+	Node even_odd_merge (Node head) {
+		if (head == null)
+			return null;		
+		Node even = head, odd = head.next, firstOdd = head.next;
+		while(even != null && odd != null) {
+			if (odd.next == null) {
+				even.next = firstOdd;
+				return head;
+			} else {
+				even.next = odd.next;
+				even = even.next;
+				odd.next = even.next;
+				odd = odd.next;				
+			}
+		}
+		even.next = firstOdd;
+		return head;
+	}
+	
+	public void print(Node node) {
+		while (node != null) {
+			System.out.print(node.val + "\t");
+			node = node.next;
+		}
+		System.out.println();
+	}
+	
+	@Test
+	public void test_even_odd_merge() {
+		Node zero = new Node(0);
+		Node one = new Node(1);
+		Node two = new Node(2);
+		Node three = new Node(3);
+		Node four = new Node(4);
+		Node five = new Node(5);
+		Node six = new Node(6);
+		Node seven = new Node(7);
+		Node eight = new Node(8);
+		Node nine = new Node(9);
+		Node ten = new Node(10);
+		
+		zero.next = one;
+		one.next = two;
+		two.next = three;
+		three.next = four;
+		four.next = five;
+		five.next = six;
+		six.next = seven;
+		seven.next = eight;
+		eight.next = nine;
+		
+		print(zero);
+		/* Test case 1: even number of nodes */
+		print(even_odd_merge(zero));
+		
+		/* Test case 2: empty list */
+		assertEquals(even_odd_merge(null), null);
+		
+		/* Test case 3: odd number of nodes */
+		zero.next = one;
+		one.next = two;
+		two.next = three;
+		three.next = four;
+		four.next = five;
+		five.next = six;
+		six.next = seven;
+		seven.next = eight;
+		eight.next = nine;
+		nine.next = ten;
+		print(even_odd_merge(zero));
 	}
 	
 }

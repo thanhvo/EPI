@@ -238,11 +238,74 @@ void test_overlapping_lists() {
     
 }
 
+template <typename T>
+shared_ptr<node_t<T>> even_odd_merge(const shared_ptr<node_t<T>> &L) {
+    shared_ptr<node_t<T>> odd = L ? L->next : nullptr;
+    shared_ptr<node_t<T>> odd_curr = odd;
+    shared_ptr<node_t<T>> pre_even_curr = nullptr, even_curr = L;
+    while (even_curr && odd_curr) {
+        even_curr->next = odd_curr->next;
+        pre_even_curr = even_curr;
+        even_curr = even_curr->next;
+        if (even_curr) {
+            odd_curr->next = even_curr->next;
+            odd_curr = odd_curr->next;
+        }
+    }
+    if (even_curr) {
+        pre_even_curr = even_curr;
+    }
+    if (pre_even_curr) {
+        pre_even_curr->next = odd;
+    }
+    return L;
+}
+
+void test_even_odd_merge() {
+    shared_ptr<node_t<int> > zero(make_shared<node_t<int>>(0));
+    shared_ptr<node_t<int> > one(make_shared<node_t<int>>(1));
+    shared_ptr<node_t<int> > two(make_shared<node_t<int>>(2));
+    shared_ptr<node_t<int> > three(make_shared<node_t<int>>(3));
+    shared_ptr<node_t<int> > four(make_shared<node_t<int>>(4));
+    shared_ptr<node_t<int> > five(make_shared<node_t<int>>(5));
+    shared_ptr<node_t<int> > six(make_shared<node_t<int>>(6));
+    shared_ptr<node_t<int> > seven(make_shared<node_t<int>>(7));
+    shared_ptr<node_t<int> > eight(make_shared<node_t<int>>(8));
+    shared_ptr<node_t<int> > nine(make_shared<node_t<int>>(9));
+    shared_ptr<node_t<int> > ten(make_shared<node_t<int>>(10));
+    
+    /* Test case 1: even number of nodes */
+    zero->next = one;
+    one->next = two;
+    two->next = three;
+    three->next = four;
+    four->next = five;
+    five->next = six;
+    six->next = seven;
+    seven->next = eight;
+    eight->next = nine;
+    print(even_odd_merge(zero));
+    
+    /* Test case 2: odd number of nodes */
+    zero->next = one;
+    one->next = two;
+    two->next = three;
+    three->next = four;
+    four->next = five;
+    five->next = six;
+    six->next = seven;
+    seven->next = eight;
+    eight->next = nine;
+    nine->next = ten;
+    print(even_odd_merge(zero));
+}
+
 int main(int argc, char **argv)
 {
 	test_has_cycle();
     test_median();
     test_merge_lists();
     test_overlapping_lists();
+    test_even_odd_merge();
 	return 0;
 }
