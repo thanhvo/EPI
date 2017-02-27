@@ -352,6 +352,63 @@ void test_remove_kth_last() {
     print(zero);
 }
 
+template <typename T>
+shared_ptr<node_t<T>> reverse_linked_lists_recursively(
+    const shared_ptr<node_t<T>> &head) {
+    if (!head || !head->next)
+        return head;
+    shared_ptr<node_t<T>> new_head = reverse_linked_lists_recursively(head->next);
+    head->next->next = head;
+    head->next = nullptr;
+    return new_head;
+}
+
+template<typename T>
+shared_ptr<node_t<T>> reverse_linked_lists(
+    const shared_ptr<node_t<T>> &head
+) {
+    shared_ptr<node_t<T>> prev = nullptr, curr = head;
+    while (curr) {
+        shared_ptr<node_t<T>> temp = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = temp;
+    }
+    return prev;    
+}
+
+void test_reverse_linked_lists() {
+    cout << "Testing reverse linked lists" << endl;
+    shared_ptr<node_t<int> > zero(make_shared<node_t<int>>(0));
+    shared_ptr<node_t<int> > one(make_shared<node_t<int>>(1));
+    shared_ptr<node_t<int> > two(make_shared<node_t<int>>(2));
+    shared_ptr<node_t<int> > three(make_shared<node_t<int>>(3));
+    shared_ptr<node_t<int> > four(make_shared<node_t<int>>(4));
+    shared_ptr<node_t<int> > five(make_shared<node_t<int>>(5));
+    shared_ptr<node_t<int> > six(make_shared<node_t<int>>(6));
+    shared_ptr<node_t<int> > seven(make_shared<node_t<int>>(7));
+    shared_ptr<node_t<int> > eight(make_shared<node_t<int>>(8));
+    shared_ptr<node_t<int> > nine(make_shared<node_t<int>>(9));
+    shared_ptr<node_t<int> > ten(make_shared<node_t<int>>(10));
+    
+    zero->next = one;
+    one->next = two;
+    two->next = three;
+    three->next = four;
+    four->next = five;
+    five->next = six;
+    six->next = seven;
+    seven->next = eight;
+    eight->next = nine;
+    nine->next = ten;
+    
+    print(zero);
+    shared_ptr<node_t<int>> new_head = reverse_linked_lists(zero);
+    print(new_head);
+    print(reverse_linked_lists_recursively(new_head));
+    
+}
+
 int main(int argc, char **argv)
 {
 	test_has_cycle();
@@ -360,5 +417,6 @@ int main(int argc, char **argv)
     test_overlapping_lists();
     test_even_odd_merge();
     test_remove_kth_last();
+    test_reverse_linked_lists();
 	return 0;
 }

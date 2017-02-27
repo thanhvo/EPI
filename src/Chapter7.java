@@ -54,6 +54,7 @@ public class Chapter7 {
 	
 	@Test
 	public void test_has_cycle() {
+		System.out.println("Testing has_cycle function");
 		Node head = new Node(0);
 		Node one = new Node(1);
 		Node two = new Node(2);
@@ -95,6 +96,7 @@ public class Chapter7 {
 	
 	@Test
 	public void test_Median() {
+		System.out.println("Testing median of a list");
 		Node zero = new Node(0);
 		Node zero1 = new Node(0);
 		Node zero2 = new Node(0);
@@ -173,6 +175,7 @@ public class Chapter7 {
 	
 	@Test
 	public void test_overlapping_lists() {
+		System.out.println("Testing overlapping lists");
 		Node zero = new Node(0);
 		Node one = new Node(1);
 		Node two = new Node(2);
@@ -239,6 +242,7 @@ public class Chapter7 {
 	
 	@Test
 	public void test_even_odd_merge() {
+		System.out.println("Testing even odd merging");
 		Node zero = new Node(0);
 		Node one = new Node(1);
 		Node two = new Node(2);
@@ -333,6 +337,50 @@ public class Chapter7 {
 		print(zero);
 		print(remove_kth_last(zero, 5));
 		print(remove_kth_last(zero, 10));
+	}
+	
+	Node reverse_list(Node head) {
+		if (head == null)
+			return null;
+		Node pre = head, curr = head.next;
+		head.next = null;
+		while(curr != null) {
+			Node next = curr.next;
+			curr.next = pre;
+			pre = curr;
+			curr = next;
+		}
+		return pre;
+	}
+	
+	@Test
+	public void test_reverse_list() {
+		System.out.println("Testing reverse list");
+		Node zero = new Node(0);
+		Node one = new Node(1);
+		Node two = new Node(2);
+		Node three = new Node(3);
+		Node four = new Node(4);
+		Node five = new Node(5);
+		Node six = new Node(6);
+		Node seven = new Node(7);
+		Node eight = new Node(8);
+		Node nine = new Node(9);
+		Node ten = new Node(10);
+		
+		zero.next = one;
+		one.next = two;
+		two.next = three;
+		three.next = four;
+		four.next = five;
+		five.next = six;
+		six.next = seven;
+		seven.next = eight;
+		eight.next = nine;
+		nine.next = ten;
+		
+		print(zero);
+		print(reverse_list(zero));
 	}
 	
 }
