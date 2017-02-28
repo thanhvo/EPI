@@ -409,6 +409,56 @@ void test_reverse_linked_lists() {
     
 }
 
+template <typename T>
+bool is_linked_list_a_palindrome( shared_ptr<node_t<T>> L) {
+    shared_ptr<node_t<T>> slow = L, fast = L;
+    while (fast) {
+        fast = fast->next;
+        if (fast) {
+            fast = fast->next;
+            slow = slow->next;
+        }
+    }
+    shared_ptr<node_t<T>> reverse = reverse_linked_lists(slow);
+    while (reverse && L) {
+        if (reverse->data != L->data)
+            return false;
+        reverse = reverse->next;
+        L = L->next;
+    }
+    return true;
+}
+
+void test_palindorme() {
+    cout << "Testing palindrome lists" << endl;
+    shared_ptr<node_t<int> > zero(make_shared<node_t<int>>(0));
+    shared_ptr<node_t<int> > one(make_shared<node_t<int>>(1));
+    shared_ptr<node_t<int> > two(make_shared<node_t<int>>(2));
+    shared_ptr<node_t<int> > three(make_shared<node_t<int>>(3));
+    shared_ptr<node_t<int> > four(make_shared<node_t<int>>(4));
+    shared_ptr<node_t<int> > five(make_shared<node_t<int>>(5));
+    shared_ptr<node_t<int> > four2(make_shared<node_t<int>>(4));
+    shared_ptr<node_t<int> > three2(make_shared<node_t<int>>(3));
+    shared_ptr<node_t<int> > two2(make_shared<node_t<int>>(2));
+    shared_ptr<node_t<int> > one2(make_shared<node_t<int>>(1));
+    shared_ptr<node_t<int> > zero2(make_shared<node_t<int>>(0));
+    
+    zero->next = one;
+    one->next = two;
+    two->next = three;
+    three->next = four;
+    four->next = five;
+    five->next = four2;
+    four2->next = three2;
+    three2->next = two2;
+    two2->next = one2;
+    one2->next = zero2;
+    
+    /* Test case 1: a palindrome list */
+    assert(is_linked_list_a_palindrome(zero));   
+    
+}
+
 int main(int argc, char **argv)
 {
 	test_has_cycle();
@@ -418,5 +468,6 @@ int main(int argc, char **argv)
     test_even_odd_merge();
     test_remove_kth_last();
     test_reverse_linked_lists();
+    test_palindorme();
 	return 0;
 }

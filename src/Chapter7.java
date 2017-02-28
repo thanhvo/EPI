@@ -383,4 +383,54 @@ public class Chapter7 {
 		print(reverse_list(zero));
 	}
 	
+	boolean isPalindrome(Node head) {
+		Stack<Node> stack = new Stack<Node>();
+		Node node = head;
+		while(node != null) {
+			stack.push(node);
+			node = node.next;
+		}
+		node = head;
+		while (node != null) {
+			if (node.val != stack.pop().val)
+				return false;
+			node = node.next;
+		}
+		return true;
+	}
+	
+	@Test
+	public void test_isPalindrome() {
+		System.out.println("Testing if a list is palindrome");
+		Node zero = new Node(0);
+		Node one = new Node(1);
+		Node two = new Node(2);
+		Node three = new Node(3);
+		Node four = new Node(4);
+		Node five = new Node(5);
+		Node four2 = new Node(4);
+		Node three2 = new Node(3);
+		Node two2 = new Node(2);
+		Node one2 = new Node(1);
+		Node zero2 = new Node(0);
+		
+		/* Test case 1: a palindrome list */
+		zero.next = one;
+		one.next = two;
+		two.next = three;
+		three.next = four;
+		four.next = five;
+		five.next = four2;
+		four2.next = three2;
+		three2.next = two2;
+		two2.next = one2;
+		one2.next = zero2;
+		assertEquals(isPalindrome(zero), true);
+		
+		/* Test case 2: a list is not palindrome */
+		one2.next = new Node(1);
+		assertEquals(isPalindrome(zero), false);
+
+	}
+	
 }
