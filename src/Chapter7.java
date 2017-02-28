@@ -430,7 +430,79 @@ public class Chapter7 {
 		/* Test case 2: a list is not palindrome */
 		one2.next = new Node(1);
 		assertEquals(isPalindrome(zero), false);
-
 	}
+	
+	Node zipping_linked_lists(Node L) {
+		Node slow = L, fast = L, pre_slow = null;
+		while (fast != null) {
+			fast = fast.next;
+			if (fast != null) {
+				pre_slow = slow;
+				fast = fast.next;
+				slow = slow.next;
+			}			
+		}
+		if (pre_slow == null)
+			return L;
+		pre_slow.next = null;
+		Node reverse = reverse_list((slow));
+		Node curr = L;
+		while (curr != null && reverse != null) {
+			Node temp = curr.next;
+			curr.next = reverse;
+			curr = temp;
+			if (curr != null) {
+				temp = reverse.next;
+				reverse.next = curr;
+				reverse = temp;
+				
+			}
+		}
+		return L;
+	}
+	
+	@Test
+	public void test_zipping_linked_lists() {
+		System.out.println("Testing zipping linked list");
+		Node zero = new Node(0);
+		Node one = new Node(1);
+		Node two = new Node(2);
+		Node three = new Node(3);
+		Node four = new Node(4);
+		Node five = new Node(5);
+		Node six = new Node(6);
+		Node seven = new Node(7);
+		Node eight = new Node(8);
+		Node nine = new Node(9);
+		Node ten = new Node(10);
+		
+		/* Test case 1: the list has an even number of nodes */
+		zero.next = one;
+		one.next = two;
+		two.next = three;
+		three.next = four;
+		four.next = five;
+		five.next = six;
+		six.next = seven;
+		seven.next = eight;
+		eight.next = nine;
+		
+		print(zipping_linked_lists(zero));
+		
+		/* Test case 2: the list has an odd number of nodes */
+		zero.next = one;
+		one.next = two;
+		two.next = three;
+		three.next = four;
+		four.next = five;
+		five.next = six;
+		six.next = seven;
+		seven.next = eight;
+		eight.next = nine;
+		nine.next = ten;
+		
+		print(zipping_linked_lists(zero));
+	}
+	
 	
 }

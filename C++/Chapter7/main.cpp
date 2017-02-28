@@ -455,7 +455,83 @@ void test_palindorme() {
     one2->next = zero2;
     
     /* Test case 1: a palindrome list */
-    assert(is_linked_list_a_palindrome(zero));   
+    assert(is_linked_list_a_palindrome(zero));      
+}
+
+template <typename T>
+void connect_a_next_to_b_advance_a(
+    shared_ptr <node_t<T>> &a,
+    const shared_ptr <node_t<T>> &b
+) {
+    shared_ptr<node_t<T>> temp = a->next;
+    a->next = b;
+    a = temp;
+}
+
+template <typename T>
+shared_ptr<node_t<T>> zipping_linked_lists(
+    const shared_ptr<node_t<T>> &L
+) {
+    shared_ptr<node_t<T>> slow = L, fast = L, pre_slow = nullptr;
+    while (fast) {
+        fast = fast->next;
+        if (fast) {
+            pre_slow = slow;
+            fast = fast->next;
+            slow = slow->next;
+        }        
+    }
+    if (!pre_slow) 
+        return L;
+    pre_slow->next = nullptr;
+    shared_ptr<node_t<T>> reverse = reverse_linked_lists<T>(slow);
+    shared_ptr<node_t<T>> curr = L;
+    while (curr && reverse) {
+        connect_a_next_to_b_advance_a(curr, reverse);
+        if (curr) 
+            connect_a_next_to_b_advance_a(reverse, curr);
+    }
+    return L;
+}
+
+void test_zipping() {
+    cout << "Testing zipping linked lists" << endl;
+    shared_ptr<node_t<int> > zero(make_shared<node_t<int>>(0));
+    shared_ptr<node_t<int> > one(make_shared<node_t<int>>(1));
+    shared_ptr<node_t<int> > two(make_shared<node_t<int>>(2));
+    shared_ptr<node_t<int> > three(make_shared<node_t<int>>(3));
+    shared_ptr<node_t<int> > four(make_shared<node_t<int>>(4));
+    shared_ptr<node_t<int> > five(make_shared<node_t<int>>(5));
+    shared_ptr<node_t<int> > six(make_shared<node_t<int>>(6));
+    shared_ptr<node_t<int> > seven(make_shared<node_t<int>>(7));
+    shared_ptr<node_t<int> > eight(make_shared<node_t<int>>(8));
+    shared_ptr<node_t<int> > nine(make_shared<node_t<int>>(9));
+    shared_ptr<node_t<int> > ten(make_shared<node_t<int>>(10));
+    
+    /* Test case 1: even number of nodes */
+    zero->next = one;
+    one->next = two;
+    two->next = three;
+    three->next = four;
+    four->next = five;
+    five->next = six;
+    six->next = seven;
+    seven->next = eight;
+    eight->next = nine;
+    print(zipping_linked_lists(zero));
+    
+    /* Test case 2: odd number of nodes */
+    zero->next = one;
+    one->next = two;
+    two->next = three;
+    three->next = four;
+    four->next = five;
+    five->next = six;
+    six->next = seven;
+    seven->next = eight;
+    eight->next = nine;
+    nine->next = ten;
+    print(zipping_linked_lists(zero));
     
 }
 
@@ -469,5 +545,6 @@ int main(int argc, char **argv)
     test_remove_kth_last();
     test_reverse_linked_lists();
     test_palindorme();
+    test_zipping();
 	return 0;
 }
