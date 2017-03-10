@@ -10,6 +10,17 @@ class Node {
 	}
 }
 
+class JNode {
+	int val;
+	JNode next;
+	JNode jump;
+	public JNode(int val) {
+		this.val = val;
+		next = null;
+		jump = null;
+	}
+}
+
 public class Chapter7 {
 	
 	Node has_cycle_using_set(Node head) {
@@ -504,5 +515,86 @@ public class Chapter7 {
 		print(zipping_linked_lists(zero));
 	}
 	
+	JNode copy_posting_list(JNode head) {
+		if (head == null)
+			return null;
+		JNode node = head;
+		int size = 0;
+		/* Get the size of the list */
+		while (node != null) {
+			size ++;
+			node = node.next;
+		}
+		JNode[] cList = new JNode[size];
+		int i = 0;
+		node = head;
+		
+		/* Create the copy list. The next pointer of each node in the new list point to 
+		 * the node it copies from. The next pointer of the original node point back to 
+		 * the copied node.  
+		 */
+		while(node != null) {
+			cList[i] = new JNode(node.val);
+			JNode temp = node.next;
+			cList[i].next = node;
+			node.next = cList[i];
+			i++;
+			node = temp;
+		}
+		/* Update the jump pointers for the copied list */
+		for (i = 0; i < size; i++) {
+			System.out.println(i + "\tcList[i] = " + cList[i].val 
+					+ "\tcList[i].next =" + cList[i].next.val 
+					+ "\tcList[i].next.jump =" + cList[i].next.jump.val);
+			cList[i].jump = cList[i].next.jump.next;			
+		}
+		/* Set the next pointers of the original list back as original*/
+		for (i = 0; i < size -1; i++) {
+			cList[i].next.next = cList[i+1].next;
+		}
+		cList[size -1].next.next = null;
+		/* Update next pointers of the copied list */
+		for (i = 0; i < size -1; i++) {
+			cList[i].next = cList[i+1];
+		}
+		cList[size -1].next = null;
+		return cList[0];
+	}
 	
+	@Test 
+	public void test_posting_list() {
+		System.out.println("Testing posting list.");
+		JNode zero = new JNode(0);
+		JNode one = new JNode(1);
+		JNode two = new JNode(2);
+		JNode three = new JNode(3);
+		zero.next = one;
+		zero.jump = two;
+		one.next = two;
+		one.jump = three;
+		two.next = three;
+		two.jump = one;
+		three.next = null;
+		three.jump = three;
+		JNode cZero = copy_posting_list(zero);
+		JNode cOne = cZero.next;
+		JNode cTwo = cOne.next;
+		JNode cThree = cTwo.next;
+		assertEquals(cZero.val, 0);
+		assertEquals(cOne.val, 1);
+		assertEquals(cTwo.val, 2);
+		assertEquals(cThree.val, 3);
+		assertEquals(cZero.jump.val, 2);
+		assertEquals(cOne.jump.val, 3);
+		assertEquals(cTwo.jump.val, 1);
+		assertEquals(cThree.jump.val, 3);
+		assertEquals(zero.next.val, 1);
+		assertEquals(one.next.val, 2);
+		assertEquals(two.next.val, 3);
+		assertEquals(three.next, null);
+		assertEquals(zero.jump.val, 2);
+		assertEquals(one.jump.val, 3);
+		assertEquals(two.jump.val, 1);
+		assertEquals(three.jump.val, 3);
+	}
 }

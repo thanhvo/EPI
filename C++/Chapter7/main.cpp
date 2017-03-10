@@ -11,8 +11,15 @@ class node_t {
         node_t(T __data) {
             data = __data;
             next = nullptr;
+            jump = nullptr;
         }
-        shared_ptr <node_t<T> > next;        
+        node_t(T __data, shared_ptr<node_t<T>> __next, shared_ptr<node_t<T>> __jump) {
+            data = __data;
+            next = __next;
+            jump = __jump;
+        }
+        shared_ptr <node_t<T>> next;
+        shared_ptr <node_t<T>> jump; 
 };
 
 template<typename T>
@@ -535,6 +542,65 @@ void test_zipping() {
     
 }
 
+template <typename T>
+shared_ptr<node_t<T>> copy_list(
+    const shared_ptr<node_t<T>> &L
+) {
+    if (!L)
+        return nullptr;
+    shared_ptr<node_t<T>> p = L;
+    /* Phase 1: Create a list of copied nodes */
+    while(p) {
+        auto temp = shared_ptr<node_t<T>> (new node_t<T>(p->data, p->next, nullptr));
+        p->next = temp;
+        p = temp->next;
+    }
+    /* Phase 2: set the jump pointers for copied list */
+    p = L;
+    while (p) {
+        if (p->jump) {
+            p->next->jump = p->jump->next;
+        }
+        p = p->next->next;
+    }
+    /* Phase 3: set the original list back to original state */
+    p = L;
+    shared_ptr<node_t<T>> copied = p->next;
+    while (p->next) {
+        shared_ptr<node_t<T>> temp = p->next;
+        p->next = temp->next;
+        p = temp;
+    }
+    return copied;
+}
+
+void test_copy_list() {
+    cout << "Testing copy list" << endl;
+    shared_ptr<node_t<int> > zero(make_shared<node_t<int>>(0));
+    shared_ptr<node_t<int> > one(make_shared<node_t<int>>(1));
+    shared_ptr<node_t<int> > two(make_shared<node_t<int>>(2));
+    shared_ptr<node_t<int> > three(make_shared<node_t<int>>(3));
+    zero->next = one;
+    one->next = two;
+    two->next = three;
+    zero->jump = two;
+    one->jump = three;
+    two->jump = one;
+    three->jump = three;    
+    shared_ptr<node_t<int>> cZero = copy_list(zero);
+    shared_ptr<node_t<int>> cOne = cZero->next;
+    shared_ptr<node_t<int>> cTwo = cOne->next;
+    shared_ptr<node_t<int>> cThree = cTwo->next;
+    assert(cZero->jump->data == 2);
+    assert(cOne->jump->data == 3);
+    assert(cTwo->jump->data == 1);
+    assert(cThree->jump->data == 3);
+    assert(cZero->next->data == 1);
+    assert(cOne->next->data == 2);
+    assert(cTwo->next->data == 3);
+    assert(cThree->next == nullptr);
+}
+
 int main(int argc, char **argv)
 {
 	test_has_cycle();
@@ -546,5 +612,6 @@ int main(int argc, char **argv)
     test_reverse_linked_lists();
     test_palindorme();
     test_zipping();
+    test_copy_list();
 	return 0;
 }
