@@ -1,26 +1,9 @@
 #include <iostream>
 #include <memory>
 #include <cassert>
+#include <node.h>
 
 using namespace std;
-
-template <typename T>
-class node_t {
-    public:
-        T data;
-        node_t(T __data) {
-            data = __data;
-            next = nullptr;
-            jump = nullptr;
-        }
-        node_t(T __data, shared_ptr<node_t<T>> __next, shared_ptr<node_t<T>> __jump) {
-            data = __data;
-            next = __next;
-            jump = __jump;
-        }
-        shared_ptr <node_t<T>> next;
-        shared_ptr <node_t<T>> jump; 
-};
 
 template<typename T>
 void print(const shared_ptr<node_t<T>> &head) {
@@ -30,37 +13,6 @@ void print(const shared_ptr<node_t<T>> &head) {
         node = node->next;
     }
     cout << endl;
-}
-
-template <typename T>
-void append_node(shared_ptr<node_t<T>> &head,
-                shared_ptr<node_t<T>> &tail,
-                shared_ptr<node_t<T>> &n) {
-    head ? tail->next = n : head = n;
-    tail = n;    
-}
-
-template<typename T>
-void append_node_and_advance(
-    shared_ptr<node_t<T>> &head,
-    shared_ptr<node_t<T>> &tail,
-    shared_ptr<node_t<T>> &n) {
-    append_node(head, tail, n);
-    n = n->next;
-}
-
-template<typename T>
-shared_ptr<node_t<T>> merge_sorted_linked_lists(
-    shared_ptr<node_t<T>> F,
-    shared_ptr<node_t<T>> L) {
-    shared_ptr<node_t<T>> sorted_head = nullptr, tail = nullptr;
-    while(F && L ) 
-        append_node_and_advance(sorted_head, tail, F->data < L->data ? F : L);            
-    if (F)
-        append_node(sorted_head, tail, F);
-    if (L)
-        append_node(sorted_head, tail, L);
-    return sorted_head;
 }
 
 void test_merge_lists() {
@@ -77,30 +29,6 @@ void test_merge_lists() {
     print(merge_sorted_linked_lists(zero, one));
 }
 
-template <typename T> shared_ptr<node_t<T> > has_cycle(
-    const shared_ptr<node_t<T> > &head) {
-    shared_ptr<node_t<T> > fast = head, slow = head;
-    while(slow && slow->next && fast && fast->next && fast->next->next) {
-        slow = slow->next, fast = fast->next->next;
-        if (slow == fast) {
-            int cycle_len = 0;
-            do {
-                ++cycle_len;
-                fast = fast->next;
-            } while(slow != fast);
-            slow = head, fast = head;
-            while(cycle_len--) {
-                fast = fast->next;
-            }
-            while(slow != fast) {
-                slow = slow->next;
-                fast = fast->next;
-            }
-            return slow;
-        }
-    }
-    return nullptr;    
-}
 
 
 void test_has_cycle() {
