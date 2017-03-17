@@ -214,7 +214,7 @@ public class LinkedListTest {
 	}
 	
 	@Test
-	public void test_isPalindrome() {
+	public void test_isPalindrome() throws Exception{
 		System.out.println("Testing if a list is palindrome");
 		LinkedList<Integer> list = new LinkedList<Integer>();
 		Node<Integer> zero = new Node<Integer>(0);
