@@ -21,4 +21,13 @@ public class StackTest {
 		assertEquals(stack.pop().intValue(), 2);
 		assertEquals(stack.max().intValue(), 4);
 	}
+	
+	@Test
+	public void test_evaluate_RPN() throws Exception {
+		System.out.println("Testing RPN evaluation");
+		assertEquals(StackUtil.evaluate_RPN("1,2,+"),3);
+		assertEquals(StackUtil.evaluate_RPN("1,2,+,3,+,2,-"),4);
+		/* Throws Exception */
+		assertEquals(StackUtil.evaluate_RPN("1,2,+,3,+,2,-,3"),4);
+	}
 }

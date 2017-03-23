@@ -1,3 +1,4 @@
+import java.util.*;
 
 public class StackT<T extends Comparable> {
 	Node<T> first;
@@ -33,5 +34,5 @@ public class StackT<T extends Comparable> {
 		if (first == null)
 			throw new Exception("The stack is empty");
 		return first.max;
-	}
+	}	
 }
