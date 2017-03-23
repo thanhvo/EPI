@@ -73,4 +73,45 @@ public class StackUtil {
 			throw new Exception("Invalid Input");
 		return ret;
 	}
+	
+	public static<T extends Comparable> void printBST_using_visited_field(BSTNode<T> root) {
+		if (root == null)
+			return;
+		Stack<BSTNode<T>> stack = new Stack<BSTNode<T>>();
+		stack.push(root);
+		root.visited = true;
+		while(!stack.isEmpty()) {
+			BSTNode<T> node = stack.pop();			
+			if (node.right != null && !node.right.visited) {
+				stack.push(node.right);
+				node.right.visited = true;
+			}
+			if (node.printable()) {				
+				System.out.print(node.data + " ");				
+			} else {
+				stack.push(node);
+				if (node.left != null && !node.left.visited) {
+					stack.push(node.left);
+					node.left.visited = true;
+				}
+			}
+		}
+		System.out.println();
+	}
+	
+	public static<T extends Comparable> void printBST(BSTNode<T> root) {
+		Stack<BSTNode<T>> stack = new Stack<BSTNode<T>>();
+		BSTNode<T> curr = root;
+		while (!stack.isEmpty() || curr != null) {
+			if (curr != null) {
+				stack.push(curr);
+				curr = curr.left;
+			} else {
+				curr = stack.pop();
+				System.out.print(curr.data + " ");
+				curr = curr.right;
+			}
+		}
+		System.out.println();
+	}
 }

@@ -1,7 +1,9 @@
 #include <string>
 #include <sstream>
 #include <stack>
+#include <iostream>
 #include "StackApp.h"
+#include "BSTNode.h"
 
 using namespace std;
 
@@ -44,3 +46,4 @@ int eval_RPN(const string &s) {
         throw invalid_argument("Invalid Input");
     return ret;
 }
+

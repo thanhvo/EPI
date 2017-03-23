@@ -3,7 +3,7 @@
 
 int main(int argc, char **argv)
 {
-	//test_linked_list();
+	test_linked_list();
     test_stack();
 	return 0;
 }

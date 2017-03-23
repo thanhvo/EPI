@@ -9,6 +9,8 @@ template <typename T>
 class node_t {
     public:
         T data;
+        shared_ptr <node_t<T>> next;
+        shared_ptr <node_t<T>> jump; 
         node_t(T __data) {
             data = __data;
             next = nullptr;
@@ -19,8 +21,7 @@ class node_t {
             next = __next;
             jump = __jump;
         }
-        shared_ptr <node_t<T>> next;
-        shared_ptr <node_t<T>> jump; 
+        
 };
 
 #endif
