@@ -3,6 +3,8 @@
 
 #include <string>
 #include <memory>
+#include <vector>
+#include <utility>
 #include "BSTNode.h"
 
 using namespace std;
@@ -27,5 +29,19 @@ void print_BST_in_sorted_order(const shared_ptr<BSTNode<T>> &n) {
 }
 
 void move_tower_hanoi(const int &n);
+
+template <typename T>
+vector <pair<int, T>> examine_buildings_with_sunset(istringstream &sin) {
+    int idx = 0;
+    T height;
+    vector<pair<int, T>> buildings_with_sunset;
+    while (sin >> height) {
+        while (!buildings_with_sunset.empty() && height >= buildings_with_sunset.back().second) {
+            buildings_with_sunset.pop_back();
+        }
+        buildings_with_sunset.emplace_back(idx++, height);
+    }
+    return buildings_with_sunset;
+}
 
 #endif

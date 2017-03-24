@@ -1,4 +1,4 @@
-import java.util.Stack;
+import java.util.*;
 
 public class StackUtil {
 	public static int evaluate_RPN(String expr) throws Exception{
@@ -127,5 +127,20 @@ public class StackUtil {
 	
 	public static<T extends Comparable> void moveRings(StackT<T> s1, StackT<T> s2, StackT<T> s3) throws Exception {
 		moveRings(s1,s2,s3,s1.getSize());
+	}	
+	
+	public static<T extends Comparable> Stack<Pair<Integer, T>> examine_buildings_with_sunset(String s, Transformer<String, T> transformer) {
+		int idx = 0;
+		T height;
+		Scanner scanner = new Scanner(s);
+		Stack<Pair<Integer, T>> buildings_with_sunset = new Stack<Pair<Integer, T>>();
+		while (scanner.hasNext()) {
+			height = transformer.transform(scanner.next());
+			while(!buildings_with_sunset.isEmpty() && height.compareTo(buildings_with_sunset.peek().second) >= 0) {
+				buildings_with_sunset.pop();
+			}
+			buildings_with_sunset.push(new Pair<Integer, T>(new Integer(idx++), height));
+		}
+		return buildings_with_sunset;
 	}
 }

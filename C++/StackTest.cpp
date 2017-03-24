@@ -1,6 +1,8 @@
 #include <cassert>
 #include <iostream>
 #include <memory>
+#include <string>
+#include <sstream>
 #include "Stack.h"
 #include "StackTest.h"
 #include "StackApp.h"
@@ -48,9 +50,21 @@ void test_print_BST() {
     print_BST_in_sorted_order(n1);
 }
 
+void test_buildings_with_sunset() {
+    cout << "Buildings with sunset: " << endl;
+    //string s("1 5 3 6 8 9");
+    string s("9 8 6 3 5 1");
+    istringstream sin(s);
+    vector<pair<int, int>> buildings_with_sunset = examine_buildings_with_sunset<int>(sin);
+    for (auto &building_pair : buildings_with_sunset) {
+        cout << building_pair.first << "\t" << building_pair.second << endl;
+    }
+}
+
 void test_stack() {
     test_max_stack();
     test_eval_RPN();
     test_print_BST();
     move_tower_hanoi(4);
+    test_buildings_with_sunset();
 }

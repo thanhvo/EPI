@@ -1,5 +1,6 @@
 import org.junit.*;
 import static org.junit.Assert.*;
+import java.util.*;
 
 public class StackTest {
 	@Test
@@ -70,5 +71,29 @@ public class StackTest {
 		assertEquals(s2.pop().intValue(), 3);
 		assertEquals(s2.pop().intValue(), 4);
 		assertEquals(s2.isEmpty(), true);
+	}
+	
+	@Test
+	public void test_buildings_with_sunset() {
+		System.out.println("Buildings with sunset");
+		String s = "9 8 6 3 5 1";
+		StringToIntegerTransformer transformer = new StringToIntegerTransformer();
+		Stack<Pair<Integer,Integer>> buildings_with_sunset = StackUtil.examine_buildings_with_sunset(s, transformer);
+		Pair<Integer,Integer> pair = buildings_with_sunset.pop();
+		assertEquals(pair.first.intValue(), 5);
+		assertEquals(pair.second.intValue(), 1);
+		pair = buildings_with_sunset.pop();
+		assertEquals(pair.first.intValue(), 4);
+		assertEquals(pair.second.intValue(), 5);
+		pair = buildings_with_sunset.pop();
+		assertEquals(pair.first.intValue(), 2);
+		assertEquals(pair.second.intValue(), 6);
+		pair = buildings_with_sunset.pop();
+		assertEquals(pair.first.intValue(), 1);
+		assertEquals(pair.second.intValue(), 8);
+		pair = buildings_with_sunset.pop();
+		assertEquals(pair.first.intValue(), 0);
+		assertEquals(pair.second.intValue(), 9);
+		assertEquals(buildings_with_sunset.isEmpty(), true);		
 	}
 }
