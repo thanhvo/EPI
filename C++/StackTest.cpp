@@ -52,4 +52,5 @@ void test_stack() {
     test_max_stack();
     test_eval_RPN();
     test_print_BST();
+    move_tower_hanoi(4);
 }

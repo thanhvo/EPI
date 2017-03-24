@@ -1,8 +1,30 @@
 import java.util.*;
 
 public class StackT<T extends Comparable> {
+	int id;
+	int size;
 	Node<T> first;
+	
+	public int getID() {
+		return id;
+	}
+	
+	public int getSize() {
+		return size;
+	}
+	
+	public boolean isEmpty() {
+		return size == 0;
+	}
+	
+	public StackT(int id) {
+		size = 0;
+		this.id = id;
+		first = null;
+	}
+	
 	public StackT() {
+		size = 0;
 		first = null;		
 	}
 	
@@ -11,6 +33,7 @@ public class StackT<T extends Comparable> {
 			throw new Exception("Can not pop from an empty stack");
 		T res = first.data;
 		first = first.next;
+		size--;
 		return res;
 	}
 	
@@ -27,7 +50,8 @@ public class StackT<T extends Comparable> {
 			}
 			node.next = first;
 			first = node;
-		}		
+		}
+		size++;
 	}
 	
 	public T max() throws Exception{

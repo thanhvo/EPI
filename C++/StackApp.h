@@ -26,4 +26,6 @@ void print_BST_in_sorted_order(const shared_ptr<BSTNode<T>> &n) {
     }
 }
 
+void move_tower_hanoi(const int &n);
+
 #endif

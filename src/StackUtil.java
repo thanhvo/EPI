@@ -114,4 +114,18 @@ public class StackUtil {
 		}
 		System.out.println();
 	}
+	
+	public static<T extends Comparable> void moveRings(StackT<T> s1, StackT<T> s2, StackT<T> s3, int n) throws Exception {
+		if (n <= 0)
+			return;
+		moveRings(s1,s3,s2,n-1);
+		T item = s1.pop();
+		s2.push(item);
+		System.out.println("Move item " + item + " from stack " + s1.getID() + " to stack " + s2.getID());
+		moveRings(s3,s2,s1, n-1);
+	}
+	
+	public static<T extends Comparable> void moveRings(StackT<T> s1, StackT<T> s2, StackT<T> s3) throws Exception {
+		moveRings(s1,s2,s3,s1.getSize());
+	}
 }
