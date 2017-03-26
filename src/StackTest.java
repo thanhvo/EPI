@@ -116,4 +116,12 @@ public class StackTest {
 		assertEquals(stack.pop().intValue(), 1);
 		assertEquals(stack.isEmpty(), true);
 	}
+	
+	@Test 
+	public void test_simplifyPath() throws Exception {
+		System.out.println("Symplifying paths");
+		assertEquals(StackUtil.simplifyPath("/root/home/thanh/../../etc/docker"),"/root/etc/docker");
+		assertEquals(StackUtil.simplifyPath("/root/home/thanh/./../etc/docker"),"/root/home/etc/docker");
+		//System.out.println(StackUtil.simplifyPath("/root/../.."));// Invalid input
+	}
 }

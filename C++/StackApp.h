@@ -66,4 +66,6 @@ void sort(stack<T> &s) {
     }
 }
 
+string normalized_path_names(const string &path);
+
 #endif

@@ -85,6 +85,12 @@ void test_sort_stack() {
     s.pop();    
 }
 
+void test_normalized_paths() {
+    cout << "Normalizing paths" << endl;
+    assert(normalized_path_names("/home/thanh/pictures/../docker/../videos/Harry_Potter") == "/home/thanh/videos/Harry_Potter");
+    assert(normalized_path_names("/home/thanh/pictures/.././eBooks") == "/home/thanh/eBooks");
+}
+
 void test_stack() {
     test_max_stack();
     test_eval_RPN();
@@ -92,4 +98,5 @@ void test_stack() {
     move_tower_hanoi(4);
     test_buildings_with_sunset();
     test_sort_stack();
+    test_normalized_paths();
 }

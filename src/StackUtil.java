@@ -161,4 +161,33 @@ public class StackUtil {
 			insert(s,e);
 		}
 	}
+	
+	public static String simplifyPath(String path) throws Exception{
+		Stack<String> stack = new Stack<String>();
+		Scanner scanner = new Scanner(path);
+		scanner.useDelimiter("/");
+		while(scanner.hasNext()) {
+			String dir = scanner.next();
+			//System.out.println(dir);
+			if (dir.equals("..")) {
+				if (stack.isEmpty()) {
+					throw new Exception("Invalid input");
+				}
+				stack.pop();
+			}
+			else if (!dir.equals(".") && !dir.isEmpty()) {
+				stack.push(dir);
+			}
+		}
+		String ret = "";
+		while (!stack.isEmpty()) {
+			if (ret.isEmpty()) {
+				ret = stack.pop();
+			} else {
+				ret = stack.pop() + "/" + ret;
+			}
+		}
+		ret = "/" + ret;
+		return ret;
+	}
 }
