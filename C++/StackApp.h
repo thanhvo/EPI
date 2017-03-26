@@ -44,4 +44,26 @@ vector <pair<int, T>> examine_buildings_with_sunset(istringstream &sin) {
     return buildings_with_sunset;
 }
 
+template <typename T>
+void insert(stack<T> &s, const T &e) {
+    if (s.empty() || s.top() <= e) {
+        s.push(e);
+    } else {
+        T f = s.top();
+        s.pop();
+        insert(s,e);
+        s.push(f);
+    }
+}
+
+template <typename T>
+void sort(stack<T> &s) {
+    if (!s.empty()) {
+        T e = s.top();
+        s.pop();
+        sort(s);
+        insert(s,e);
+    }
+}
+
 #endif

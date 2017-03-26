@@ -61,10 +61,35 @@ void test_buildings_with_sunset() {
     }
 }
 
+void test_sort_stack() {
+    cout << "Sotring stack" << endl;
+    stack<int> s;
+    s.push(5);
+    s.push(8);
+    s.push(1);
+    s.push(4);
+    s.push(10);
+    s.push(3);
+    sort(s);
+    assert(s.top() == 10);
+    s.pop();
+    assert(s.top() == 8);
+    s.pop();
+    assert(s.top() == 5);
+    s.pop();
+    assert(s.top() == 4);
+    s.pop();
+    assert(s.top() == 3);
+    s.pop();
+    assert(s.top() == 1);
+    s.pop();    
+}
+
 void test_stack() {
     test_max_stack();
     test_eval_RPN();
     test_print_BST();
     move_tower_hanoi(4);
     test_buildings_with_sunset();
+    test_sort_stack();
 }

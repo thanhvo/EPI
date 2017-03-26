@@ -96,4 +96,24 @@ public class StackTest {
 		assertEquals(pair.second.intValue(), 9);
 		assertEquals(buildings_with_sunset.isEmpty(), true);		
 	}
+	
+	@Test
+	public void test_sort_stack() {
+		System.out.println("Sorting stack");
+		Stack<Integer> stack = new Stack<Integer>();
+		stack.push(1);
+		stack.push(5);
+		stack.push(4);
+		stack.push(8);
+		stack.push(10);
+		stack.push(3);
+		StackUtil.sort(stack);
+		assertEquals(stack.pop().intValue(), 10);
+		assertEquals(stack.pop().intValue(), 8);
+		assertEquals(stack.pop().intValue(), 5);
+		assertEquals(stack.pop().intValue(), 4);
+		assertEquals(stack.pop().intValue(), 3);
+		assertEquals(stack.pop().intValue(), 1);
+		assertEquals(stack.isEmpty(), true);
+	}
 }

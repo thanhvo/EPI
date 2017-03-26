@@ -143,4 +143,22 @@ public class StackUtil {
 		}
 		return buildings_with_sunset;
 	}
+	
+	public static<T extends Comparable> void insert(Stack<T> s, T e ) {
+		if (s.isEmpty() || s.peek().compareTo(e) <= 0) {
+			s.push(e);
+		} else {
+			T f = s.pop();
+			insert(s,e);
+			s.push(f);
+		}
+	}
+	
+	public static<T extends Comparable> void sort(Stack<T> s) {
+		if (!s.isEmpty()) {
+			T e = s.pop();
+			sort(s);
+			insert(s,e);
+		}
+	}
 }
