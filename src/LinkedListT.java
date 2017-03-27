@@ -1,6 +1,6 @@
 import java.util.*;
 
-class LinkedList<T extends Comparable> {
+class LinkedListT<T extends Comparable> {
 	Node<T> has_cycle_using_set(Node<T> head) {
 		Set<Node<T>> set = new HashSet<Node<T>>();
 		Node<T> node = head;

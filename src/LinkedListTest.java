@@ -15,7 +15,7 @@ public class LinkedListTest {
 		Node<Integer> five = new Node<Integer>(5);
 		Node<Integer> six = new Node<Integer>(6);
 		
-		LinkedList<Integer> list = new LinkedList<Integer>();
+		LinkedListT<Integer> list = new LinkedListT<Integer>();
 		/* Test case 1: all items in the list are identical */
 		zero.next = zero1;
 		zero1.next = zero2;
@@ -40,7 +40,7 @@ public class LinkedListTest {
 	@Test
 	public void test_has_cycle() {
 		System.out.println("Testing has_cycle function");
-		LinkedList<Integer> list = new LinkedList<Integer>();
+		LinkedListT<Integer> list = new LinkedListT<Integer>();
 		Node<Integer> head = new Node<Integer>(0);
 		Node<Integer> one = new Node<Integer>(1);
 		Node<Integer> two = new Node<Integer>(2);
@@ -65,7 +65,7 @@ public class LinkedListTest {
 	@Test
 	public void test_overlapping_lists() {
 		System.out.println("Testing overlapping lists");
-		LinkedList<Integer> list = new LinkedList<Integer>();
+		LinkedListT<Integer> list = new LinkedListT<Integer>();
 		Node<Integer> zero = new Node<Integer>(0);
 		Node<Integer> one = new Node<Integer>(1);
 		Node<Integer> two = new Node<Integer>(2);
@@ -106,7 +106,7 @@ public class LinkedListTest {
 	@Test
 	public void test_even_odd_merge() {
 		System.out.println("Testing even odd merging");
-		LinkedList<Integer> list = new LinkedList<Integer>();
+		LinkedListT<Integer> list = new LinkedListT<Integer>();
 		Node<Integer> zero = new Node<Integer>(0);
 		Node<Integer> one = new Node<Integer>(1);
 		Node<Integer> two = new Node<Integer>(2);
@@ -153,7 +153,7 @@ public class LinkedListTest {
 	@Test
 	public void test_remove_kth_last() throws Exception{
 		System.out.println("Testing remove kth last");
-		LinkedList<Integer> list = new LinkedList<Integer>();
+		LinkedListT<Integer> list = new LinkedListT<Integer>();
 		Node<Integer> zero = new Node<Integer>(0);
 		Node<Integer> one = new Node<Integer>(1);
 		Node<Integer> two = new Node<Integer>(2);
@@ -185,7 +185,7 @@ public class LinkedListTest {
 	@Test
 	public void test_reverse_list() {
 		System.out.println("Testing reverse list");
-		LinkedList<Integer> list = new LinkedList<Integer>();
+		LinkedListT<Integer> list = new LinkedListT<Integer>();
 		Node<Integer> zero = new Node<Integer>(0);
 		Node<Integer> one = new Node<Integer>(1);
 		Node<Integer> two = new Node<Integer>(2);
@@ -216,7 +216,7 @@ public class LinkedListTest {
 	@Test
 	public void test_isPalindrome() throws Exception{
 		System.out.println("Testing if a list is palindrome");
-		LinkedList<Integer> list = new LinkedList<Integer>();
+		LinkedListT<Integer> list = new LinkedListT<Integer>();
 		Node<Integer> zero = new Node<Integer>(0);
 		Node<Integer> one = new Node<Integer>(1);
 		Node<Integer> two = new Node<Integer>(2);
@@ -250,7 +250,7 @@ public class LinkedListTest {
 	@Test
 	public void test_zipping_linked_lists() {
 		System.out.println("Testing zipping linked list");
-		LinkedList<Integer> list = new LinkedList<Integer>();
+		LinkedListT<Integer> list = new LinkedListT<Integer>();
 		Node<Integer> zero = new Node<Integer>(0);
 		Node<Integer> one = new Node<Integer>(1);
 		Node<Integer> two = new Node<Integer>(2);
@@ -294,7 +294,7 @@ public class LinkedListTest {
 	@Test 
 	public void test_posting_list() {
 		System.out.println("Testing posting list.");
-		LinkedList<Integer> list = new LinkedList<Integer>();
+		LinkedListT<Integer> list = new LinkedListT<Integer>();
 		Node<Integer> zero = new Node<Integer>(0);
 		Node<Integer> one = new Node<Integer>(1);
 		Node<Integer> two = new Node<Integer>(2);
