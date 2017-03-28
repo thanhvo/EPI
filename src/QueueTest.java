@@ -59,8 +59,23 @@ public class QueueTest {
 		assertEquals(queue.dequeue(),3);
 		assertEquals(queue.dequeue(),6);
 		assertEquals(queue.dequeue(),5);
+		assertEquals(queue.isEmpty(), true);		
+	}
+	
+	@Test
+	public void test_Queue_By_Stacks() throws Exception{
+		QueueByStacks<Integer> queue = new QueueByStacks<Integer>();
+		queue.enqueue(1);
+		queue.enqueue(2);
+		queue.enqueue(3);
+		queue.enqueue(6);
+		queue.enqueue(5);
+		assertEquals(queue.dequeue().intValue(),1);
+		assertEquals(queue.dequeue().intValue(),2);
+		assertEquals(queue.dequeue().intValue(),3);
+		assertEquals(queue.dequeue().intValue(),6);
+		assertEquals(queue.dequeue().intValue(),5);
 		assertEquals(queue.isEmpty(), true);
-		
 	}
 
 }

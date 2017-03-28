@@ -5,6 +5,7 @@
 #include "BTNode.h"
 #include "CircularQueue.h"
 #include "IQueue.h"
+#include "QueueByStacks.h"
 
 using namespace std;
 
@@ -56,6 +57,19 @@ void test_IQueue() {
     assert(queue.dequeue() == 4);
     assert(queue.dequeue() == 7);
     assert(queue.dequeue() == 6);
+    assert(queue.empty());
+}
+
+void test_queue_by_stacks() {
+    QueueByStacks<int> queue;
+    queue.enqueue(1);
+    queue.enqueue(2);
+    queue.enqueue(3);
+    queue.enqueue(4);
+    assert(queue.dequeue() == 1);
+    assert(queue.dequeue() == 2);
+    assert(queue.dequeue() == 3);
+    assert(queue.dequeue() == 4);
     assert(queue.empty());
 }
 
