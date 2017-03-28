@@ -3,7 +3,8 @@
 #include "QueueTest.h"
 #include "QueueApp.h"
 #include "BTNode.h"
-#include "Queue.h"
+#include "CircularQueue.h"
+#include "IQueue.h"
 
 using namespace std;
 
@@ -33,7 +34,7 @@ void test_print_binary_tree_level_order() {
 }
 
 void test_circular_queue() {
-    Queue<int> queue(3);
+    CircularQueue<int> queue(3);
     queue.enqueue(1);
     queue.enqueue(2);
     queue.enqueue(3);
@@ -42,6 +43,19 @@ void test_circular_queue() {
     assert(queue.dequeue() == 2);
     assert(queue.dequeue() == 3);
     assert(queue.dequeue() == 4);
+    assert(queue.empty());
+}
+
+void test_IQueue() {
+    IQueue queue;
+    queue.enqueue(1);
+    queue.enqueue(4);
+    queue.enqueue(7);
+    queue.enqueue(6);
+    assert(queue.dequeue() == 1);
+    assert(queue.dequeue() == 4);
+    assert(queue.dequeue() == 7);
+    assert(queue.dequeue() == 6);
     assert(queue.empty());
 }
 

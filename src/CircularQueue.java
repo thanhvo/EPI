@@ -1,5 +1,3 @@
-import java.lang.reflect.Array;
-
 public class CircularQueue<T> {
 	T[] elements;
 	int size;
@@ -57,7 +55,6 @@ public class CircularQueue<T> {
 		T ret = elements[first];
 		first = (first + 1) % capacity;
 		size--;
-		return ret;
-		
+		return ret;		
 	}	
 }

@@ -6,12 +6,12 @@
 using namespace std;
 
 template<typename T>
-class Queue {
+class CircularQueue {
     private:
         size_t head, tail, count;
         vector<T> data;
     public:
-        Queue(const size_t &cap = 8): head(0), tail(0), count(0), data(vector<int>(cap)) {}
+        CircularQueue(const size_t &cap = 8): head(0), tail(0), count(0), data(vector<int>(cap)) {}
         
         void enqueue(const T &x) {
             if (count == data.size()) {

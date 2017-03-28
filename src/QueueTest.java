@@ -45,5 +45,22 @@ public class QueueTest {
 		assertEquals(queue.dequeue().intValue(), 5);
 		assertEquals(queue.isEmpty(), true);
 	}
+	
+	@Test
+	public void test_IQueue() throws Exception{
+		IQueue queue = new IQueue();
+		queue.enqueue(1);
+		queue.enqueue(2);
+		queue.enqueue(3);
+		queue.enqueue(6);
+		queue.enqueue(5);
+		assertEquals(queue.dequeue(),1);
+		assertEquals(queue.dequeue(),2);
+		assertEquals(queue.dequeue(),3);
+		assertEquals(queue.dequeue(),6);
+		assertEquals(queue.dequeue(),5);
+		assertEquals(queue.isEmpty(), true);
+		
+	}
 
 }
