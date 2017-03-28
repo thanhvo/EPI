@@ -24,7 +24,8 @@ void print_binary_tree_level_order(const shared_ptr<BTNode<T>> &n) {
             q.emplace(q.front()->right);
         }
         q.pop();
-    }    
+    }
+    cout << endl;
 }
 
 #endif

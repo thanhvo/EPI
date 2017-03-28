@@ -1,7 +1,9 @@
 #include <memory>
+#include <cassert>
 #include "QueueTest.h"
 #include "QueueApp.h"
 #include "BTNode.h"
+#include "Queue.h"
 
 using namespace std;
 
@@ -30,6 +32,20 @@ void test_print_binary_tree_level_order() {
     print_binary_tree_level_order(n0);
 }
 
+void test_circular_queue() {
+    Queue<int> queue(3);
+    queue.enqueue(1);
+    queue.enqueue(2);
+    queue.enqueue(3);
+    queue.enqueue(4);
+    assert(queue.dequeue() == 1);
+    assert(queue.dequeue() == 2);
+    assert(queue.dequeue() == 3);
+    assert(queue.dequeue() == 4);
+    assert(queue.empty());
+}
+
 void test_queue() {
-    test_print_binary_tree_level_order();        
+    test_print_binary_tree_level_order();
+    test_circular_queue();
 }
