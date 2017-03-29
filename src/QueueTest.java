@@ -1,5 +1,6 @@
 import org.junit.*;
 import static org.junit.Assert.*;
+import java.util.*;
 
 public class QueueTest {
 	
@@ -100,6 +101,19 @@ public class QueueTest {
 		assertEquals(queue.max().intValue(), 1);
 		assertEquals(queue.dequeue().intValue(), 1);
 		assertEquals(queue.isEmpty(), true);
+	}
+	
+	@Test
+	public void test_traffic_volumes() throws Exception{
+		ArrayList<TrafficElement> A = new ArrayList<TrafficElement>();
+		A.add(new TrafficElement(1,7));
+		A.add(new TrafficElement(2,6));
+		A.add(new TrafficElement(3,3));
+		A.add(new TrafficElement(4,5));
+		A.add(new TrafficElement(5,9));
+		A.add(new TrafficElement(6,10));
+		A.add(new TrafficElement(7,4));
+		QueueUtil.traffic_volumes(A, 5);
 	}
 
 }

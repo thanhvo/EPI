@@ -4,6 +4,8 @@
 #include <queue>
 #include <deque>
 
+using namespace std; 
+
 template <typename T>
 class MaxQueue {
     private:
@@ -35,6 +37,10 @@ class MaxQueue {
                 return D.front();
             }
             throw length_error("empty queue");
+        }
+        
+        const T front(void) const {
+            return Q.front();
         }
         
         const bool empty() {

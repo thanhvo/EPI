@@ -39,4 +39,8 @@ public class MaxQueue<T extends Comparable> {
 	public boolean isEmpty() {
 		return Q.isEmpty();
 	}
+	
+	public T peek() {
+		return Q.peek();
+	}
 }

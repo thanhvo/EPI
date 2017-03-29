@@ -5,6 +5,7 @@
 #include <queue>
 #include <iostream>
 #include "BTNode.h"
+#include "TrafficElement.h"
 
 using namespace std;
 
@@ -27,5 +28,7 @@ void print_binary_tree_level_order(const shared_ptr<BTNode<T>> &n) {
     }
     cout << endl;
 }
+
+void traffic_volumes(const vector<TrafficElement>& A, const int& w);
 
 #endif

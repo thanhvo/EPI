@@ -94,9 +94,30 @@ void test_max_queue() {
     assert(queue.empty());
 }
 
+void test_traffic_volumes() {
+    vector<TrafficElement> v;
+    TrafficElement te1(1,7);
+    TrafficElement te2(2,6);
+    TrafficElement te3(3,3);
+    TrafficElement te4(4,5);
+    TrafficElement te5(5,9);
+    TrafficElement te6(6,10);
+    TrafficElement te7(7,4);
+    v.emplace_back(te1);
+    v.emplace_back(te2);
+    v.emplace_back(te3);
+    v.emplace_back(te4);
+    v.emplace_back(te5);
+    v.emplace_back(te6);
+    v.emplace_back(te7);
+    traffic_volumes(v, 5);
+    
+}
+
 void test_queue() {
     test_print_binary_tree_level_order();
     test_circular_queue();
     test_queue_by_stacks();
     test_max_queue();
+    test_traffic_volumes();
 }
