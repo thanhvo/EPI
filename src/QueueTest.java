@@ -77,5 +77,29 @@ public class QueueTest {
 		assertEquals(queue.dequeue().intValue(),5);
 		assertEquals(queue.isEmpty(), true);
 	}
+	
+	@Test
+	public void test_Max_Queue() throws Exception{
+		MaxQueue<Integer> queue = new MaxQueue<Integer>();
+		queue.enqueue(4);
+		queue.enqueue(5);
+		queue.enqueue(8);
+		queue.enqueue(3);
+		queue.enqueue(2);
+		queue.enqueue(1);
+		assertEquals(queue.max().intValue(), 8);
+		assertEquals(queue.dequeue().intValue(), 4);
+		assertEquals(queue.max().intValue(), 8);
+		assertEquals(queue.dequeue().intValue(), 5);
+		assertEquals(queue.max().intValue(), 8);
+		assertEquals(queue.dequeue().intValue(), 8);
+		assertEquals(queue.max().intValue(), 3);
+		assertEquals(queue.dequeue().intValue(), 3);
+		assertEquals(queue.max().intValue(), 2);
+		assertEquals(queue.dequeue().intValue(), 2);
+		assertEquals(queue.max().intValue(), 1);
+		assertEquals(queue.dequeue().intValue(), 1);
+		assertEquals(queue.isEmpty(), true);
+	}
 
 }

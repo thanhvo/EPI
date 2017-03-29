@@ -6,6 +6,7 @@
 #include "CircularQueue.h"
 #include "IQueue.h"
 #include "QueueByStacks.h"
+#include "MaxQueue.h"
 
 using namespace std;
 
@@ -73,7 +74,29 @@ void test_queue_by_stacks() {
     assert(queue.empty());
 }
 
+void test_max_queue() {
+    MaxQueue<int> queue;
+    queue.enqueue(5);
+    queue.enqueue(4);
+    queue.enqueue(6);
+    queue.enqueue(2);
+    queue.enqueue(1);
+    assert(queue.max() == 6);
+    assert(queue.dequeue() == 5);
+    assert(queue.max() == 6);
+    assert(queue.dequeue() == 4);
+    assert(queue.max() == 6);
+    assert(queue.dequeue() == 6);
+    assert(queue.max() == 2);
+    assert(queue.dequeue() == 2);
+    assert(queue.max() == 1);
+    assert(queue.dequeue() == 1);
+    assert(queue.empty());
+}
+
 void test_queue() {
     test_print_binary_tree_level_order();
     test_circular_queue();
+    test_queue_by_stacks();
+    test_max_queue();
 }
