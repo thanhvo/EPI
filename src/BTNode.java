@@ -1,5 +1,5 @@
 
-public class BTNode<T extends Comparable> implements Comparable{
+public class BTNode<T> {
 	T data;
 	BTNode<T> left;
 	BTNode<T> right;
@@ -8,14 +8,5 @@ public class BTNode<T extends Comparable> implements Comparable{
 		data = __data;
 		left = null;
 		right = null;
-	}
-	
-	public int compareTo(BTNode<T> node) {
-		return data.compareTo(node.data);
-	}
-
-	public int compareTo(Object o) {
-		// TODO Auto-generated method stub
-		return 0;
-	}				
+	}	
 }
