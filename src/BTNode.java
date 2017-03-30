@@ -8,5 +8,6 @@ public class BTNode<T> {
 		data = __data;
 		left = null;
 		right = null;
-	}	
+	}
+	
 }

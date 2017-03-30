@@ -44,4 +44,34 @@ bool is_balanced_binary_tree(const shared_ptr<BTNode<T>> &n) {
     return get_balanced_height(n) != -2;
 }
 
+template <typename T>
+pair<shared_ptr<BTNode<T>>, int> find_non_k_balanced_node_helper(
+    const shared_ptr<BTNode<T>> &n, const int &k
+) {
+    if (!n) {
+        return {nullptr, 0};
+    }
+    auto L = find_non_k_balanced_node_helper<T>(n->left, k);
+    if (L.first) {
+        return L;
+    }
+    auto R = find_non_k_balanced_node_helper<T>(n->right, k);
+    if (R.first) {
+        return R;
+    }
+    int node_num = L.second + R.second + 1;
+    if (abs(L.second - R.second) > k) {
+        return {n, node_num};
+    }
+    return {nullptr, node_num};
+}
+
+template<typename T>
+shared_ptr<BTNode<T>> find_non_k_balanced_node(
+    const shared_ptr<BTNode<T>> &n, const int &k
+){
+    return find_non_k_balanced_node_helper<T>(n, k).first;
+    
+}
+
 #endif
