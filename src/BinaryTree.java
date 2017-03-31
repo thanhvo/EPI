@@ -51,4 +51,24 @@ public class BinaryTree {
 	public static<T> boolean isBlanced(BTNode<T> root) {
 		return (get_balanced_height(root) != -2);
 	}
+	
+	private static<T extends Comparable> boolean isSymmetric(BTNode<T> left, BTNode<T> right) {
+		if (left == null && right == null) {
+			return true;
+		}
+		if (left == null || right == null) {
+			return false;
+		}
+		if (left.data.compareTo(right.data) != 0) {
+			return false;
+		}
+		return isSymmetric(left.right, right.left) && isSymmetric(left.left, right.right);
+	}
+	
+	public static<T extends Comparable> boolean isSymmetric(BTNode<T> root) {
+		if (root == null) {
+			return true;
+		}
+		return isSymmetric(root.left, root.right);
+	}
 }

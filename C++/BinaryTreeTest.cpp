@@ -63,8 +63,37 @@ void test_non_k_balanced_node() {
     K->right = N;
     L->right = M;
     O->right = P;
-    assert(find_non_k_balanced_node(A, 3)->data == 2);
+    assert(find_non_k_balanced_node(A, 3)->data == 2);    
+}
+
+void test_symmetric_binary_tree() {
+    /* Test case 1: a symmetric binary tree */
+    shared_ptr<BTNode<int>> A(make_shared<BTNode<int>>(314));
+    shared_ptr<BTNode<int>> B(make_shared<BTNode<int>>(6));
+    shared_ptr<BTNode<int>> C(make_shared<BTNode<int>>(2));
+    shared_ptr<BTNode<int>> D(make_shared<BTNode<int>>(3));
+    shared_ptr<BTNode<int>> E(make_shared<BTNode<int>>(6));
+    shared_ptr<BTNode<int>> F(make_shared<BTNode<int>>(2));
+    shared_ptr<BTNode<int>> G(make_shared<BTNode<int>>(3));
+    A->left = B;
+    A->right = E;
+    B->right = C;
+    C->right = D;
+    E->left = F;
+    F->left = G;
+    assert(is_symmetric(A));
     
+    /* Test case 2: asymmetric binary tree */
+    C->data = 561;
+    assert(!is_symmetric(A));
+    
+    /* Test case 3: a symmetric binary tree */
+    F->data = 561;
+    assert(is_symmetric(A));
+    
+    /* Test case 4: asymmetric binary tree */
+    F->left = nullptr;
+    assert(!is_symmetric(A));
 }
 
 void test_binary_tree() {

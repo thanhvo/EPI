@@ -64,4 +64,35 @@ public class BinaryTreeTest {
 		O.right = P;
 		assertEquals(BinaryTree.find_k_unbalanced_node(A, 3).data.intValue(), 2);	
 	}
+	
+	@Test 
+	public void test_symmetric_binary_tree() {
+		/* Test case 1: Symmetric binary tree */
+		BTNode<Integer> A = new BTNode<Integer>(314);
+		BTNode<Integer> B = new BTNode<Integer>(6);
+		BTNode<Integer> C = new BTNode<Integer>(2);
+		BTNode<Integer> D = new BTNode<Integer>(3);
+		BTNode<Integer> E = new BTNode<Integer>(6);
+		BTNode<Integer> F = new BTNode<Integer>(2);
+		BTNode<Integer> G = new BTNode<Integer>(3);
+		A.left = B;
+		A.right = E;
+		B.right = C;
+		C.right = D;
+		E.left = F;
+		F.left = G;
+		assertEquals(BinaryTree.isSymmetric(A),true);
+		
+		/* Test case 2: asymmetric binary tree */
+		C.data = 561;
+		assertEquals(BinaryTree.isSymmetric(A),false);
+		
+		/* Test case 3: symmetric binary tree */
+		F.data = 561;
+		assertEquals(BinaryTree.isSymmetric(A),true);
+		
+		/* Test case 4: asymmetric binary tree */
+		F.left = null;
+		assertEquals(BinaryTree.isSymmetric(A),false);
+	}
 }
