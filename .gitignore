@@ -2,10 +2,10 @@ bin
 .classpath
 *.project
 .settings
-C++/.codelite
+.codelite
 *Debug
 *.mk
 *.workspace
-*Chapter7.txt
 *.tags
-C++/EPI.txt
+EPI.txt
+Makefile

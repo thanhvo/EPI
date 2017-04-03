@@ -169,7 +169,7 @@ class LinkedListT<T extends Comparable> {
 	}
 	
 	boolean isPalindrome(Node<T> head) throws Exception{
-		StackT<T> stack = new StackT<T>();
+		Stack<T> stack = new Stack<T>();
 		Node<T> node = head;
 		while(node != null) {
 			stack.push(node.data);
@@ -177,7 +177,7 @@ class LinkedListT<T extends Comparable> {
 		}
 		node = head;
 		while (node != null) {
-			if (node.data.equals(stack.pop()))
+			if (!node.data.equals(stack.pop()))
 				return false;
 			node = node.next;
 		}

@@ -7,16 +7,57 @@ using namespace std;
 
 template<typename T>
 class BTNode {
-    public:
+	private:
+		bool locked;
+		int numChildrenLocks;
+	public:
         T data;
         shared_ptr<BTNode<T>> left;
         shared_ptr<BTNode<T>> right;
+		shared_ptr<BTNode<T>> parent;
       
         BTNode(T __data) {
             data = __data;
+			locked = false;
+			numChildrenLocks = 0;
             left = nullptr;
             right = nullptr;
+			parent = nullptr;
         }
+		
+		const bool &isLock(void) const {
+			return locked;
+		}
+		
+		void lock(void) {
+			if (numChildrenLocks == 0 && locked == false) {
+				shared_ptr<BTNode<T>> n = parent;
+				/* Check if any ancestor is locked. If so, return right away */
+				while (n) {
+					if (n->locked) {
+						return;
+					}
+					n = n->parent;
+				}
+				locked = true;
+				n = parent;
+				while (n) {
+					++n->numChildrenLocks;
+					n = n->parent;
+				}
+			}
+		}
+		
+		void unlock(void) {
+			if (locked) {
+				locked = false;
+				shared_ptr<BTNode<T>> n = parent;
+				while (n) {
+					--n->numChildrenLocks;
+					n = n->parent;
+				}
+			}
+		}
     
 };
 

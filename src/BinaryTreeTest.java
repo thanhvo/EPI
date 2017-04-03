@@ -95,4 +95,62 @@ public class BinaryTreeTest {
 		F.left = null;
 		assertEquals(BinaryTree.isSymmetric(A),false);
 	}
+	
+	@Test
+	public void test_lock_binary_tree() {
+		BTNode<String> A = new BTNode<String>("A");
+		BTNode<String> B = new BTNode<String>("B");
+		BTNode<String> C = new BTNode<String>("C");
+		BTNode<String> D = new BTNode<String>("D");
+		BTNode<String> E = new BTNode<String>("E");
+		BTNode<String> F = new BTNode<String>("F");
+		BTNode<String> G = new BTNode<String>("G");
+		BTNode<String> H = new BTNode<String>("H");
+		BTNode<String> I = new BTNode<String>("I");
+		BTNode<String> J = new BTNode<String>("J");
+		BTNode<String> K = new BTNode<String>("K");
+		BTNode<String> L = new BTNode<String>("L");
+		BTNode<String> M = new BTNode<String>("M");
+		A.left = B;
+		B.parent = A;
+		A.right = C;
+		C.parent = A;
+		B.left = D;
+		D.parent = B;
+		B.right = E;
+		E.parent = B;
+		C.left = F;
+		F.parent = C;		
+		C.right = G;
+		G.parent = C;
+		D.left = H;
+		H.parent = D;
+		D.right = I;
+		I.parent = D;
+		E.left = J;
+		J.parent = E;
+		E.right = K;
+		K.parent = E;
+		G.left = L;
+		L.parent = G;
+		G.right = M;
+		M.parent = G;
+		assertEquals(L.isLock(), false);
+		L.lock();
+		assertEquals(L.isLock(), true);
+		G.lock(); /* fails because L is locked */
+		assertEquals(G.isLock(), false);
+		assertEquals(F.isLock(), false);
+		F.lock();
+		assertEquals(F.isLock(), true);
+		C.lock(); /* fails because F is locked */
+		assertEquals(C.isLock(), false);
+		assertEquals(E.isLock(), false);
+		E.lock();
+		assertEquals(E.isLock(), true);
+		B.lock(); /* fails because E is locked */
+		assertEquals(B.isLock(), false);
+		H.lock();
+		assertEquals(H.isLock(), true);
+	}
 }
