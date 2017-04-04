@@ -95,4 +95,60 @@ public class BinaryTree {
 		}
 		System.out.println();
 	}
+	
+	public static<T> void inorder_traversal(BTNode<T> root) {
+		BTNode<T> n = root;
+		/* We use a variable to keep track the direction. 
+		 * 0: starting
+		 * 1: move left
+		 * 2: move right
+		 * 3: left up
+		 * 4: right up 
+		 */
+		int direction = 0;
+		while (n != null) {
+			if (direction < 3) {
+				if (n.left != null) {
+					n = n.left;
+					direction = 1;
+				} else {
+					System.out.print(n.data + " ");
+					if (n.right != null) {
+						n = n.right;
+						direction = 2;
+					} else {						
+						n = n.parent;
+						if (direction == 1) {
+							direction = 3;
+						} else {
+							direction = 4;
+						}
+					}
+				}
+			} else if (direction == 3) {
+				System.out.print(n.data + " ");
+				if (n.right != null) {
+					n = n.right;
+					direction = 2;
+				} else {
+					BTNode<T> parent = n.parent;
+					if (parent != null && parent.left == n) {
+						direction = 3;
+					} else {
+						direction = 4;
+					}
+					n = parent;
+				}
+			} else {
+				BTNode<T> parent = n.parent;
+				if (parent != null && parent.left == n) {
+					direction = 3;
+				} else  {
+					direction = 4;
+				}
+				n = parent;
+			}
+		}
+		System.out.println();
+	}
 }

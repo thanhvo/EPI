@@ -181,4 +181,43 @@ public class BinaryTreeTest {
 		G.right = L;
 		BinaryTree.morris_inorder_traversal(A);
 	}
+	
+	@Test 
+	public void test_inorder_traversal() {
+		BTNode<String> A = new BTNode<String>("A");
+		BTNode<String> B = new BTNode<String>("B");
+		BTNode<String> C = new BTNode<String>("C");
+		BTNode<String> D = new BTNode<String>("D");
+		BTNode<String> E = new BTNode<String>("E");
+		BTNode<String> F = new BTNode<String>("F");
+		BTNode<String> G = new BTNode<String>("G");
+		BTNode<String> H = new BTNode<String>("H");
+		BTNode<String> I = new BTNode<String>("I");
+		BTNode<String> J = new BTNode<String>("J");
+		BTNode<String> K = new BTNode<String>("K");
+		BTNode<String> L = new BTNode<String>("L");
+		A.left = B;
+		B.parent = A;
+		A.right = C;
+		C.parent = A;
+		B.left = D;
+		D.parent = B;
+		B.right = E;
+		E.parent = B;
+		D.left = H;
+		H.parent = D;
+		E.left = I;
+		I.parent = E;
+		E.right = J;
+		J.parent = E;
+		C.left = F;
+		F.parent = C;
+		C.right = G;
+		G.parent = C;
+		F.right = K;
+		K.parent = F;
+		G.right = L;
+		L.parent = G;
+		BinaryTree.inorder_traversal(A);
+	}
 }

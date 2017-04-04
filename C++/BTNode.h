@@ -143,17 +143,44 @@ void morris_inorder_traversal(shared_ptr<BTNode<T>> n) {
 			}
 			if (pre->right) {
 				pre->right = nullptr;
-				cout << n->data << endl;
+				cout << n->data << " ";
 				n = n->right;
 			} else {
 				pre->right = n;
 				n = n->left;
 			}
 		} else {
-			cout << n->data << endl;
+			cout << n->data << " ";
 			n = n->right;
 		}
 	}
+	cout << endl;
+}
+
+template <typename T>
+void inorder_traversal(const shared_ptr<BTNode<T>> &r) {
+	if (!r) {
+		return;
+	}
+	shared_ptr<BTNode<T>> prev = nullptr, curr = r, next;
+	while (curr) {
+		if (!prev || prev->left == curr || prev->right == curr) {
+			if (curr->left) {
+				next = curr->left;
+			} else {
+				cout << curr->data << " ";
+				next = (curr->right ? curr->right: curr->parent);
+			}
+		} else if (curr->left == prev) {
+			cout << curr->data << " ";
+			next = (curr->right ? curr->right : curr->parent);
+		} else {
+			next = curr->parent;
+		}
+		prev = curr;
+		curr = next;
+	}
+	cout << endl;
 }
 
 #endif
