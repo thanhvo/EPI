@@ -71,4 +71,28 @@ public class BinaryTree {
 		}
 		return isSymmetric(root.left, root.right);
 	}
+	
+	public static<T> void morris_inorder_traversal(BTNode<T> root) {
+		BTNode<T> n = root;
+		while (n != null) {
+			if (n.left != null) {
+				BTNode<T> pre = n.left;
+				while (pre.right != null && pre.right != n) {
+					pre = pre.right;
+				}
+				if (pre.right != null) {
+					pre.right = null;
+					System.out.print(n.data + " ");
+					n = n.right;
+				} else {
+					pre.right = n;
+					n = n.left;
+				}
+			} else {
+				System.out.print(n.data + " ");
+				n = n.right;
+			}
+		}
+		System.out.println();
+	}
 }

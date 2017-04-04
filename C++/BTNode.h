@@ -2,6 +2,7 @@
 #define BTNODE_H
 
 #include <memory>
+#include <iostream>
 
 using namespace std;
 
@@ -130,6 +131,29 @@ bool is_symmetric_helper( const shared_ptr<BTNode<T>> &l, const shared_ptr<BTNod
 template <typename T>
 bool is_symmetric(const shared_ptr<BTNode<T>> &n) {
     return (!n || is_symmetric_helper<T>(n->left, n->right));
+}
+
+template <typename T>
+void morris_inorder_traversal(shared_ptr<BTNode<T>> n) {
+	while (n) {
+		if (n->left) {
+			shared_ptr<BTNode<T>> pre = n->left;
+			while(pre->right && pre->right != n) {
+				pre = pre->right;
+			}
+			if (pre->right) {
+				pre->right = nullptr;
+				cout << n->data << endl;
+				n = n->right;
+			} else {
+				pre->right = n;
+				n = n->left;
+			}
+		} else {
+			cout << n->data << endl;
+			n = n->right;
+		}
+	}
 }
 
 #endif

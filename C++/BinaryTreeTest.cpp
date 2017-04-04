@@ -154,8 +154,22 @@ void test_lock_binary_tree() {
 
 }
 
+void test_morris_inorder_traversal() {
+	shared_ptr<BTNode<string>> A(make_shared<BTNode<string>>("A"));
+	shared_ptr<BTNode<string>> B(make_shared<BTNode<string>>("B"));
+	shared_ptr<BTNode<string>> C(make_shared<BTNode<string>>("C"));
+	shared_ptr<BTNode<string>> D(make_shared<BTNode<string>>("D"));
+	shared_ptr<BTNode<string>> E(make_shared<BTNode<string>>("E"));
+	A->left = B;
+	A->right = C;
+	B->left = D;
+	C->left = E;
+	morris_inorder_traversal(A);
+}
+
 void test_binary_tree() {
     test_balanced_binary_tree(); 
     test_non_k_balanced_node();
 	test_lock_binary_tree();
+	test_morris_inorder_traversal();
 }

@@ -153,4 +153,32 @@ public class BinaryTreeTest {
 		H.lock();
 		assertEquals(H.isLock(), true);
 	}
+	
+	@Test
+	public void test_morris_inorder_traversal() {
+		BTNode<String> A = new BTNode<String>("A");
+		BTNode<String> B = new BTNode<String>("B");
+		BTNode<String> C = new BTNode<String>("C");
+		BTNode<String> D = new BTNode<String>("D");
+		BTNode<String> E = new BTNode<String>("E");
+		BTNode<String> F = new BTNode<String>("F");
+		BTNode<String> G = new BTNode<String>("G");
+		BTNode<String> H = new BTNode<String>("H");
+		BTNode<String> I = new BTNode<String>("I");
+		BTNode<String> J = new BTNode<String>("J");
+		BTNode<String> K = new BTNode<String>("K");
+		BTNode<String> L = new BTNode<String>("L");
+		A.left = B;
+		A.right = C;
+		B.left = D;
+		B.right = E;
+		D.left = H;
+		E.left = I;
+		E.right = J;
+		C.left = F;
+		C.right = G;
+		F.right = K;
+		G.right = L;
+		BinaryTree.morris_inorder_traversal(A);
+	}
 }
