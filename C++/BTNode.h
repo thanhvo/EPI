@@ -16,6 +16,7 @@ class BTNode {
         shared_ptr<BTNode<T>> left;
         shared_ptr<BTNode<T>> right;
 		shared_ptr<BTNode<T>> parent;
+		int size;
       
         BTNode(T __data) {
             data = __data;
@@ -181,6 +182,21 @@ void inorder_traversal(const shared_ptr<BTNode<T>> &r) {
 		curr = next;
 	}
 	cout << endl;
+}
+
+template <typename T>
+shared_ptr<BTNode<T>> find_kth_node_binary_tree(shared_ptr<BTNode<T>> r, int k) {
+	while (k && r) {
+		int left_size = r->left ? r->left->size : 0;
+		if (left_size < k - 1) {
+			k -= (left_size + 1);
+			r = r->right;
+		} else if (left_size == k - 1) {
+			return r;
+		} else {
+			r = r->left;
+		}
+	}
 }
 
 #endif

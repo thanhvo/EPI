@@ -220,4 +220,48 @@ public class BinaryTreeTest {
 		L.parent = G;
 		BinaryTree.inorder_traversal(A);
 	}
+	
+	@Test
+	public void test_kth_inorder_traversal() {
+		BTNode<String> A = new BTNode<String>("A");
+		BTNode<String> B = new BTNode<String>("B");
+		BTNode<String> C = new BTNode<String>("C");
+		BTNode<String> D = new BTNode<String>("D");
+		BTNode<String> E = new BTNode<String>("E");
+		BTNode<String> F = new BTNode<String>("F");
+		BTNode<String> G = new BTNode<String>("G");
+		BTNode<String> H = new BTNode<String>("H");
+		BTNode<String> I = new BTNode<String>("I");
+		BTNode<String> J = new BTNode<String>("J");
+		BTNode<String> K = new BTNode<String>("K");
+		BTNode<String> L = new BTNode<String>("L");
+		A.left = B;
+		A.right = C;
+		A.size = 12;
+		B.left = D;
+		B.right = E;
+		B.size = 6;
+		D.left = H;
+		D.size = 2;
+		H.size = 1;
+		E.left = I;
+		E.right = J;
+		E.size = 3;
+		I.size = 1;
+		J.size = 1;
+		C.left = F;
+		C.right = G;
+		C.size = 5;
+		F.right = K;
+		F.size = 2;
+		K.size = 1;
+		G.right = L;
+		G.size = 2;
+		L.size = 1;
+		assertEquals(BinaryTree.kth_inorder_traversal(A, 1).data, "H");
+		assertEquals(BinaryTree.kth_inorder_traversal(A, 2).data, "D");
+		assertEquals(BinaryTree.kth_inorder_traversal(A, 7).data, "A");
+		assertEquals(BinaryTree.kth_inorder_traversal(A, 9).data, "K");
+		assertEquals(BinaryTree.kth_inorder_traversal(A, 12).data, "L");
+	}
 }

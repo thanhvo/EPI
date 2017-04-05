@@ -1,11 +1,14 @@
 
 public class BTNode<T> {
+	private boolean locked;
+	private int numChildrenLocks;
+	
 	T data;
 	BTNode<T> left;
 	BTNode<T> right;
 	BTNode<T> parent;
-	private boolean locked;
-	private int numChildrenLocks;
+	
+	public int size;
 	
 	public BTNode(T __data) {
 		data = __data;

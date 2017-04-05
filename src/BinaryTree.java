@@ -151,4 +151,24 @@ public class BinaryTree {
 		}
 		System.out.println();
 	}
+	
+	public static<T> BTNode<T> kth_inorder_traversal(BTNode<T> root, int k) {
+		if (root == null || root.size < k) {
+			return null;
+		}
+		if(root.left == null) {
+			if (k == 1) {
+				return root;
+			}
+			return kth_inorder_traversal(root.right, k-1);
+		} else {
+			if (root.left.size >= k) {
+				return kth_inorder_traversal(root.left, k);
+			} else if (root.left.size == k -1) {
+				return root;
+			} else {
+				return kth_inorder_traversal(root.right, k - root.left.size -1);
+			}
+		}
+	}
 }

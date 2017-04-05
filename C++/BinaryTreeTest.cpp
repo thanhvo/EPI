@@ -184,6 +184,28 @@ void test_inorder_traversal() {
 	inorder_traversal(A);
 }
 
+void test_kth_inorder_binary_tree() {
+	shared_ptr<BTNode<string>> A(make_shared<BTNode<string>>("A"));
+	shared_ptr<BTNode<string>> B(make_shared<BTNode<string>>("B"));
+	shared_ptr<BTNode<string>> C(make_shared<BTNode<string>>("C"));
+	shared_ptr<BTNode<string>> D(make_shared<BTNode<string>>("D"));
+	shared_ptr<BTNode<string>> E(make_shared<BTNode<string>>("E"));
+	A->left = B;
+	A->right = C;
+	A->size = 5;
+	B->left = D;
+	B->size = 2;
+	C->left = E;
+	C->size = 2;
+	D->size = 1;
+	E->size = 1;
+	assert(find_kth_node_binary_tree(A,1)->data == "D");
+	assert(find_kth_node_binary_tree(A,2)->data == "B");
+	assert(find_kth_node_binary_tree(A,3)->data == "A");
+	assert(find_kth_node_binary_tree(A,4)->data == "E");
+	assert(find_kth_node_binary_tree(A,5)->data == "C");	
+}
+
 void test_binary_tree() {
     test_balanced_binary_tree(); 
     test_non_k_balanced_node();
