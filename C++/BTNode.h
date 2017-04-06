@@ -3,6 +3,8 @@
 
 #include <memory>
 #include <iostream>
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -26,6 +28,12 @@ class BTNode {
             right = nullptr;
 			parent = nullptr;
         }
+		
+		BTNode(T __data, shared_ptr<BTNode<T>> __left, shared_ptr<BTNode<T>> __right) {
+			data = __data;
+			left = __left;
+			right = __right;
+		}
 		
 		const bool &isLock(void) const {
 			return locked;
@@ -197,6 +205,54 @@ shared_ptr<BTNode<T>> find_kth_node_binary_tree(shared_ptr<BTNode<T>> r, int k) 
 			r = r->left;
 		}
 	}
+}
+
+template <typename T>
+shared_ptr<BTNode<T>> reconstruct_pre_in_orders_helper
+	(const vector<T> &pre, const int &pre_s, const int &pre_e,
+	const vector<T> &in, const int &in_s, const int &in_e
+) {
+	if (pre_e > pre_s && in_e > in_s) {
+		auto it = find(in.cbegin() + in_s, in.cbegin() + in_e, pre[pre_s]);
+		int left_tree_size = it - (in.cbegin() + in_s);
+		return shared_ptr<BTNode<T>>( new BTNode<T> {
+			pre[pre_s],
+			reconstruct_pre_in_orders_helper<T>(pre, pre_s + 1, pre_s + 1 + left_tree_size,
+			in, in_s, it - in.cbegin()),
+			reconstruct_pre_in_orders_helper<T>(pre, pre_s + 1 + left_tree_size,
+			pre_e, in, it - in.cbegin() + 1, in_e)
+		});
+	}
+	return nullptr;
+}
+
+template <typename T>
+shared_ptr<BTNode<T>> reconstruct_pre_in_orders( const vector<T> &pre, const vector<T> &in) {
+	return reconstruct_pre_in_orders_helper(pre, 0, pre.size(), in, 0, in.size());
+}
+
+template <typename T>
+shared_ptr<BTNode<T>> reconstruct_post_in_orders_helper(
+	const vector<T> &post, const int &post_s, const int &post_e,
+	const vector<T> &in, const int &in_s, const int &in_e
+) {
+	if (post_e > post_s && in_e > in_s) {
+		auto it = find(in.cbegin() + in_s, in.begin() + in_e, post[post_e -1]);
+		int left_tree_size = it - (in.cbegin() + in_s);
+		return shared_ptr<BTNode<T>>( new BTNode<T> {
+			post[post_e-1],
+			reconstruct_post_in_orders_helper<T>(post, post_s, post_s + left_tree_size, 
+				in, in_s, it - in.cbegin()),
+			reconstruct_post_in_orders_helper<T>(post, post_s + left_tree_size, post_e - 1, 
+				in, it - in.cbegin() + 1, in_e)
+		});		
+	}
+	return nullptr;
+}
+
+template <typename T>
+shared_ptr<BTNode<T>> reconstruct_post_in_orders(const vector<T> &post, const vector<T> &in) {
+	return reconstruct_post_in_orders_helper(post, 0, post.size(), in, 0, in.size());
 }
 
 #endif

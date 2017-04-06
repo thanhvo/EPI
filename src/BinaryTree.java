@@ -1,3 +1,4 @@
+import java.util.*;
 
 public class BinaryTree {
 	
@@ -170,5 +171,35 @@ public class BinaryTree {
 				return kth_inorder_traversal(root.right, k - root.left.size -1);
 			}
 		}
+	}
+	
+	public static BTNode<String> constructFromTraversal(String inorder, String preorder) {
+		if (inorder == null || inorder.isEmpty()) {
+			return null;
+		}
+		int i = preorder.indexOf(",");
+		String data = "", lInorder = "", rInorder = "", lPreorder = "", rPreorder = "";
+		if (i >0) {
+			data = preorder.substring(0, i);
+		} else {
+			data = preorder;
+		}
+		BTNode<String> root = new BTNode<String>(data);
+		int j = inorder.indexOf(data);
+		if (j > 1) {
+			lInorder = inorder.substring(0, j-1);
+		}
+		if (j + data.length() + 1 < inorder.length()) {
+			rInorder = inorder.substring(j + data.length() +1);
+		}
+		if (!lInorder.isEmpty()) {
+			lPreorder = preorder.substring(data.length() + 1, data.length() + 1 + lInorder.length());			
+		}
+		if (!rInorder.isEmpty()) {
+			rPreorder = preorder.substring(preorder.length() - rInorder.length());
+		}
+		root.left = constructFromTraversal(lInorder, lPreorder);
+		root.right = constructFromTraversal(rInorder, rPreorder);
+		return root;		
 	}
 }

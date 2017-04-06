@@ -3,9 +3,10 @@ bin
 *.project
 .settings
 .codelite
-*Debug
+Debug
 *.mk
 *.workspace
 *.tags
 EPI.txt
 Makefile
+Release

@@ -206,10 +206,96 @@ void test_kth_inorder_binary_tree() {
 	assert(find_kth_node_binary_tree(A,5)->data == "C");	
 }
 
+void test_reconstruct_pre_binary_tree() {
+	vector<string> in;
+	vector<string> pre;
+	in.emplace_back("F");
+	in.emplace_back("B");
+	in.emplace_back("A");
+	in.emplace_back("E");
+	in.emplace_back("H");
+	in.emplace_back("C");
+	in.emplace_back("D");
+	in.emplace_back("I");
+	in.emplace_back("G");
+	pre.emplace_back("H");
+	pre.emplace_back("B");
+	pre.emplace_back("F");
+	pre.emplace_back("E");
+	pre.emplace_back("A");
+	pre.emplace_back("C");
+	pre.emplace_back("D");
+	pre.emplace_back("G");
+	pre.emplace_back("I");
+	shared_ptr<BTNode<string>> H = reconstruct_pre_in_orders(pre, in);
+	assert(H->data == "H");
+	shared_ptr<BTNode<string>> B = H->left;
+	assert(B->data == "B");
+	shared_ptr<BTNode<string>> C = H->right;
+	assert(C->data == "C");
+	shared_ptr<BTNode<string>> F = B->left;
+	assert(F->data == "F");
+	shared_ptr<BTNode<string>> E = B->right;
+	assert(E->data == "E");
+	shared_ptr<BTNode<string>> A = E->left;
+	assert(A->data == "A");
+	shared_ptr<BTNode<string>> D = C->right;
+	assert(D->data == "D");
+	shared_ptr<BTNode<string>> G = D->right;
+	assert(G->data == "G");
+	shared_ptr<BTNode<string>> I = G->left;
+	assert(I->data == "I");
+}
+
+void test_reconstruct_post_binary_tree() {
+	vector<string> in;
+	vector<string> post;
+	in.emplace_back("F");
+	in.emplace_back("B");
+	in.emplace_back("A");
+	in.emplace_back("E");
+	in.emplace_back("H");
+	in.emplace_back("C");
+	in.emplace_back("D");
+	in.emplace_back("I");
+	in.emplace_back("G");
+	post.emplace_back("F");
+	post.emplace_back("A");
+	post.emplace_back("E");
+	post.emplace_back("B");
+	post.emplace_back("I");
+	post.emplace_back("G");
+	post.emplace_back("D");
+	post.emplace_back("C");	
+	post.emplace_back("H");	
+	
+	shared_ptr<BTNode<string>> H = reconstruct_post_in_orders(post, in);
+	assert(H->data == "H");
+	shared_ptr<BTNode<string>> B = H->left;
+	assert(B->data == "B");
+	shared_ptr<BTNode<string>> C = H->right;
+	assert(C->data == "C");
+	shared_ptr<BTNode<string>> F = B->left;
+	assert(F->data == "F");
+	shared_ptr<BTNode<string>> E = B->right;
+	assert(E->data == "E");
+	shared_ptr<BTNode<string>> A = E->left;
+	assert(A->data == "A");
+	shared_ptr<BTNode<string>> D = C->right;
+	assert(D->data == "D");
+	shared_ptr<BTNode<string>> G = D->right;
+	assert(G->data == "G");
+	shared_ptr<BTNode<string>> I = G->left;
+	assert(I->data == "I");
+}
+
 void test_binary_tree() {
     test_balanced_binary_tree(); 
     test_non_k_balanced_node();
 	test_lock_binary_tree();
 	test_morris_inorder_traversal();
 	test_inorder_traversal();
+	test_kth_inorder_binary_tree();
+	test_reconstruct_pre_binary_tree();
+	test_reconstruct_post_binary_tree();
 }

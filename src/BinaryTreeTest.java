@@ -264,4 +264,26 @@ public class BinaryTreeTest {
 		assertEquals(BinaryTree.kth_inorder_traversal(A, 9).data, "K");
 		assertEquals(BinaryTree.kth_inorder_traversal(A, 12).data, "L");
 	}
+	
+	@Test
+	public void test_construct_binary_tree() {
+		BTNode<String> H = BinaryTree.constructFromTraversal("F,B,A,E,H,C,D,I,G", "H,B,F,E,A,C,D,G,I");
+		assertEquals(H.data, "H");
+		BTNode<String> B = H.left;
+		assertEquals(B.data, "B");
+		BTNode<String> C = H.right;
+		assertEquals(C.data, "C");
+		BTNode<String> F = B.left;
+		assertEquals(F.data, "F");
+		BTNode<String> E = B.right;
+		assertEquals(E.data, "E");
+		BTNode<String> A = E.left;
+		assertEquals(A.data, "A");
+		BTNode<String> D = C.right;
+		assertEquals(D.data, "D");
+		BTNode<String> G = D.right;
+		assertEquals(G.data, "G");
+		BTNode<String> I = G.left;
+		assertEquals(I.data, "I");
+	}
 }
