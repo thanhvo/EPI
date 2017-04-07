@@ -202,4 +202,18 @@ public class BinaryTree {
 		root.right = constructFromTraversal(rInorder, rPreorder);
 		return root;		
 	}
+	
+	public static<T> BTNode<T> reconstruct_preorder(List<T> preorder) {
+		Stack<BTNode<T>> stack = new Stack<BTNode<T>>();
+		ListIterator<T> li = preorder.listIterator(preorder.size());
+		while (li.hasPrevious()) {
+			T data = li.previous();
+			if (data == null) {
+				stack.push(null);
+			} else {
+				stack.push(new BTNode<T>(data, stack.pop(), stack.pop()));
+			}
+		}
+		return stack.pop();
+	}
 }

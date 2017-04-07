@@ -4,6 +4,7 @@
 #include <memory>
 #include <iostream>
 #include <vector>
+#include <stack>
 #include <algorithm>
 
 using namespace std;
@@ -253,6 +254,23 @@ shared_ptr<BTNode<T>> reconstruct_post_in_orders_helper(
 template <typename T>
 shared_ptr<BTNode<T>> reconstruct_post_in_orders(const vector<T> &post, const vector<T> &in) {
 	return reconstruct_post_in_orders_helper(post, 0, post.size(), in, 0, in.size());
+}
+
+template <typename T>
+shared_ptr<BTNode<T>> reconstruct_preorder( const vector<shared_ptr<T>> &preorder) {
+	stack<shared_ptr<BTNode<T>>> s;
+	for (auto it = preorder.crbegin(); it != preorder.crend(); ++it) {
+		if (!(*it)) {
+			s.emplace(nullptr);
+		} else {
+			shared_ptr<BTNode<T>> l = s.top();
+			s.pop();
+			shared_ptr<BTNode<T>> r = s.top();
+			s.pop();
+			s.emplace(new BTNode<T>{*(*it), l, r});
+		}
+	}
+	return s.top();
 }
 
 #endif

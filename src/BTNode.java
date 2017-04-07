@@ -19,6 +19,12 @@ public class BTNode<T> {
 		parent = null;
 	}
 	
+	public BTNode(T __data, BTNode<T> __left, BTNode<T> __right) {
+		data = __data;
+		left = __left;
+		right = __right;
+	}
+	
 	public boolean isLock() {
 		return locked;
 	}

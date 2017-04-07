@@ -289,6 +289,49 @@ void test_reconstruct_post_binary_tree() {
 	assert(I->data == "I");
 }
 
+void test_construct_pre_order() {
+	vector<shared_ptr<string>> preorder;
+	preorder.emplace_back(make_shared<string>("H"));
+	preorder.emplace_back(make_shared<string>("B"));
+	preorder.emplace_back(make_shared<string>("F"));
+	preorder.emplace_back(nullptr);
+	preorder.emplace_back(nullptr);
+	preorder.emplace_back(make_shared<string>("E"));
+	preorder.emplace_back(make_shared<string>("A"));
+	preorder.emplace_back(nullptr);
+	preorder.emplace_back(nullptr);
+	preorder.emplace_back(nullptr);
+	preorder.emplace_back(make_shared<string>("C"));
+	preorder.emplace_back(nullptr);
+	preorder.emplace_back(make_shared<string>("D"));
+	preorder.emplace_back(nullptr);
+	preorder.emplace_back(make_shared<string>("G"));
+	preorder.emplace_back(make_shared<string>("I"));
+	preorder.emplace_back(nullptr);
+	preorder.emplace_back(nullptr);
+	preorder.emplace_back(nullptr);
+	preorder.emplace_back(nullptr);
+	
+	shared_ptr<BTNode<string>> H = reconstruct_preorder(preorder);
+	assert(H->data == "H");
+	shared_ptr<BTNode<string>> B = H->left;
+	assert(B->data == "B");
+	shared_ptr<BTNode<string>> C = H->right;
+	assert(C->data == "C");
+	shared_ptr<BTNode<string>> F = B->left;
+	assert(F->data == "F");
+	shared_ptr<BTNode<string>> E = B->right;
+	assert(E->data == "E");
+	shared_ptr<BTNode<string>> A = E->left;
+	assert(A->data == "A");
+	shared_ptr<BTNode<string>> D = C->right;
+	assert(D->data == "D");
+	shared_ptr<BTNode<string>> G = D->right;
+	assert(G->data == "G");
+	shared_ptr<BTNode<string>> I = G->left;
+	assert(I->data == "I");
+}
+
 void test_binary_tree() {
     test_balanced_binary_tree(); 
     test_non_k_balanced_node();
@@ -298,4 +341,5 @@ void test_binary_tree() {
 	test_kth_inorder_binary_tree();
 	test_reconstruct_pre_binary_tree();
 	test_reconstruct_post_binary_tree();
+	test_construct_pre_order();
 }

@@ -1,5 +1,6 @@
 import org.junit.*;
 import static org.junit.Assert.*;
+import java.util.*;
 
 public class BinaryTreeTest {
 	@Test
@@ -285,5 +286,47 @@ public class BinaryTreeTest {
 		assertEquals(G.data, "G");
 		BTNode<String> I = G.left;
 		assertEquals(I.data, "I");
+	}
+	
+	@Test
+	public void test_construct_preorder() {
+		List<String> list = new ArrayList<String>();
+		list.add("H");
+		list.add("B");
+		list.add("F");
+		list.add(null);
+		list.add(null);
+		list.add("E");
+		list.add("A");
+		list.add(null);
+		list.add(null);
+		list.add(null);
+		list.add("C");
+		list.add(null);
+		list.add("D");
+		list.add(null);
+		list.add("G");
+		list.add("I");
+		list.add(null);
+		list.add(null);
+		list.add(null);
+		BTNode<String> H = BinaryTree.reconstruct_preorder(list);
+		assertEquals(H.data, "H");
+		BTNode<String> B = H.left;
+		assertEquals(B.data, "B");
+		BTNode<String> C = H.right;
+		assertEquals(C.data, "C");
+		BTNode<String> F = B.left;
+		assertEquals(F.data, "F");
+		BTNode<String> E = B.right;
+		assertEquals(E.data, "E");
+		BTNode<String> A = E.left;
+		assertEquals(A.data, "A");
+		BTNode<String> D = C.right;
+		assertEquals(D.data, "D");
+		BTNode<String> G = D.right;
+		assertEquals(G.data, "G");
+		BTNode<String> I = G.left;
+		assertEquals(I.data, "I");		
 	}
 }
