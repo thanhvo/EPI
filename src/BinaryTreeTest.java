@@ -373,4 +373,68 @@ public class BinaryTreeTest {
 		assertEquals(it.next().data.intValue(), 28);
 		assertEquals(it.hasNext(), false);
 	}
+	
+	@Test
+	public void test_exterior_nodes() {
+		BTNode<Integer> A = new BTNode<Integer>(314);
+		BTNode<Integer> B = new BTNode<Integer>(6);
+		BTNode<Integer> C = new BTNode<Integer>(271);
+		BTNode<Integer> D = new BTNode<Integer>(28);
+		BTNode<Integer> E = new BTNode<Integer>(0);
+		BTNode<Integer> F = new BTNode<Integer>(561);
+		BTNode<Integer> G = new BTNode<Integer>(3);
+		BTNode<Integer> H = new BTNode<Integer>(17);
+		BTNode<Integer> I = new BTNode<Integer>(6);
+		BTNode<Integer> J = new BTNode<Integer>(2);
+		BTNode<Integer> K = new BTNode<Integer>(1);
+		BTNode<Integer> L = new BTNode<Integer>(461);
+		BTNode<Integer> M = new BTNode<Integer>(641);
+		BTNode<Integer> N = new BTNode<Integer>(257);
+		BTNode<Integer> O = new BTNode<Integer>(271);
+		BTNode<Integer> P = new BTNode<Integer>(28);
+		A.left = B;
+		B.parent = A;
+		A.right = I;
+		I.parent = A;
+		B.left = C;
+		C.parent = B;
+		B.right = F;
+		F.parent = B;
+		C.left = D;
+		D.parent = C;
+		C.right = E;
+		E.parent = C;
+		F.right = G;
+		G.parent = F;
+		G.left = H;
+		H.parent = G;
+		I.left = J;
+		J.parent = I;
+		I.right = O;
+		O.parent = I;
+		J.right = K;
+		K.parent = J;
+		K.left = L;
+		L.parent = K;
+		K.right = N;
+		N.parent = K;
+		L.right = M;
+		M.parent = L;
+		O.right = P;
+		P.parent = O;
+		List<BTNode<Integer>> list = BinaryTree.exterior_nodes(A);
+		ListIterator<BTNode<Integer>> it = list.listIterator();
+		assertEquals(it.next().data.intValue(), 314);
+		assertEquals(it.next().data.intValue(), 6);
+		assertEquals(it.next().data.intValue(), 271);
+		assertEquals(it.next().data.intValue(), 28);
+		assertEquals(it.next().data.intValue(), 0);
+		assertEquals(it.next().data.intValue(), 17);
+		assertEquals(it.next().data.intValue(), 641);
+		assertEquals(it.next().data.intValue(), 257);
+		assertEquals(it.next().data.intValue(), 28);
+		assertEquals(it.next().data.intValue(), 271);
+		assertEquals(it.next().data.intValue(), 6);
+		assertEquals(it.hasNext(), false);
+	}
 }

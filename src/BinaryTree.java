@@ -242,4 +242,23 @@ public class BinaryTree {
 		}
 		return list;
 	}
+	
+	public static<T> List<BTNode<T>> exterior_nodes(BTNode<T> root) {
+		if (root == null) {
+			return null;
+		}
+		BTNode<T> node = root;
+		List<BTNode<T>> list = new ArrayList<BTNode<T>>();
+		while (node.left != null) {
+			list.add(node);
+			node = node.left;
+		}
+		list.addAll(get_leaf_nodes(root));
+		node = list.get(list.size() -1).parent;
+		while (node != null && node.parent != null) {
+			list.add(node);
+			node = node.parent;
+		}
+		return list;
+	}
 }

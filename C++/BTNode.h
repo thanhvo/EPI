@@ -293,4 +293,36 @@ list<shared_ptr<BTNode<T>>> connect_leaves(const shared_ptr<BTNode<T>> &n) {
 	return L;
 }
 
+template <typename T>
+void left_boundary_b_tree(const shared_ptr<BTNode<T>> &n, const bool &is_boundary) {
+	if (n) {
+		if (is_boundary || (!n->left && !n->right)) {
+			cout << n->data << ' ';
+		}
+		left_boundary_b_tree(n->left, is_boundary);
+		left_boundary_b_tree(n->right, is_boundary && !n->left);
+	}
+}
+
+template <typename T>
+void right_boundary_b_tree(const shared_ptr<BTNode<T>> &n, const bool &is_boundary) {
+	if (n) {
+		right_boundary_b_tree(n->left, is_boundary && !n->right);
+		right_boundary_b_tree(n->right, is_boundary && !n->right);
+		if (is_boundary || (!n->left && !n->right)) {
+			cout << n->data << ' ';
+		}
+	}
+}
+
+template <typename T>
+void exterior_binary_tree(const shared_ptr<BTNode<T>> &root) {
+	if (root) {
+		cout << root->data << ' ';
+		left_boundary_b_tree(root->left, true);
+		right_boundary_b_tree(root->right, true);
+	}
+	cout << endl;
+}
+
 #endif
