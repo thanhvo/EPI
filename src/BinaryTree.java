@@ -216,4 +216,30 @@ public class BinaryTree {
 		}
 		return stack.pop();
 	}
+	
+	public static<T> List<BTNode<T>> get_leaf_nodes(BTNode<T> root) {
+		if (root == null) {
+			return null;
+		}
+		Stack<BTNode<T>> stack = new Stack<BTNode<T>>();
+		List<BTNode<T>> list = new ArrayList<BTNode<T>>();
+		stack.push(root);
+		root.visited = true;
+		while (!stack.isEmpty()) {
+			BTNode<T> node = stack.pop();
+			if (node.left == null && node.right == null) {
+				list.add(node);
+			}
+			if (node.left != null && !node.left.visited) {
+				stack.push(node);
+				stack.push(node.left);
+				node.left.visited = true;				
+			}
+			else if (node.right != null && !node.right.visited) {
+				stack.push(node.right);
+				node.right.visited = true;
+			}
+		}
+		return list;
+	}
 }

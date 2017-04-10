@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <stack>
+#include <list>
 #include <algorithm>
 
 using namespace std;
@@ -271,6 +272,25 @@ shared_ptr<BTNode<T>> reconstruct_preorder( const vector<shared_ptr<T>> &preorde
 		}
 	}
 	return s.top();
+}
+
+template <typename T> 
+void connect_leaves_helper(const shared_ptr<BTNode<T>> &n, list<shared_ptr<BTNode<T>>> &L) {
+	if (n) {
+		if (!n->left && !n->right) {
+			L.push_back(n);
+		} else {
+			connect_leaves_helper(n->left, L);
+			connect_leaves_helper(n->right, L);
+		}
+	}
+}
+
+template <typename T>
+list<shared_ptr<BTNode<T>>> connect_leaves(const shared_ptr<BTNode<T>> &n) {
+	list<shared_ptr<BTNode<T>>> L;
+	connect_leaves_helper(n, L);
+	return L;
 }
 
 #endif

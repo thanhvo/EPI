@@ -7,8 +7,8 @@ public class BTNode<T> {
 	BTNode<T> left;
 	BTNode<T> right;
 	BTNode<T> parent;
-	
 	public int size;
+	public boolean visited = false;
 	
 	public BTNode(T __data) {
 		data = __data;
