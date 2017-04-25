@@ -325,4 +325,20 @@ void exterior_binary_tree(const shared_ptr<BTNode<T>> &root) {
 	cout << endl;
 }
 
+template<typename T>
+shared_ptr<BTNode<T>> LCA(const shared_ptr<BTNode<T>> &n, const shared_ptr<BTNode<T>> &a, const shared_ptr<BTNode<T>> &b) {
+    if (!n) {
+        return nullptr;
+    }
+    else if ( n == a || n == b) {
+        return n;
+    }
+    auto l_res = LCA(n->left, a, b), r_res = LCA(n->right, a, b);
+    if (l_res && r_res) {
+        return n;
+    } else {
+        return l_res ? l_res : r_res;
+    }
+} 
+
 #endif

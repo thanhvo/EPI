@@ -367,13 +367,19 @@ void test_connect_leaves() {
     O->right = P;
 	list<shared_ptr<BTNode<int>>> List = connect_leaves(A);	
 	list<shared_ptr<BTNode<int>>>::iterator it = List.begin();
-	assert(*it++->data == 28);
-	assert(*it++->data == 0);
-	assert(*it++->data == 17);
-	assert(*it++->data == 641);
-	assert(*it++->data == 257);
-	assert(*it++->data == 28);
-	assert(!it);
+	shared_ptr<BTNode<int>> Z = *it++;
+    assert(Z->data == 28);
+    Z = *it++;
+	assert(Z->data == 0);
+	Z = *it++;
+    assert(Z->data == 17);
+	Z = *it++;
+    assert(Z->data == 641);
+    Z = *it++;
+	assert(Z->data == 257);
+    Z = *it++;
+	assert(Z->data == 28);
+	assert(it == List.end());
 }
 
 void test_exterior_binary_tree() {
@@ -411,6 +417,43 @@ void test_exterior_binary_tree() {
 	exterior_binary_tree(A);
 }
 
+void test_LCA() {
+    shared_ptr<BTNode<int>> A(make_shared<BTNode<int>>(314));
+    shared_ptr<BTNode<int>> B(make_shared<BTNode<int>>(6));
+    shared_ptr<BTNode<int>> C(make_shared<BTNode<int>>(271));
+    shared_ptr<BTNode<int>> D(make_shared<BTNode<int>>(28));
+    shared_ptr<BTNode<int>> E(make_shared<BTNode<int>>(0));
+    shared_ptr<BTNode<int>> F(make_shared<BTNode<int>>(561));
+    shared_ptr<BTNode<int>> G(make_shared<BTNode<int>>(3));
+    shared_ptr<BTNode<int>> H(make_shared<BTNode<int>>(17));
+    shared_ptr<BTNode<int>> I(make_shared<BTNode<int>>(6));
+    shared_ptr<BTNode<int>> J(make_shared<BTNode<int>>(2));
+    shared_ptr<BTNode<int>> K(make_shared<BTNode<int>>(1));
+    shared_ptr<BTNode<int>> L(make_shared<BTNode<int>>(461));
+    shared_ptr<BTNode<int>> M(make_shared<BTNode<int>>(641));
+    shared_ptr<BTNode<int>> N(make_shared<BTNode<int>>(257));
+    shared_ptr<BTNode<int>> O(make_shared<BTNode<int>>(271));
+    shared_ptr<BTNode<int>> P(make_shared<BTNode<int>>(28));
+    A->left = B;
+    A->right = I;
+    B->left = C;
+    B->right = F;
+    C->left = D;
+    C->right = E;
+    F->right = G;
+    G->left = H;
+    I->left = J;
+    I->right = O;
+    J->right = K;
+    K->left = L;
+    K->right = N;
+    L->right = M;
+    O->right = P;
+    assert(LCA(A, E, H) == B);
+    assert(LCA(A, L, H) == A);
+    assert(LCA(A, M, P) == I);
+}
+
 void test_binary_tree() {
     test_balanced_binary_tree(); 
     test_non_k_balanced_node();
@@ -423,4 +466,5 @@ void test_binary_tree() {
 	test_construct_pre_order();
 	test_connect_leaves();
 	test_exterior_binary_tree();
+    test_LCA();
 }

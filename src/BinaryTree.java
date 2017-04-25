@@ -261,4 +261,20 @@ public class BinaryTree {
 		}
 		return list;
 	}
+	
+	public static<T> BTNode<T> LCA(BTNode<T> root, BTNode<T> a, BTNode<T> b) {
+		if (root == null) {
+			return null;
+		}
+		if (root == a || root == b) {
+			return root;
+		}
+		BTNode<T> L = LCA(root.left, a, b);
+		BTNode<T> R = LCA(root.right, a, b);
+		if (L != null && R != null)
+			return root;
+		if (L != null)
+			return L;
+		return R;
+	}
 }
