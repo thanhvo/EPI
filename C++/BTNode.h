@@ -341,4 +341,35 @@ shared_ptr<BTNode<T>> LCA(const shared_ptr<BTNode<T>> &n, const shared_ptr<BTNod
     }
 } 
 
+template <typename T>
+int get_depth(shared_ptr<BTNode<T>> &n) {
+    int d = 0;
+    while (n) {
+        ++d;
+        n = n->parent;
+    }
+    return d;
+}
+
+template <typename T>
+shared_ptr<BTNode<T>> LCA_with_parents(
+    shared_ptr<BTNode<T>> a, shared_ptr<BTNode<T>> b    
+) {
+    int depth_a = get_depth(a);
+    int depth_b = get_depth(b);
+    if (depth_b > depth_a) {
+        swap(a,b);
+    }
+    // Advance deeper node first
+    int depth_diff = depth_a - depth_b;
+    while (depth_diff--) {
+        a = a->parent;
+    }
+    while (a != b) {
+        a = a->parent;
+        b = b->parent;
+    }
+    return a;
+}
+
 #endif

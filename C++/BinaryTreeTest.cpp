@@ -454,6 +454,59 @@ void test_LCA() {
     assert(LCA(A, M, P) == I);
 }
 
+void test_LCA_with_parents() {
+    shared_ptr<BTNode<int>> A(make_shared<BTNode<int>>(314));
+    shared_ptr<BTNode<int>> B(make_shared<BTNode<int>>(6));
+    shared_ptr<BTNode<int>> C(make_shared<BTNode<int>>(271));
+    shared_ptr<BTNode<int>> D(make_shared<BTNode<int>>(28));
+    shared_ptr<BTNode<int>> E(make_shared<BTNode<int>>(0));
+    shared_ptr<BTNode<int>> F(make_shared<BTNode<int>>(561));
+    shared_ptr<BTNode<int>> G(make_shared<BTNode<int>>(3));
+    shared_ptr<BTNode<int>> H(make_shared<BTNode<int>>(17));
+    shared_ptr<BTNode<int>> I(make_shared<BTNode<int>>(6));
+    shared_ptr<BTNode<int>> J(make_shared<BTNode<int>>(2));
+    shared_ptr<BTNode<int>> K(make_shared<BTNode<int>>(1));
+    shared_ptr<BTNode<int>> L(make_shared<BTNode<int>>(461));
+    shared_ptr<BTNode<int>> M(make_shared<BTNode<int>>(641));
+    shared_ptr<BTNode<int>> N(make_shared<BTNode<int>>(257));
+    shared_ptr<BTNode<int>> O(make_shared<BTNode<int>>(271));
+    shared_ptr<BTNode<int>> P(make_shared<BTNode<int>>(28));
+    A->left = B;
+    B->parent = A;
+    A->right = I;
+    I->parent = A;
+    B->left = C;
+    C->parent = B;
+    B->right = F;
+    F->parent = B;
+    C->left = D;
+    D->parent = C;
+    C->right = E;
+    E->parent = C;
+    F->right = G;
+    G->parent = F;
+    G->left = H;
+    H->parent = G;
+    I->left = J;
+    J->parent = I;
+    I->right = O;
+    O->parent = I;
+    J->right = K;
+    K->parent = J;
+    K->left = L;
+    L->parent = K;
+    K->right = N;
+    N->parent = K;
+    L->right = M;
+    M->parent = L;
+    O->right = P;
+    P->parent = O;
+    assert(LCA(A, E, H) == B);
+    assert(LCA(A, L, H) == A);
+    assert(LCA(A, M, P) == I);
+}
+
+
 void test_binary_tree() {
     test_balanced_binary_tree(); 
     test_non_k_balanced_node();
@@ -467,4 +520,5 @@ void test_binary_tree() {
 	test_connect_leaves();
 	test_exterior_binary_tree();
     test_LCA();
+    test_LCA_with_parents();
 }
