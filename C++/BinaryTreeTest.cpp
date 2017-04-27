@@ -501,9 +501,12 @@ void test_LCA_with_parents() {
     M->parent = L;
     O->right = P;
     P->parent = O;
-    assert(LCA(A, E, H) == B);
-    assert(LCA(A, L, H) == A);
-    assert(LCA(A, M, P) == I);
+    assert(LCA_with_parents(E, H) == B);
+    assert(LCA_close_nodes(E, H) == B);
+    assert(LCA_with_parents(L, H) == A);
+    assert(LCA_close_nodes(L, H) == A);
+    assert(LCA_with_parents(M, P) == I);
+    assert(LCA_close_nodes(M, P) == I);
 }
 
 

@@ -7,6 +7,7 @@
 #include <stack>
 #include <list>
 #include <algorithm>
+#include <unordered_set>
 
 using namespace std;
 
@@ -35,6 +36,7 @@ class BTNode {
 			data = __data;
 			left = __left;
 			right = __right;
+            parent = nullptr;
 		}
 		
 		const bool &isLock(void) const {
@@ -342,7 +344,7 @@ shared_ptr<BTNode<T>> LCA(const shared_ptr<BTNode<T>> &n, const shared_ptr<BTNod
 } 
 
 template <typename T>
-int get_depth(shared_ptr<BTNode<T>> &n) {
+int get_depth(shared_ptr<BTNode<T>> n) {
     int d = 0;
     while (n) {
         ++d;
@@ -357,11 +359,13 @@ shared_ptr<BTNode<T>> LCA_with_parents(
 ) {
     int depth_a = get_depth(a);
     int depth_b = get_depth(b);
+    int depth_diff = depth_a - depth_b;
     if (depth_b > depth_a) {
         swap(a,b);
+        depth_diff = depth_b - depth_a;
     }
-    // Advance deeper node first
-    int depth_diff = depth_a - depth_b;
+    
+    // Advance deeper node first    
     while (depth_diff--) {
         a = a->parent;
     }
@@ -370,6 +374,28 @@ shared_ptr<BTNode<T>> LCA_with_parents(
         b = b->parent;
     }
     return a;
+}
+
+template <typename T>
+shared_ptr<BTNode<T>> LCA_close_nodes(
+    shared_ptr<BTNode<T>> a, shared_ptr<BTNode<T>> b
+) {
+    unordered_set<shared_ptr<BTNode<T>>> hash;
+    while (a || b) {
+        if (a) {
+            if (hash.emplace(a).second == false) {
+                return a;
+            }
+            a = a->parent;
+        }
+        if (b) {
+            if (hash.emplace(b).second == false) {
+                return b;
+            }
+            b = b->parent;
+        }
+    }
+    throw invalid_argument("Two nodes are not in the same tree.");
 }
 
 #endif
