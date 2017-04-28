@@ -3,6 +3,7 @@
 #include <list>
 #include "BTNode.h"
 #include "BinaryTreeTest.h"
+#include "Trie.h"
 
 using namespace std;
 
@@ -509,6 +510,18 @@ void test_LCA_with_parents() {
     assert(LCA_close_nodes(M, P) == I);
 }
 
+void test_shortest_prefix() {
+    unordered_set<string> D;
+    D.emplace("dog");
+    D.emplace("be");
+    D.emplace("cut");
+    string s = "cat";
+    assert(find_shorest_prefix(s, D) == "ca");
+    D.emplace("car");
+    assert(find_shorest_prefix(s, D) == "cat");
+    D.emplace("cat");
+    assert(find_shorest_prefix(s, D) == "");
+}
 
 void test_binary_tree() {
     test_balanced_binary_tree(); 
@@ -524,4 +537,5 @@ void test_binary_tree() {
 	test_exterior_binary_tree();
     test_LCA();
     test_LCA_with_parents();
+    test_shortest_prefix();
 }
