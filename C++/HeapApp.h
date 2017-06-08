@@ -36,4 +36,32 @@ vector<T> merge_arrays(const vector<vector<T>> &S) {
     return ret;
 }
 
+template <typename T>
+vector <T> sort_k_increasing_descreasing_array(const vector<T> &A) {
+    // Decompose A into a set of sorted arrays
+    vector<vector<T>> S;
+    bool is_increasing = true;
+    unsigned int start_idx = 0;
+    for (unsigned int i=1; i < A.size(); ++i) {
+        if ((A[i-1] < A[i] && !is_increasing) || 
+            (A[i-1] >= A[i] && is_increasing)) {
+                if (is_increasing) {
+                    S.emplace_back(A.cbegin() + start_idx, A.cbegin() + i);
+                } else {
+                    S.emplace_back(A.crbegin() + A.size() - i, A.crbegin() + A.size() - start_idx);
+                }
+                start_idx = i;
+                is_increasing = !is_increasing;
+            }
+    }
+    if (start_idx < A.size()) {
+        if (is_increasing) {
+            S.emplace_back(A.cbegin() + start_idx, A.cend());
+        } else {
+            S.emplace_back(A.crbegin(), A.crbegin() + A.size() - start_idx);
+        }
+    }
+    return merge_arrays(S);
+}
+
 #endif

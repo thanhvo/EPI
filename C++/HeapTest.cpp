@@ -18,6 +18,16 @@ void test_merge_arrays() {
     cout << endl;
 }
 
+void test_sort_k_increasing_decreasing_array() {
+    vector<int> a = {57,131,493,294,221,339,418,452,442,190};
+    vector<int> b = sort_k_increasing_descreasing_array(a);
+    for (int val: b) {
+        cout << val << " ";
+    }
+    cout << endl;
+}
+
 void test_heap() {
     test_merge_arrays();
+    test_sort_k_increasing_decreasing_array();
 }
