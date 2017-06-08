@@ -17,7 +17,7 @@ public class HeapTest {
 	public void test_sort_k_up_down_array() {
 		/* Test case 1 */
 		Integer[] a = {57, 131, 493, 294, 221, 339, 418, 452, 442, 190};
-		Integer[] b = HeapUtil.sort_k_up_down_array(a, 4);
+		Integer[] b = HeapUtil.sort_k_up_down_array(a);
 		assertEquals(b[0].intValue(), 57);
 		assertEquals(b[1].intValue(), 131);
 		assertEquals(b[2].intValue(), 190);
@@ -31,7 +31,7 @@ public class HeapTest {
 		
 		/*Test case 2 */
 		Integer[] c = {5, 6, 4, 3, 8, 9, 1, 2, 7};
-		Integer[] d = HeapUtil.sort_k_up_down_array(c, 5);
+		Integer[] d = HeapUtil.sort_k_up_down_array(c);
 		assertEquals(d[0].intValue(), 1);
 		assertEquals(d[1].intValue(), 2);
 		assertEquals(d[2].intValue(), 3);
@@ -41,5 +41,26 @@ public class HeapTest {
 		assertEquals(d[6].intValue(), 7);
 		assertEquals(d[7].intValue(), 8);
 		assertEquals(d[8].intValue(), 9);
+	}
+	
+	@Test
+	public void test_Heap_Stack_Queue() throws Exception{
+		/* Test for stack */ 
+		HeapStack<Integer> stack = new HeapStack();
+		stack.push(1);
+		stack.push(4);
+		stack.push(10);
+		assertEquals(stack.pop().intValue(), 10);
+		assertEquals(stack.pop().intValue(), 4);
+		assertEquals(stack.pop().intValue(), 1);
+		
+		/* Test for queue */
+		HeapQueue<Integer> queue = new HeapQueue();
+		queue.enqueue(1);
+		queue.enqueue(4);
+		queue.enqueue(10);
+		assertEquals(queue.dequeue().intValue(), 1);
+		assertEquals(queue.dequeue().intValue(), 4);
+		assertEquals(queue.dequeue().intValue(), 10);		
 	}
 }

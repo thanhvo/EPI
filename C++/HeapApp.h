@@ -15,6 +15,36 @@ class Compare {
 };
 
 template <typename T>
+class HeapStack: public priority_queue<pair<T, int>, vector<pair<T, int>>, Compare<T>> {
+    private:
+        int order;
+        typedef priority_queue<pair<T, int>, vector<pair<T, int>>, Compare<T>> PQ;
+    public:
+        HeapStack(): order(0) {}
+        const T& top() const {
+            return PQ::top().first;
+        }
+        void push(const T& x) {
+            PQ::emplace(x, order++);
+        }
+};
+
+template <typename T>
+class HeapQueue: public priority_queue<pair<T, int>, vector<pair<T, int>>, Compare<T>> {
+    private:
+        int order;
+        typedef priority_queue<pair<T, int>, vector<pair<T, int>>, Compare<T>> PQ;
+    public:
+        HeapQueue(): order(0) {}
+        const T &front() const {
+            return PQ::top().second;
+        }
+        void push(const T &x) {
+            PQ::emplace(order--, x);
+        }
+};
+
+template <typename T>
 vector<T> merge_arrays(const vector<vector<T>> &S) {
     priority_queue <pair<T, int>, vector<pair<T, int>>, Compare<T> > min_heap;
     vector<int> S_idx(S.size(), 0);

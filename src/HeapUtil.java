@@ -25,20 +25,20 @@ public class HeapUtil {
 		return ret;		
 	}
 	
-	public static<T extends Comparable> T[] sort_k_up_down_array(T[] a, int k) {
-		int n = (k +1)/2;
-		int[] low = new int[n];
-		int[] high = new int[n];
-		int j = 0;
-		for (int i = 0; i < n; i++) {
-			low[i] = j;
+	public static<T extends Comparable> T[] sort_k_up_down_array(T[] a) {
+		int[] low = new int[a.length];
+		int[] high = new int[a.length];		
+		int j = 0, n = 0;
+		while (j < a.length -1) {
+			low[n] = j;
 			while (j < (a.length -1) && a[j].compareTo(a[j+1]) <= 0) {
 				j++;
 			}
 			while (j < (a.length -1) && a[j].compareTo(a[j+1]) >= 0) {
 				j++;
 			}
-			high[i] = (i < n-1) ? j -1 : j;			
+			high[n] = (j < (a.length -1)) ? j -1 : j;
+			n++;
 		}
 		T[] b = (T[])Array.newInstance(a.getClass().getComponentType(), a.length);
 		Comparator<Pair<T, Integer>> comparator = (p1, p2) -> p1.first.compareTo(p2.first);

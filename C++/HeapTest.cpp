@@ -2,6 +2,7 @@
 #include "HeapApp.h"
 #include <vector>
 #include <iostream>
+#include <cassert>
 
 using namespace std;
 
@@ -25,6 +26,32 @@ void test_sort_k_increasing_decreasing_array() {
         cout << val << " ";
     }
     cout << endl;
+}
+
+void test_heap_stack_queue() {
+    HeapStack<int> stack;
+    stack.push(1);
+    stack.push(2);
+    stack.push(3);
+    assert(stack.top() == 3);
+    stack.pop();
+    assert(stack.top() == 2);
+    stack.pop();
+    assert(stack.top() == 1);
+    stack.pop();
+    assert(stack.empty());
+    
+    HeapQueue<int> queue;
+    queue.push(1);
+    queue.push(2);
+    queue.push(3);
+    assert(queue.front() == 1);
+    queue.pop();
+    assert(queue.front() == 2);
+    queue.pop();
+    assert(queue.front() == 3);
+    queue.pop();
+    assert(queue.empty());
 }
 
 void test_heap() {
