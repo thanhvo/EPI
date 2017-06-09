@@ -63,4 +63,24 @@ public class HeapTest {
 		assertEquals(queue.dequeue().intValue(), 4);
 		assertEquals(queue.dequeue().intValue(), 10);		
 	}
+	
+	@Test
+	public void test_k_closest_stars() {
+		List<Star> starList = new ArrayList<Star>();
+		starList.add(new Star(0, 0.0, 0.0, 0.0));
+		starList.add(new Star(1, 0.0, 0.0, 1.0));
+		starList.add(new Star(2, 1.0, 0.0, 0.0));
+		starList.add(new Star(3, 0.0, 1.0, 0.0));
+		starList.add(new Star(4, 0.0, 1.0, 0.0));
+		starList.add(new Star(5, 3.0, 1.0, 0.0));
+		starList.add(new Star(6, 3.0, 1.0, 2.0));
+		starList.add(new Star(7, 8.0, 1.0, 9.0));
+		starList.add(new Star(8, 2.0, 1.0, 0.0));
+		starList.add(new Star(9, -3.0, 1.0, -6.0));
+		List<Star> closestStars = Star.k_closest_stars(starList, 4);
+		for (Star star: closestStars) {
+			System.out.print(star.getId() + " ");
+		}
+		System.out.println();
+	}
 }

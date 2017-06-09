@@ -3,6 +3,9 @@
 
 #include <queue>
 #include <utility>
+#include <cmath>
+#include <sstream>
+#include <string>
 
 using namespace std;
 
@@ -10,7 +13,7 @@ template <typename T>
 class Compare {
     public:
         const bool operator()(const pair<T,int> &lhs, const pair<T,int> &rhs) const {
-            return lhs.first > rhs.first;
+            return lhs.second < rhs.second;
         }
 };
 
@@ -37,10 +40,10 @@ class HeapQueue: public priority_queue<pair<T, int>, vector<pair<T, int>>, Compa
     public:
         HeapQueue(): order(0) {}
         const T &front() const {
-            return PQ::top().second;
+            return PQ::top().first;
         }
         void push(const T &x) {
-            PQ::emplace(order--, x);
+            PQ::emplace(x, order--);      
         }
 };
 
@@ -93,5 +96,19 @@ vector <T> sort_k_increasing_descreasing_array(const vector<T> &A) {
     }
     return merge_arrays(S);
 }
+
+class Star{
+    public: 
+        int ID;
+        double x,y,z;
+        const double distance() const {
+            return sqrt(x*x + y*y + z*z);
+        }
+        const bool operator<(const Star &s) const {
+            return distance() < s.distance();
+        }
+};
+
+vector<Star> find_closest_k_stars(istringstream &sin, const int &k);
 
 #endif
