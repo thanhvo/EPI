@@ -1,5 +1,7 @@
 import org.junit.*;
 import static org.junit.Assert.*;
+
+import java.io.*;
 import java.util.*;
 
 public class HeapTest {
@@ -82,5 +84,22 @@ public class HeapTest {
 			System.out.print(star.getId() + " ");
 		}
 		System.out.println();
+	}
+	
+	@Test
+	public void test_kth_largest_item() throws FileNotFoundException, IOException, ClassNotFoundException {
+		
+		String inputFileName = "/home/thanh/workspace/EPI/input/kth_largest_item.dat";
+		String outputFileName = "/home/thanh/workspace/EPI/output/kth_largest_item.out";
+		Integer[] list = {13, 23, 1, 4, 5, 6, 20, 100, 2, 3};
+		/* Write to the input file */
+		ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream(inputFileName));
+		for (Integer i: list) {
+			stream.writeObject(i);
+		}
+		stream.flush();
+		ObjectInputStream input = new ObjectInputStream(new FileInputStream(inputFileName));
+		FileOutputStream output = new FileOutputStream(outputFileName);
+		HeapUtil.print_kth_largest_item(input, output, 3);
 	}
 }

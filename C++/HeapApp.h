@@ -6,6 +6,7 @@
 #include <cmath>
 #include <sstream>
 #include <string>
+#include <iostream>
 
 using namespace std;
 
@@ -110,5 +111,22 @@ class Star{
 };
 
 vector<Star> find_closest_k_stars(istringstream &sin, const int &k);
+
+template <typename T>
+void find_kth_largest_stream(istringstream &sin, const int &k) {
+    priority_queue<T, vector<T>, greater<T>> min_heap;
+    T x;
+    for (int i = 0; i < k && sin >> x; i++) {
+        min_heap.emplace(x);
+        cout << min_heap.top() << endl;
+    }
+    while (sin >> x) {
+        if (min_heap.top() < x) {
+            min_heap.pop();
+            min_heap.emplace(x);
+        }
+        cout << min_heap.top() << endl;
+    }
+}
 
 #endif

@@ -1,5 +1,6 @@
 import java.lang.reflect.Array;
 import java.util.*;
+import java.io.*;
 
 public class HeapUtil {	
 	
@@ -71,5 +72,37 @@ public class HeapUtil {
 			}
 		}
 		return b;
+	}
+	
+	public static <T extends Comparable> void print_kth_largest_item(ObjectInputStream input, OutputStream output, int k) 
+			throws ClassNotFoundException, IOException {
+		PriorityQueue<T> min_heap = new PriorityQueue<T>(k);
+		ObjectOutputStream writer = new ObjectOutputStream(output);
+		for (int i = 0; i < k; i++) {
+			T item = (T)input.readObject(); 
+			min_heap.add(item);
+			System.out.println(min_heap.peek());
+			writer.writeObject(min_heap.peek());
+		}
+		
+		while (true) {
+			try {
+				T item = (T)input.readObject();
+				T top = min_heap.peek();
+				if (item.compareTo(top) < 0) {
+					System.out.println(top);
+					writer.writeObject(top);					
+				} else {
+					min_heap.poll();
+					min_heap.add(item);
+					System.out.println(min_heap.peek());
+					writer.writeObject(min_heap.peek());					
+				}
+			} catch (EOFException ex) {
+				break;
+			} finally {
+				writer.flush();
+			}
+		}
 	}
 }
