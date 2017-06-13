@@ -87,8 +87,7 @@ public class HeapTest {
 	}
 	
 	@Test
-	public void test_kth_largest_item() throws FileNotFoundException, IOException, ClassNotFoundException {
-		
+	public void test_kth_largest_item() throws FileNotFoundException, IOException, ClassNotFoundException {		
 		String inputFileName = "/home/thanh/workspace/EPI/input/kth_largest_item.dat";
 		String outputFileName = "/home/thanh/workspace/EPI/output/kth_largest_item.out";
 		Integer[] list = {13, 23, 1, 4, 5, 6, 20, 100, 2, 3};
@@ -101,5 +100,21 @@ public class HeapTest {
 		ObjectInputStream input = new ObjectInputStream(new FileInputStream(inputFileName));
 		FileOutputStream output = new FileOutputStream(outputFileName);
 		HeapUtil.print_kth_largest_item(input, output, 3);
+	}
+	
+	@Test
+	public void test_appoximate_sort() {
+		List<Integer> list = Arrays.asList(10, 2, 3, 20, 50, 100, 34, 99, 80);
+		List<Integer> sortedList = HeapUtil.approximate_sort(list, 3);
+		Iterator<Integer> it = sortedList.iterator();
+		assertEquals(it.next().intValue(), 2);
+		assertEquals(it.next().intValue(), 3);
+		assertEquals(it.next().intValue(), 10);
+		assertEquals(it.next().intValue(), 20);
+		assertEquals(it.next().intValue(), 34);
+		assertEquals(it.next().intValue(), 50);
+		assertEquals(it.next().intValue(), 80);
+		assertEquals(it.next().intValue(), 99);
+		assertEquals(it.next().intValue(), 100);
 	}
 }

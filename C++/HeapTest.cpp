@@ -65,9 +65,17 @@ void test_k_closest_stars() {
 }
 
 void test_kth_largest_stream() {
+    cout << "kth largerst stream" << endl;
     string stringvalues = "10 5 3 2 1 6 9 11 23 17 99";
     istringstream ss(stringvalues);
     find_kth_largest_stream<int>(ss, 3);
+}
+
+void test_approximate_sort() {
+    cout << "Approximate sort: " << endl;
+    string stringvalues = "10 5 3 7 23 33 99 80 100 60";
+    istringstream ss(stringvalues);
+    approximate_sort<int>(ss, 4);    
 }
 
 void test_heap() {
@@ -76,4 +84,5 @@ void test_heap() {
     test_heap_stack_queue();
     test_k_closest_stars();
     test_kth_largest_stream();
+    test_approximate_sort();
 }

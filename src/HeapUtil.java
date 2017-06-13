@@ -81,7 +81,7 @@ public class HeapUtil {
 		for (int i = 0; i < k; i++) {
 			T item = (T)input.readObject(); 
 			min_heap.add(item);
-			System.out.println(min_heap.peek());
+			//System.out.println(min_heap.peek());
 			writer.writeObject(min_heap.peek());
 		}
 		
@@ -90,12 +90,12 @@ public class HeapUtil {
 				T item = (T)input.readObject();
 				T top = min_heap.peek();
 				if (item.compareTo(top) < 0) {
-					System.out.println(top);
+					//System.out.println(top);
 					writer.writeObject(top);					
 				} else {
 					min_heap.poll();
 					min_heap.add(item);
-					System.out.println(min_heap.peek());
+					//System.out.println(min_heap.peek());
 					writer.writeObject(min_heap.peek());					
 				}
 			} catch (EOFException ex) {
@@ -104,5 +104,22 @@ public class HeapUtil {
 				writer.flush();
 			}
 		}
+	}
+	
+	public static<T extends Comparable> List<T> approximate_sort(List<T> list, int k) {
+		PriorityQueue<T> min_heap = new PriorityQueue<T>(k);
+		Iterator<T> it = list.iterator();
+		for (int i = 0; i < k; i++) {
+			min_heap.add(it.next());
+		}
+		List<T> ret = new ArrayList<T>();
+		while (it.hasNext()) {
+			ret.add(min_heap.poll());
+			min_heap.add(it.next());
+		}
+		while(!min_heap.isEmpty()) {
+			ret.add(min_heap.poll());
+		}
+		return ret;
 	}
 }

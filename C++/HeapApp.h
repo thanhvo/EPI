@@ -129,4 +129,22 @@ void find_kth_largest_stream(istringstream &sin, const int &k) {
     }
 }
 
+template <typename T>
+void approximate_sort(istringstream &sin, const int &k) {
+    priority_queue<T, vector<T>, greater<T>> min_heap;
+    T x;
+    for (int i = 0; i < k && sin >> x; ++i) {
+        min_heap.push(x);
+    }
+    while (sin >> x) {
+        min_heap.push(x);
+        cout << min_heap.top() << endl;
+        min_heap.pop();
+    }
+    while(min_heap.size()) {
+        cout << min_heap.top() << endl;
+        min_heap.pop();
+    }
+}
+
 #endif
