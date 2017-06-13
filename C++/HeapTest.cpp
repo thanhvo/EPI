@@ -78,6 +78,15 @@ void test_approximate_sort() {
     approximate_sort<int>(ss, 4);    
 }
 
+void test_k_closest_median() {
+    cout << "k closest median" << endl;
+    vector<int> v = {7, 14, 10, 12, 2, 11, 29, 3, 4};
+    vector<int> u = find_k_closest_to_median(v, 5);
+    for (int i : u) {
+        cout << i << endl;
+    }
+}
+
 void test_heap() {
     test_merge_arrays();
     test_sort_k_increasing_decreasing_array();
@@ -85,4 +94,5 @@ void test_heap() {
     test_k_closest_stars();
     test_kth_largest_stream();
     test_approximate_sort();
+    test_k_closest_median();
 }
