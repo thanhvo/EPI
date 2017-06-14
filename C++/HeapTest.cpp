@@ -94,6 +94,14 @@ void test_online_median() {
     online_median<int>(ss);
 }
 
+void test_generate_first_k() {
+    cout << "Generate first k" << endl;
+    vector<Num> v = generate_first_k(10);
+    for (Num n: v) {
+        cout << n.val_ << endl;
+    }
+}
+
 void test_heap() {
     test_merge_arrays();
     test_sort_k_increasing_decreasing_array();
@@ -103,4 +111,5 @@ void test_heap() {
     test_approximate_sort();
     test_k_closest_median();
     test_online_median();
+    test_generate_first_k();
 }

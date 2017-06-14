@@ -8,6 +8,7 @@
 #include <string>
 #include <iostream>
 #include <algorithm>
+#include <unordered_set>
 
 using namespace std;
 
@@ -112,6 +113,28 @@ class Star{
 };
 
 vector<Star> find_closest_k_stars(istringstream &sin, const int &k);
+
+class Num {
+    public:
+        int a_, b_;
+        double val_;
+        Num(const int &a, const int &b): a_(a), b_(b), val_(a+b*sqrt(2)) {}
+        const bool operator<(const Num &n) const {
+            return val_ > n.val_;
+        }
+        const bool operator==(const Num &n) const {
+            return a_==n.a_ && b_==n.b_;
+        }
+};
+
+class HashNum {
+    public: 
+            const size_t operator() (const Num &n) const {
+                return hash<int>()(n.a_) ^ hash<int>()(n.b_);
+            }
+};
+
+vector<Num> generate_first_k(const int &k);
 
 template <typename T>
 void find_kth_largest_stream(istringstream &sin, const int &k) {

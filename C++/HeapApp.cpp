@@ -35,3 +35,26 @@ vector<Star> find_closest_k_stars(istringstream &sin, const int &k) {
     }
     return closest_stars;
 }
+
+vector<Num> generate_first_k(const int &k) {
+    priority_queue <Num, vector<Num>> min_heap;
+    vector<Num> smallest;
+    unordered_set<Num, HashNum> hash;
+    min_heap.emplace(0, 0);
+    hash.emplace(0, 0);
+    while (smallest.size() < k) {
+        Num s(min_heap.top());
+        smallest.emplace_back(s);
+        hash.erase(s);
+    
+        min_heap.pop();
+        Num c1(s.a_ + 1, s.b_), c2(s.a_, s.b_ +1);
+        if (hash.emplace(c1).second) {
+            min_heap.emplace(c1);
+        }
+        if (hash.emplace(c2).second) {
+            min_heap.emplace(c2);
+        }
+    }
+    return smallest;
+}
