@@ -117,4 +117,15 @@ public class HeapTest {
 		assertEquals(it.next().intValue(), 99);
 		assertEquals(it.next().intValue(), 100);
 	}
+	
+	@Test
+	public void test_Median_Heap() {
+		int[] input = {2,3,4,1,5,7,10,9};
+		MedianHeap<Integer> heap = new MedianHeap<Integer>();
+		for (int i: input) {
+			heap.add(i);
+			System.out.print(heap.getMedian() + " ");
+		}
+		System.out.println();
+	}
 }

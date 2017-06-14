@@ -178,4 +178,27 @@ vector <T> find_k_closest_to_median(vector<T> A, const int &k) {
     return {A.cbegin(), A.cbegin() + k};
 }
 
+template <typename T>
+void online_median(istringstream &sin) {
+    priority_queue<T, vector<T>, greater<T>> H;
+    priority_queue<T, vector<T>, less<T>> L;
+    T x;
+    while(sin >> x) {
+        if (L.empty() == false && x > L.top()) {
+            H.emplace(x);
+        } else {
+            L.emplace(x);
+        }
+        if (H.size() > L.size() + 1) {
+            L.emplace(H.top());
+            H.pop();
+        }
+        if (H.size() == L.size()) {
+            cout << 0.5 * (H.top() + L.top()) << endl;
+        } else {
+            cout << (H.size() > L.size() ? H.top() : L.top()) << endl;
+        }
+    }
+}
+
 #endif

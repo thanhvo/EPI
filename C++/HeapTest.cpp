@@ -87,6 +87,13 @@ void test_k_closest_median() {
     }
 }
 
+void test_online_median() {
+    cout << "Online median" << endl;
+    string values = "1 2 3 5 10 9 8 7";
+    istringstream ss(values);
+    online_median<int>(ss);
+}
+
 void test_heap() {
     test_merge_arrays();
     test_sort_k_increasing_decreasing_array();
@@ -95,4 +102,5 @@ void test_heap() {
     test_kth_largest_stream();
     test_approximate_sort();
     test_k_closest_median();
+    test_online_median();
 }
