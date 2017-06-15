@@ -122,4 +122,27 @@ public class HeapUtil {
 		}
 		return ret;
 	}
+	
+	private static<T extends Comparable> void compare_kth_largest_heap_helper(T[] max_heap, 
+			int k, T x, int idx, Pair<Integer, Integer> p) {
+		if (idx < max_heap.length) {
+			if (max_heap[idx].compareTo(x) < 0) {
+				return;
+			} else if (max_heap[idx].equals(x)) {
+				++p.second;
+			} else {
+				++p.first;
+			}
+		}
+		if (p.second < k && p.first < k) {
+			compare_kth_largest_heap_helper(max_heap, k, x, (idx << 1) + 1, p);
+			compare_kth_largest_heap_helper(max_heap, k, x, (idx << 1) + 2, p);
+		}
+	}
+	
+	public static<T extends Comparable> int compare_kth_largest_heap(T[] max_heap, int k, T x) {
+		Pair<Integer, Integer> p = new Pair<Integer, Integer>(0, 0);
+		compare_kth_largest_heap_helper(max_heap, k, x, 0, p);		
+		return p.first >= k ? 1: (p.first + p.second >= k ? 0: -1);
+	}
 }

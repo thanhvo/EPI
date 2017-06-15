@@ -102,6 +102,13 @@ void test_generate_first_k() {
     }
 }
 
+void test_compare_kth_largest() {
+    vector<int> v = {16, 14, 10, 8, 7, 9, 3, 2, 4, 1};
+    assert(compare_k_th_largest_heap(v, 3, 9) == 1);
+    assert(compare_k_th_largest_heap(v, 3, 10) == 0);
+    assert(compare_k_th_largest_heap(v, 3, 11) == -1);
+}
+
 void test_heap() {
     test_merge_arrays();
     test_sort_k_increasing_decreasing_array();
@@ -112,4 +119,5 @@ void test_heap() {
     test_k_closest_median();
     test_online_median();
     test_generate_first_k();
+    test_compare_kth_largest();
 }

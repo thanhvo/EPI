@@ -128,4 +128,12 @@ public class HeapTest {
 		}
 		System.out.println();
 	}
+	
+	@Test
+	public void test_kth_largest_heap() {
+		Integer[] max_heap = {16, 14, 10, 8, 7, 9, 3, 2, 4, 1};
+		assertEquals(HeapUtil.compare_kth_largest_heap(max_heap, 3, 10), 0);
+		assertEquals(HeapUtil.compare_kth_largest_heap(max_heap, 3, 9), 1);
+		assertEquals(HeapUtil.compare_kth_largest_heap(max_heap, 3, 11), -1);
+	}
 }

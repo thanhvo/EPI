@@ -224,4 +224,28 @@ void online_median(istringstream &sin) {
     }
 }
 
+template <typename T>
+void compare_k_th_largest_heap_helper(const vector<T> &max_heap, const int &k, const T &x, const int &idx, int &larger, int &equal) {
+    if (idx < (int)max_heap.size()) {
+        if (max_heap[idx] < x) {
+            return;
+        } else if(max_heap[idx] == x) {
+            ++equal;
+        } else {
+            ++larger;
+        }
+        if (equal < k && larger < k) {
+            compare_k_th_largest_heap_helper(max_heap, k, x, (idx << 1) + 1, larger, equal);
+            compare_k_th_largest_heap_helper(max_heap, k, x, (idx << 1) + 2, larger, equal);
+        }
+    }
+}
+
+template <typename T>
+int compare_k_th_largest_heap(const vector<T> &max_heap, const int &k, const T &x) {
+    int larger = 0, equal = 0;
+    compare_k_th_largest_heap_helper(max_heap, k, x, 0, larger, equal);
+    return larger >= k ? 1 : (larger + equal >= k ? 0 : -1);
+}
+
 #endif
