@@ -12,4 +12,14 @@ public class SearchTest {
 		assertEquals(Search.find(a, -14), 0);
 		assertEquals(Search.find(a, 401), 9);
 	}
+	
+	@Test
+	public void test_first_larger() {
+		Integer[] a = {-14, -10, 2, 108, 108, 243, 285, 285, 285, 401};
+		assertEquals(Search.first_larger_element(a, 402), -1);
+		assertEquals(Search.first_larger_element(a, 101), 3);
+		assertEquals(Search.first_larger_element(a, -10), 2);
+		assertEquals(Search.first_larger_element(a, 1), 2);
+		assertEquals(Search.first_larger_element(a, 2), 3);
+	}
 }

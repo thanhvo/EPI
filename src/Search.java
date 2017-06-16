@@ -19,4 +19,20 @@ public class Search {
 		}
 		return res;
 	}
+	
+	public static<T extends Comparable> int first_larger_element(T[] a, T x) {
+		int start = 0;
+		int end = a.length -1;
+		int res = -1;
+		while (start <= end) {
+			int mid = start + ((end- start) >> 1);
+			if (a[mid].compareTo(x) <= 0) {
+				start = mid +1;
+			} else {
+				res = mid;
+				end = mid - 1;
+			}
+		}
+		return res;
+	}
 }
