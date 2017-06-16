@@ -22,4 +22,10 @@ public class SearchTest {
 		assertEquals(Search.first_larger_element(a, 1), 2);
 		assertEquals(Search.first_larger_element(a, 2), 3);
 	}
+	
+	@Test
+	public void test_element_equals_to_index() {
+		int[] a = {-14, -10, 2, 108, 108, 243, 285, 285, 285, 401};
+		assertEquals(Search.find_element_equals_to_its_index(a), 2);		
+	}
 }

@@ -35,4 +35,20 @@ public class Search {
 		}
 		return res;
 	}
+	
+	public static int find_element_equals_to_its_index(int[] a) {
+		int start = 0;
+		int end = a.length -1;
+		while (start <= end) {
+			int mid = start + ((end - start) >> 1);
+			if (a[mid] == mid) {
+				return mid;
+			} else if (a[mid] < mid) {
+				start = mid + 1;
+			} else {
+				end = mid -1;
+			}
+		}
+		return -1;
+	}
 }

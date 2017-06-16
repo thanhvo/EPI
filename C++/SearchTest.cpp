@@ -27,6 +27,11 @@ void test_search_first_larger() {
     assert(search_first_larger(a, 401) == -1);
 }
 
+void test_search_index_value_equal() {
+    vector<int> a = {-14, -10, 2, 108, 108, 243, 285, 285, 285, 401};
+    assert(search_index_value_equal(a) == 2);
+}
+
 void test_search() {
     test_search_first();    
 }

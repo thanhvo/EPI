@@ -34,4 +34,6 @@ int search_first_larger(const vector<T> &A, const T &k) {
     return res;
 }
 
+int search_index_value_equal(const vector<int> &A);
+
 #endif
