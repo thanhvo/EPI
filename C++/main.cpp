@@ -3,6 +3,7 @@
 #include "QueueTest.h"
 #include "BinaryTreeTest.h"
 #include "HeapTest.h"
+#include "SearchTest.h"
 
 int main(int argc, char **argv)
 {
@@ -10,6 +11,7 @@ int main(int argc, char **argv)
     //test_stack();
     //test_queue();
     //test_binary_tree();
-    test_heap();
+    //test_heap();
+    test_search();
 	return 0;
 }

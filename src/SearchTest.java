@@ -1,0 +1,15 @@
+import org.junit.*;
+import static org.junit.Assert.*;
+
+public class SearchTest {
+	@Test
+	public void test_find() {
+		Integer[] a = {-14, -10, 2, 108, 108, 243, 285, 285, 285, 401};
+		assertEquals(Search.find(a, 108), 3);
+		assertEquals(Search.find(a, 285), 6);
+		assertEquals(Search.find(a, -20), -1);
+		assertEquals(Search.find(a, -403), -1);
+		assertEquals(Search.find(a, -14), 0);
+		assertEquals(Search.find(a, 401), 9);
+	}
+}
