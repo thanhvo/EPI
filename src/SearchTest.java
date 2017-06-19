@@ -28,4 +28,17 @@ public class SearchTest {
 		int[] a = {-14, -10, 2, 108, 108, 243, 285, 285, 285, 401};
 		assertEquals(Search.find_element_equals_to_its_index(a), 2);		
 	}
+	
+	@Test
+	public void test_find_pair_sum() {
+		int[] a = {-49, 75, 103, -147, 164, -197, -238, 314, 348, -422};
+		Pair<Integer, Integer> p = Search.find_pair_sum_k(a, 167);
+		System.out.println(p.first + " " + p.second);
+		p = Search.find_pair_sum_k(a, -196);
+		System.out.println(p.first + " " + p.second);
+		p = Search.find_pair_sum_k(a, 423);
+		System.out.println(p.first + " " + p.second);
+		p = Search.find_pair_sum_k(a, 0);
+		System.out.println(p.first + " " + p.second);
+	}
 }

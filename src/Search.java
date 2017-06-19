@@ -1,3 +1,4 @@
+import java.util.*;
 
 public class Search {
 	public static<T extends Comparable> int find(T[] a, T x) {
@@ -50,5 +51,66 @@ public class Search {
 			}
 		}
 		return -1;
+	}
+	
+	private static Pair<Integer, Integer> find_pair_using_comp(int[] A, int k, Comparator<Integer> comparator) {
+		Pair<Integer, Integer> ret = new Pair(0, A.length -1);
+		while (ret.first < ret.second && comparator.compare(A[ret.first], 0) > 0) {
+			ret.first++;			
+		}
+		while (ret.first < ret.second && comparator.compare(A[ret.second], 0) > 0) {
+			--ret.second;
+		}
+		while (ret.first < ret.second) {
+			if (A[ret.first] + A[ret.second] == k) {
+				return ret;
+			} else if (comparator.compare(A[ret.first] + A[ret.second], k) > 0) {
+				do {
+					++ret.first;
+				} while (ret.first < ret.second && comparator.compare(A[ret.first], 0) > 0); 
+			} else {
+				do {
+					--ret.second;
+				} while (ret.first < ret.second && comparator.compare(A[ret.second], 0) > 0);
+			}
+		}
+		return new Pair(-1, -1);
+	}
+	
+	private static Pair<Integer, Integer> find_pos_neg_pair(int[] A, int k) {
+		Pair<Integer, Integer> ret= new Pair(A.length -1, A.length -1);
+		while (ret.first >= 0 && A[ret.first] <0) {
+			--ret.first;
+		}
+		while(ret.second >= 0 && A[ret.second] >= 0) {
+			--ret.second;
+		}
+		while (ret.first >= 0 && ret.second >= 0) {
+			if (A[ret.first] + A[ret.second] == k) {
+				return ret;
+			} else if (A[ret.first] + A[ret.second] > k) {
+				do {
+					--ret.first;
+				} while (ret.first >= 0 && A[ret.first] < 0);
+			} else {
+				do {
+					--ret.second;
+				} while (ret.second >= 0 && A[ret.second] > 0);
+			}
+		}
+		return new Pair(-1, -1);
+	}
+	
+	public static Pair<Integer, Integer> find_pair_sum_k(int[] A, int k) {
+		Comparator<Integer> less = (i1, i2) -> i2.compareTo(i1);
+		Comparator<Integer> greater_equal = (i1, i2) -> {
+			if (i1.compareTo(i2) >= 0) return 1;
+			else return -1;
+		};
+		Pair<Integer, Integer> ret = find_pos_neg_pair(A, k);
+		if (ret.first == -1 && ret.second == -1) {
+			return k >= 0 ? find_pair_using_comp(A, k, less) : find_pair_using_comp(A, k, greater_equal);
+		}
+		return ret;
 	}
 }
