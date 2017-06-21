@@ -113,4 +113,20 @@ public class Search {
 		}
 		return ret;
 	}
+	
+	public static int min_cyclic_array(int[] a) {
+		int start = 0, end = a.length -1;
+		while (start < end) {
+			if (a[start] < a[end]) {
+				return start;
+			}
+			int mid = start + (end - start) / 2;
+			if (a[mid] > a[end]) {
+				start = mid +1;
+			} else {
+				end = mid;
+			}
+		}
+		return start;
+	}
 }

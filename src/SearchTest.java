@@ -41,4 +41,10 @@ public class SearchTest {
 		p = Search.find_pair_sum_k(a, 0);
 		System.out.println(p.first + " " + p.second);
 	}
+	
+	@Test
+	public void test_min_cyclic_array() {
+		int[] a = {378, 478, 550, 631, 103, 203, 220, 234, 279, 368};
+		assertEquals(Search.min_cyclic_array(a), 4);
+	}
 }

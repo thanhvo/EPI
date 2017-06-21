@@ -44,9 +44,15 @@ void test_find_pair_sum_k() {
     cout << p.first << "\t" << p.second << endl;
 }
 
+void test_search_smallest() {
+    vector<int> v = {378, 478, 550, 631, 103, 203, 220, 234, 279, 368};
+    assert(search_smallest(v) == 4);
+}
+
 void test_search() {
     test_search_first();
     test_search_first_larger();
     test_search_index_value_equal();
     test_find_pair_sum_k();
+    test_search_smallest();
 }
