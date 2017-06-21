@@ -55,4 +55,14 @@ public class SearchTest {
 		assertEquals(Search.search_unknown_length_array(a, 93), 14);
 		assertEquals(Search.search_unknown_length_array(a, 100), -1);
 	}
+	
+	@Test
+	public void test_find_cut_off_cap() {
+		double[] a = {90, 30, 100, 40, 20};
+		double target = 210;
+		//assertEquals(Search.find_cut_off_cap(a, target), 60);
+		System.out.println(Search.find_cut_off_cap(a, target));
+		target = 120;
+		System.out.println(Search.find_cut_off_cap(a, target));
+	}
 }

@@ -163,4 +163,47 @@ public class Search {
 		}
 		return -1;
 	}
+	
+	private static double min(double[] a) {
+		double min = Double.MAX_VALUE;
+		for (int i = 0; i < a.length; i++) {
+			if (a[i] < min) min = a[i];
+		}
+		return min;
+	}
+	
+	private static double max(double[] a) {
+		double max = Double.MIN_VALUE;
+		for (int i = 0; i < a.length; i++) {
+			if (a[i] > max) max = a[i];
+		}
+		return max;
+	}
+	
+	private static double getCapSum(double[] a, double cap) {
+		double sum = 0.0;
+		for (int i = 0; i < a.length; i++) {
+			sum += Math.min(a[i], cap);
+		}
+		return sum;
+	}
+	
+	public static double find_cut_off_cap(double[] a, double target) {
+		double min = min(a);
+		double max = max(a);
+		if (getCapSum(a, max) < target)
+			return -1.0;
+		while (min < max) {
+			double mid = min + (max -min) * 0.5;
+			double sum = getCapSum(a, mid);
+			if (sum == target) {
+				return mid;
+			} else if (sum < target) {
+				min = mid;
+			} else {
+				max = mid;
+			}
+		}
+		return min;
+	}
 }

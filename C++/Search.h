@@ -148,4 +148,6 @@ int binary_search_unknown_len(const vector<T> &A, const T &k) {
     return -1;
 }
 
+double completion_search(vector<double> &A, const double &budget);
+
 #endif

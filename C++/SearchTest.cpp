@@ -57,6 +57,12 @@ void test_binary_search_unknown_len() {
     assert(binary_search_unknown_len(a, 101) == -1);    
 }
 
+void test_completion_search() {
+    vector<double> v = {90, 30, 100, 40, 20};
+    double target = 210;
+    assert(completion_search(v, 210) == 60);
+}
+
 void test_search() {
     test_search_first();
     test_search_first_larger();
@@ -64,4 +70,5 @@ void test_search() {
     test_find_pair_sum_k();
     test_search_smallest();
     test_binary_search_unknown_len();
+    test_completion_search();
 }
