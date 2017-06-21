@@ -47,4 +47,12 @@ public class SearchTest {
 		int[] a = {378, 478, 550, 631, 103, 203, 220, 234, 279, 368};
 		assertEquals(Search.min_cyclic_array(a), 4);
 	}
+	
+	@Test
+	public void test_search_unknown_length_array() {
+		Integer[] a = {1, 2, 4, 5, 6, 8, 9, 11, 20, 32, 45, 67, 78, 89, 93, 102};
+		assertEquals(Search.search_unknown_length_array(a, 5), 3);
+		assertEquals(Search.search_unknown_length_array(a, 93), 14);
+		assertEquals(Search.search_unknown_length_array(a, 100), -1);
+	}
 }

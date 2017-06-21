@@ -49,10 +49,19 @@ void test_search_smallest() {
     assert(search_smallest(v) == 4);
 }
 
+void test_binary_search_unknown_len() {
+    vector<int> a = {1, 3, 4, 5, 6, 8, 9, 11, 12, 13, 14, 16, 19, 20, 25, 34, 40, 46, 49, 53, 56, 67, 74, 89, 100};
+    assert(binary_search_unknown_len(a, 6) == 4);
+    assert(binary_search_unknown_len(a, 12) == 8);
+    assert(binary_search_unknown_len(a, 99) == -1);
+    assert(binary_search_unknown_len(a, 101) == -1);    
+}
+
 void test_search() {
     test_search_first();
     test_search_first_larger();
     test_search_index_value_equal();
     test_find_pair_sum_k();
     test_search_smallest();
+    test_binary_search_unknown_len();
 }
