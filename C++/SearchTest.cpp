@@ -87,6 +87,13 @@ void test_matrix_search() {
     assert(matrix_search(matrix, 17) == false);
 }
 
+void test_find_min_max() {
+    vector<int> v = {2, 5, 3, 6, 7, 9};
+    pair<int, int> p = find_min_max(v);
+    assert(p.first == 2);
+    assert(p.second == 9);
+}
+
 void test_search() {
     test_search_first();
     test_search_first_larger();
