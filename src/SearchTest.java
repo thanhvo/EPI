@@ -60,9 +60,20 @@ public class SearchTest {
 	public void test_find_cut_off_cap() {
 		double[] a = {90, 30, 100, 40, 20};
 		double target = 210;
-		//assertEquals(Search.find_cut_off_cap(a, target), 60);
 		System.out.println(Search.find_cut_off_cap(a, target));
 		target = 120;
 		System.out.println(Search.find_cut_off_cap(a, target));
+	}
+	
+	@Test
+	public void test_search_kth_element() {
+		Integer[] A = {1,2,3,4,5,6,7};
+		Integer[] B = {2,3,5,7,9,10,11};
+		assertEquals(Search.search_kth_element(A, B, 3).intValue(), 2);
+		assertEquals(Search.search_kth_element(A, B, 4).intValue(), 3);
+		assertEquals(Search.search_kth_element(A, B, 5).intValue(), 3);
+		assertEquals(Search.search_kth_element(A, B, 6).intValue(), 4);
+		assertEquals(Search.search_kth_element(A, B, 8).intValue(), 5);
+		assertEquals(Search.search_kth_element(A, B, 9).intValue(), 6);
 	}
 }

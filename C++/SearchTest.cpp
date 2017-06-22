@@ -63,6 +63,15 @@ void test_completion_search() {
     assert(completion_search(v, 210) == 60);
 }
 
+void test_find_kth_in_two_sorted_arrays() {
+    vector<int> a = {1,2,3,4,5,6,7};
+    vector<int> b = {2,3,4,6,8,10};
+    assert(find_kth_in_two_sorted_arrays(a, b, 3) == 2);
+    assert(find_kth_in_two_sorted_arrays(a, b, 4) == 3);
+    assert(find_kth_in_two_sorted_arrays(a, b, 5) == 3);
+    assert(find_kth_in_two_sorted_arrays(a, b, 6) == 4);
+}
+
 void test_search() {
     test_search_first();
     test_search_first_larger();
@@ -71,4 +80,5 @@ void test_search() {
     test_search_smallest();
     test_binary_search_unknown_len();
     test_completion_search();
+    test_find_kth_in_two_sorted_arrays();
 }

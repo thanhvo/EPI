@@ -206,4 +206,26 @@ public class Search {
 		}
 		return min;
 	}
+	
+	private static<T extends Comparable> T search_kth_element_helper(T[] A, int startA, T[] B, int startB, int k) {
+		if (k <= 0)
+			return null;
+		if (k == 1) {
+			if (A[startA].compareTo(B[startB]) > 0) {
+				return B[startB];
+			} else {
+				return A[startA];
+			}
+		}
+		int mid = k/2;
+		if (A[startA + mid -1].compareTo(B[startB + mid -1]) < 0) {
+			return search_kth_element_helper(A, startA + mid, B, startB, k - mid);
+		} else {
+			return search_kth_element_helper(A, startA, B, startB + mid, k- mid);
+		}
+	}
+	
+	public static<T extends Comparable> T search_kth_element(T[] A, T[] B, int k) {
+		return search_kth_element_helper(A, 0, B, 0, k);
+	}
 }
