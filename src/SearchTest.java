@@ -76,4 +76,9 @@ public class SearchTest {
 		assertEquals(Search.search_kth_element(A, B, 8).intValue(), 5);
 		assertEquals(Search.search_kth_element(A, B, 9).intValue(), 6);
 	}
+	
+	@Test
+	public void test_square_root() {
+		System.out.println(Search.square_root(2.0));
+	}
 }

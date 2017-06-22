@@ -72,6 +72,10 @@ void test_find_kth_in_two_sorted_arrays() {
     assert(find_kth_in_two_sorted_arrays(a, b, 6) == 4);
 }
 
+void test_square_root() {
+    cout << square_root(2.0) << endl;
+}
+
 void test_search() {
     test_search_first();
     test_search_first_larger();
@@ -81,4 +85,5 @@ void test_search() {
     test_binary_search_unknown_len();
     test_completion_search();
     test_find_kth_in_two_sorted_arrays();
+    test_square_root();
 }

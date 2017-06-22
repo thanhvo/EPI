@@ -174,4 +174,6 @@ T find_kth_in_two_sorted_arrays(const vector<T> &A, const vector<T> &B, const in
     return max(A_l_1, B_k_l_1);
 }
 
+double square_root(const double &x);
+
 #endif

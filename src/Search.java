@@ -228,4 +228,31 @@ public class Search {
 	public static<T extends Comparable> T search_kth_element(T[] A, T[] B, int k) {
 		return search_kth_element_helper(A, 0, B, 0, k);
 	}
+	
+	private static int compare(double a, double b) {
+		double epsilon = 1E-6;
+		double diff = (a -b)/b;
+		return diff < -epsilon ? -1: diff > epsilon ? 1 : 0;
+	}
+	
+	public static double square_root(double x) {
+		double low, high;
+		if (compare(x, 1.0) < 0) {
+			low = x; high = 1.0;
+		} else {
+			low = 1.0; high = x;
+		}
+		while ( compare(low, high) == -1) {
+			double mid = low + 0.5 * (high - low);
+			double square_mid = mid * mid;
+			if (compare(square_mid, x) == 0) {
+				return mid;
+			} else if (compare(square_mid, x) == 1) {
+				high = mid;
+			} else {
+				low = mid;
+			}
+		}
+		return low;
+	} 
 }
