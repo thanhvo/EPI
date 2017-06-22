@@ -176,4 +176,19 @@ T find_kth_in_two_sorted_arrays(const vector<T> &A, const vector<T> &B, const in
 
 double square_root(const double &x);
 
+template <typename T>
+bool matrix_search(const vector<vector<T>> &A, const T &x) {
+    int r = 0, c = A[0].size() -1;
+    while (r < (int)A.size() && c >= 0) {
+        if (A[r][c] == x) {
+            return true;
+        } else if (A[r][c] < x) {
+            ++r;
+        } else {
+            --c;
+        }
+    }
+    return false;
+}
+
 #endif

@@ -76,6 +76,17 @@ void test_square_root() {
     cout << square_root(2.0) << endl;
 }
 
+void test_matrix_search() {
+    vector<vector<int>> matrix = { {1,2,3,4},
+                                   {3,5,6,9},
+                                   {7,10,11,14},
+                                   {9,12,15,20}};
+    assert(matrix_search(matrix, 3));
+    assert(matrix_search(matrix, 16) == false);
+    assert(matrix_search(matrix, 6));
+    assert(matrix_search(matrix, 17) == false);
+}
+
 void test_search() {
     test_search_first();
     test_search_first_larger();
@@ -86,4 +97,5 @@ void test_search() {
     test_completion_search();
     test_find_kth_in_two_sorted_arrays();
     test_square_root();
+    test_matrix_search();
 }

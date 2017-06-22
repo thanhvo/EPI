@@ -81,4 +81,16 @@ public class SearchTest {
 	public void test_square_root() {
 		System.out.println(Search.square_root(2.0));
 	}
+	
+	@Test
+	public void test_search_sorted_2D_array() {
+		Integer[][] matrix = {{1,2,3,4},
+							  {3,5,6,7},
+							  {6,9,11,13},
+							  {8,10,15,20}};
+		assertEquals(Search.search_sorted_2D_array(matrix, 11), true);
+		assertEquals(Search.search_sorted_2D_array(matrix, 14), false);
+		assertEquals(Search.search_sorted_2D_array(matrix, 12), false);
+		assertEquals(Search.search_sorted_2D_array(matrix, 6), true);		
+	}
 }

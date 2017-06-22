@@ -255,4 +255,19 @@ public class Search {
 		}
 		return low;
 	} 
+	
+	public static<T extends Comparable> boolean search_sorted_2D_array(T[][] matrix, T val) {
+		int low_x = 0, high_y = matrix[0].length -1;
+		while (low_x < matrix.length && high_y >= 0) {
+			int comp = matrix[low_x][high_y].compareTo(val);
+			if (comp == 0) {
+				return true;
+			}else if (comp < 0) {
+				low_x++;
+			} else {
+				high_y--;
+			}
+		}
+		return false;
+	}
 }
