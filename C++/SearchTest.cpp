@@ -1,6 +1,8 @@
 #include <cassert>
 #include <vector>
 #include <iostream>
+#include <sstream>
+#include <string>
 
 #include "Search.h"
 #include "SearchTest.h"
@@ -100,6 +102,12 @@ void test_find_kth_largest() {
     assert(find_kth_largest(v, 3) == 15);
 }
 
+void test_find_kth_largest_unknown_length() {
+    string values = "1 10 3 9 15 21 4 34";
+    istringstream sin(values);
+    assert(find_kth_largest_unknown_length<int>(sin, 3) == 15);
+}
+
 void test_search() {
     test_search_first();
     test_search_first_larger();
@@ -112,4 +120,5 @@ void test_search() {
     test_square_root();
     test_matrix_search();
     test_find_kth_largest();
+    test_find_kth_largest_unknown_length();
 }

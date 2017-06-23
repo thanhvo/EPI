@@ -240,4 +240,19 @@ T find_kth_largest(vector<T> A, const int &k) {
     }
 }
 
+template <typename T>
+T find_kth_largest_unknown_length(istringstream &sin, const int &k) {
+    vector<T> M;
+    T x;
+    while( sin >> x) {
+        M.emplace_back(x);
+        if ((int)M.size() == (k << 1) -1) {
+            nth_element(M.begin(), M.begin() + k -1, M.end(), greater<T>());
+            M.resize(k);
+        }
+    }
+    nth_element(M.begin(), M.begin() + k - 1, M.end(), greater<T>());
+    return M[k-1];
+}
+
 #endif
