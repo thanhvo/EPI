@@ -93,4 +93,11 @@ public class SearchTest {
 		assertEquals(Search.search_sorted_2D_array(matrix, 12), false);
 		assertEquals(Search.search_sorted_2D_array(matrix, 6), true);		
 	}
+	
+	@Test
+	public void test_find_kth_largest() {
+		Integer[] a = {1,10,3,9,15,21,4,34};
+		assertEquals(Search.find_kth_largest(a, 1).intValue(), 34);
+		assertEquals(Search.find_kth_largest(a, 3).intValue(), 15);
+	}
 }

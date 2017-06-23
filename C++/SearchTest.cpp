@@ -94,6 +94,12 @@ void test_find_min_max() {
     assert(p.second == 9);
 }
 
+void test_find_kth_largest() {
+    vector<int> v = {1,10,3,9,15,21,4,34};
+    assert(find_kth_largest(v, 1) == 34);
+    assert(find_kth_largest(v, 3) == 15);
+}
+
 void test_search() {
     test_search_first();
     test_search_first_larger();
@@ -105,4 +111,5 @@ void test_search() {
     test_find_kth_in_two_sorted_arrays();
     test_square_root();
     test_matrix_search();
+    test_find_kth_largest();
 }

@@ -270,4 +270,38 @@ public class Search {
 		}
 		return false;
 	}
+	public static<T> void swap(T[] A, int i, int j) {
+		T tmp = A[i];
+		A[i] = A[j];
+		A[j] = tmp;
+	}
+	
+	private static<T extends Comparable> int partition(T[] A, int l, int r, int pivot) {
+		T pivot_value = A[pivot];
+		int larger_index = l;
+		swap(A, pivot, r);
+		for (int i = l; i <r; i++) {
+			if (A[i].compareTo(pivot_value) > 0) {
+				swap(A, i, larger_index++);
+			}
+		}
+		swap(A, r, larger_index);
+		return larger_index;
+	}
+	
+	public static<T extends Comparable> T find_kth_largest(T[] A, int k) {
+		int l = 0, r = A.length -1;
+		while (l <= r) {
+			int pivot = l + (r -l)/2;
+			int p = partition(A, l, r, pivot);
+			if (p == k -1) {
+				return A[p];
+			} else if (p > k -1) {
+				r = p -1;
+			} else {
+				l = p +1;
+			}
+		}
+		return A[l];
+	}
 }
