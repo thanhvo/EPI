@@ -100,4 +100,12 @@ public class SearchTest {
 		assertEquals(Search.find_kth_largest(a, 1).intValue(), 34);
 		assertEquals(Search.find_kth_largest(a, 3).intValue(), 15);
 	}
+	
+	@Test
+	public void test_find_duplicate_missing() {
+		int[] A = {0,1,2,4,5,4,6,7,8,9};
+		Pair<Integer, Integer> p = Search.find_duplicate_missing(A);
+		assertEquals(p.first.intValue(), 4);
+		assertEquals(p.second.intValue(), 3);
+	}
 }

@@ -304,4 +304,26 @@ public class Search {
 		}
 		return A[l];
 	}
+	
+	public static Pair<Integer, Integer> find_duplicate_missing(int[] A) {
+		int miss_XOR_dup = 0;
+		for (int i = 0; i< A.length; i++) {
+			miss_XOR_dup ^= i ^ A[i];
+		}
+		int differ_bit = miss_XOR_dup & (~(miss_XOR_dup -1)), miss_or_dup = 0;
+		for (int i = 0; i < A.length; i++) {
+			if ((i & differ_bit) != 0){
+				miss_or_dup ^= i;
+			} 
+			if ((A[i] & differ_bit) != 0) {
+				miss_or_dup ^= A[i];
+			}
+		}
+		for (int i = 0; i < A.length; i++) {
+			if (A[i] == miss_or_dup) {
+				return new Pair(miss_or_dup, miss_or_dup ^ miss_XOR_dup);
+			}
+		}
+		return new Pair(miss_or_dup ^ miss_XOR_dup, miss_or_dup);
+	}
 }

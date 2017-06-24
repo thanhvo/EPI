@@ -108,6 +108,13 @@ void test_find_kth_largest_unknown_length() {
     assert(find_kth_largest_unknown_length<int>(sin, 3) == 15);
 }
 
+void test_find_duplicate_missing() {
+    vector<int> A = {0,1,2,3,5,7,8,5,6,9};
+    pair<int, int> p = find_duplicate_missing(A);
+    assert(p.first == 5);
+    assert(p.second == 4);
+}
+
 void test_search() {
     test_search_first();
     test_search_first_larger();
@@ -121,4 +128,5 @@ void test_search() {
     test_matrix_search();
     test_find_kth_largest();
     test_find_kth_largest_unknown_length();
+    test_find_duplicate_missing();
 }
