@@ -326,4 +326,15 @@ public class Search {
 		}
 		return new Pair(miss_or_dup ^ miss_XOR_dup, miss_or_dup);
 	}
+	
+	public static int find_element_appear_once(int[] A) {
+		int ones = 0, twos = 0;		
+		for (int i : A) {
+			int next_ones = (~i & ones) | (i & ~ones & ~twos);
+			int next_twos = (~i & twos) | (i & ones);
+			ones = next_ones;
+			twos = next_twos;
+		}
+		return ones;
+	}
 }

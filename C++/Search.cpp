@@ -85,3 +85,15 @@ pair<int, int> find_duplicate_missing( const vector<int> &A) {
     }
     return {miss_or_dup ^ miss_XOR_dup, miss_or_dup};
 }
+
+int find_element_appear_once(const vector<int> &A) {
+    int ones = 0, twos = 0;
+    int next_ones, next_twos;
+    for (const int &i: A) {
+        next_ones = (~i & ones) | (i & ~ones & ~twos);
+        next_twos = (~i & twos) | (i & ones);
+        ones = next_ones;
+        twos = next_twos;
+    }
+    return ones;
+}

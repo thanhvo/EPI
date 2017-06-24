@@ -115,6 +115,11 @@ void test_find_duplicate_missing() {
     assert(p.second == 4);
 }
 
+void test_find_element_appear_once() {
+    vector<int> v = {1, 2, 3, 4, 2, 3, 4, 2,3,4};
+    assert(find_element_appear_once(v) == 1);
+}
+
 void test_search() {
     test_search_first();
     test_search_first_larger();
@@ -129,4 +134,5 @@ void test_search() {
     test_find_kth_largest();
     test_find_kth_largest_unknown_length();
     test_find_duplicate_missing();
+    test_find_element_appear_once();
 }

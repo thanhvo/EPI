@@ -257,4 +257,6 @@ T find_kth_largest_unknown_length(istringstream &sin, const int &k) {
 
 pair<int, int> find_duplicate_missing( const vector<int> &A);
 
+int find_element_appear_once(const vector<int> &A);
+
 #endif

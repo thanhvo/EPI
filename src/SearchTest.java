@@ -106,6 +106,12 @@ public class SearchTest {
 		int[] A = {0,1,2,4,5,4,6,7,8,9};
 		Pair<Integer, Integer> p = Search.find_duplicate_missing(A);
 		assertEquals(p.first.intValue(), 4);
-		assertEquals(p.second.intValue(), 3);
+		assertEquals(p.second.intValue(), 3);		
+	}
+	
+	@Test
+	public void test_find_element_appear_once() {
+		int[] A = {1,2,2,2,3,3,3,4,4,4,5,6,5,6,5,6};
+		assertEquals(Search.find_element_appear_once(A),1);
 	}
 }
