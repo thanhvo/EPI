@@ -259,4 +259,6 @@ pair<int, int> find_duplicate_missing( const vector<int> &A);
 
 int find_element_appear_once(const vector<int> &A);
 
+string majority_search(istringstream &sin);
+
 #endif

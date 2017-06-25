@@ -337,4 +337,21 @@ public class Search {
 		}
 		return ones;
 	}
+	
+	public static String majority_search(String input) {
+		Scanner scanner = new Scanner(input);
+		String candidate = null, buf;
+		int count = 0;
+		while (scanner.hasNext()) {
+			buf = scanner.next();
+			if (count == 0) {
+				candidate = buf;
+			} else if (candidate.equals(buf)) {
+				count++;
+			} else {
+				count--;
+			}
+		}
+		return candidate;
+	}
 }

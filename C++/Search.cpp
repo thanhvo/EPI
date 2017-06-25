@@ -1,7 +1,11 @@
 #include <algorithm>
 #include <numeric>
+#include <string>
+#include <sstream>
 
 #include "Search.h" 
+
+using namespace std;
 
 int search_index_value_equal(const vector<int> &A) {
     int l = 0, r = A.size() -1;
@@ -96,4 +100,21 @@ int find_element_appear_once(const vector<int> &A) {
         twos = next_twos;
     }
     return ones;
+}
+
+string majority_search(istringstream &sin) {
+    string candidate, buf;
+    int count = 0;
+    while (sin >> buf) {
+        if(count == 0) {
+            candidate = buf;
+            count = 1;
+        } else if (candidate == buf) {
+            ++count;
+        } else {
+            --count;
+        }
+        
+    }
+    return candidate;
 }

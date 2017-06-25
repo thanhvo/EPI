@@ -120,6 +120,12 @@ void test_find_element_appear_once() {
     assert(find_element_appear_once(v) == 1);
 }
 
+void test_majority_search() {
+    string values = "a b c a a d e f a a f f f f f f f a f f";
+    istringstream ss(values);
+    cout << majority_search(ss) << endl;
+}
+
 void test_search() {
     test_search_first();
     test_search_first_larger();
@@ -135,4 +141,5 @@ void test_search() {
     test_find_kth_largest_unknown_length();
     test_find_duplicate_missing();
     test_find_element_appear_once();
+    test_majority_search();
 }

@@ -114,4 +114,10 @@ public class SearchTest {
 		int[] A = {1,2,2,2,3,3,3,4,4,4,5,6,5,6,5,6};
 		assertEquals(Search.find_element_appear_once(A),1);
 	}
+	
+	@Test
+	public void test_majority_search() {
+		String input = "a b c a a d e f a a f f f f f f f a f f";
+		assertEquals(Search.majority_search(input), "f");
+	}
 }
