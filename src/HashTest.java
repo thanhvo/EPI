@@ -1,5 +1,6 @@
 import org.junit.*;
 import static org.junit.Assert.*;
+import java.util.*;
 
 public class HashTest {
 	@Test
@@ -10,5 +11,47 @@ public class HashTest {
 		assertEquals(pair.second.intValue(), 9);
 		String[] list2 = {"hello", "world", "just","a","random","sentence"};
 		assertEquals(HashUtil.closest_repeated_pair(list2), null);
+	}
+	
+	@Test
+	public void test_canonical_binary_tree() {
+		BTNode A = new BTNode(3);
+		BTNode B = new BTNode(2);
+		BTNode C = new BTNode(1);
+		BTNode D = new BTNode(0);
+		A.left = B;
+		B.left = C;
+		C.left = D;
+		BTNode E = new BTNode(9);
+		BTNode F = new BTNode(5);
+		BTNode G = new BTNode(3);
+		BTNode H = new BTNode(7);
+		BTNode I = new BTNode(11);
+		E.left = F;
+		E.right = I;
+		F.left = G;
+		F.right = H;
+		BTNode J = new BTNode(2);
+		BTNode K = new BTNode(1);
+		BTNode L = new BTNode(0);
+		BTNode M = new BTNode(5);
+		BTNode N = new BTNode(3);
+		BTNode O = new BTNode(7);
+		J.left = K;
+		J.right = M;
+		K.left = L;
+		M.left = N;
+		M.right = O;
+		
+		BTNode A1 = BTNode.getCanonical(A);
+		BTNode E1 = BTNode.getCanonical(E);
+		BTNode J1 = BTNode.getCanonical(J);
+		
+		BTNode[] list = {A, B, C, D, E, F, G, H, I, J, K, L, M, N, O};
+		for (BTNode node: list) {
+			BTNode canonical_node = BTNode.getCanonical(node);
+			assertEquals(node.data, canonical_node.data);
+			System.out.println(node + " " + canonical_node);
+		}
 	}
 }
