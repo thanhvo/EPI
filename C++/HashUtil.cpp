@@ -1,6 +1,8 @@
 #include <unordered_map>
 #include <limits>
 #include <iostream>
+#include <algorithm>
+#include <iterator>
 #include "HashUtil.h"
 
 using namespace std;
@@ -16,4 +18,19 @@ int find_closest_repetition(const vector<string> &s) {
         string_to_location[s[i]] = i;
     }
     return closest_distance;
+}
+
+void find_anagrams(const vector<string> &dictionary) {
+    unordered_map<string, vector<string>> hash;
+    for (const string &s: dictionary){
+        string sorted_str(s);
+        sort(sorted_str.begin(), sorted_str.end());
+        hash[sorted_str].emplace_back(s);
+    }
+    for (const pair<string, vector<string>> &p : hash) {
+        if (p.second.size() >=2) {
+            copy(p.second.begin(), p.second.end(), ostream_iterator<string>(cout, " "));
+            cout << endl;
+        }
+    }
 }

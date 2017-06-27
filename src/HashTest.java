@@ -1,5 +1,7 @@
 import org.junit.*;
 import static org.junit.Assert.*;
+
+import java.io.*;
 import java.util.*;
 
 public class HashTest {
@@ -51,7 +53,24 @@ public class HashTest {
 		for (BTNode node: list) {
 			BTNode canonical_node = BTNode.getCanonical(node);
 			assertEquals(node.data, canonical_node.data);
-			System.out.println(node + " " + canonical_node);
+			//System.out.println(node + " " + canonical_node);
 		}
+	}
+	
+	@Test
+	public void test_anagram() throws Exception{
+		List<String> dictionary = HashUtil.getDictionary("/usr/share/dict/words");
+		Map<String, List<String>> map = HashUtil.get_anagram_sub_sets(dictionary);
+		PrintWriter printer = new PrintWriter(new File("/home/thanh/workspace/EPI/output/anagrams.txt"));
+		for (String key : map.keySet()) {
+			List<String> list = map.get(key);
+			if (list.size() >= 2) {
+				for (String s : map.get(key)) {
+					printer.print(s + " ");
+				}
+				printer.println();
+			}
+		}
+		printer.close();
 	}
 }

@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.*;
 
 public class HashUtil {
@@ -14,6 +15,46 @@ public class HashUtil {
 			map.put(list[i], i);
 		}
 		return pair;
+	}
+	
+	public static String anagram_hash(String s) {
+		int[] count = new int[26];
+		for (int i = 0; i < s.length(); i++) {
+			count[s.charAt(i)-'a']++;
+		}
+		String hash = "";
+		for (int i = 0; i < 26; i++) {
+			hash += count[i];
+			hash += (char)(i + 'a');
+		}
+		return hash;
+	}
+	
+	public static Map<String, List<String>> get_anagram_sub_sets(List<String> list) {
+		Map<String, List<String>> map =new HashMap<String, List<String>>();
+		for (String s: list) {
+			String key = anagram_hash(s);
+			if (!map.containsKey(key)) {
+				List<String> subset = new ArrayList<String>();
+				subset.add(s);
+				map.put(key, subset);
+			} else {
+				map.get(key).add(s);
+			}
+		}
+		return map;
+	}
+	
+	public static List<String> getDictionary(String filename) throws Exception{
+		Scanner scanner = new Scanner(new File(filename));
+		Set<String> set= new HashSet<String>();
+		while (scanner.hasNext()) {
+			String s = scanner.next();
+			if (s.matches("[a-z]*"))
+				set.add(s);
+		}
+		scanner.close();
+		return new ArrayList(set);
 	}
 
 }
