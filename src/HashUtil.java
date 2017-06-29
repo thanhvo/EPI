@@ -62,31 +62,31 @@ public class HashUtil {
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		int itemNum = 0;
 		while (scanner.hasNext()) {			
-			for (int i = 0; i < k; i++) {
+			for (int i = 0; i <= k; i++) {
 				if (scanner.hasNext()) {
 					String s = scanner.next();
 					itemNum++;
 					if (map.containsKey(s)) {
 						map.put(s, map.get(s) +1);
-					} else if (map.size() < k) {
+					} else if (map.size() <= k) {
 						map.put(s, 1);
 					}
 				} else {
 					break;
 				}
 			}
-			if (!scanner.hasNext())
-				break;
-			Iterator it = map.entrySet().iterator();
-			while (it.hasNext()) {
-				Map.Entry<String, Integer> entry = (Map.Entry<String, Integer>)it.next();
-				String s = entry.getKey();
-				if (map.get(s) > 1) {
-					map.put(s,  map.get(s) -1);
-				} else {
-					it.remove();
+			if (map.size() == k +1) {
+				Iterator it = map.entrySet().iterator();
+				while (it.hasNext()) {
+					Map.Entry<String, Integer> entry = (Map.Entry<String, Integer>)it.next();
+					String s = entry.getKey();
+					if (map.get(s) > 1) {
+						map.put(s,  map.get(s) -1);
+					} else {
+						it.remove();
+					}
 				}
-			}		
+			}
 		}
 		scanner.close();
 		scanner = new Scanner(input);
@@ -101,7 +101,7 @@ public class HashUtil {
 		}
 		List<String> list = new ArrayList<String>();
 		for(String s: map.keySet()) {
-			if (map.get(s) >= itemNum/k) list.add(s);
+			if (map.get(s) >= (double)itemNum/k) list.add(s);
 		}
 		return list;
 	}

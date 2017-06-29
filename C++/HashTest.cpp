@@ -29,8 +29,18 @@ void test_find_line_with_most_points() {
          << line.intercept.first << " " << line.intercept.second << endl; 
 }
 
+void test_search_frequent_items() {
+    string values = "a b c a b c a d e a b";
+    istringstream ss(values);
+    vector<string> frequent_items = search_frequent_items(ss, 4);
+    for (string s: frequent_items)
+        cout << s << " ";
+    cout << endl;
+}
+
 void test_hash() {
     test_find_closest_petition();
     test_anagrams();
     test_find_line_with_most_points();
+    test_search_frequent_items();
 }

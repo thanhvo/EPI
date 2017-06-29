@@ -9,4 +9,6 @@ int find_closest_repetition(const vector<string> &s);
 
 void find_anagrams(const vector<string> &dictionary);
 
+vector<string> search_frequent_items(istringstream &sin, const int &k);
+
 #endif
