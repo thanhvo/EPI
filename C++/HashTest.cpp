@@ -4,8 +4,7 @@
 #include <sstream>
 #include <iterator>
 #include "HashUtil.h"
-
-using namespace std;
+#include "Plane.h"
 
 void test_find_closest_petition() {
     vector<string> s = {"All", "work", "and", "no", "play", "makes", "for", "no", "work", "no", "fun", "and", "no", "results"};
@@ -23,7 +22,15 @@ void test_anagrams() {
     find_anagrams(v);
 }
 
+void test_find_line_with_most_points() {
+    vector<Point> v = {{1,2}, {2,3}, {3,4}, {0,0},{1,1},{5,4}};
+    Line line = find_line_with_most_points(v);
+    cout << line.slope.first << " " << line.slope.second << " " 
+         << line.intercept.first << " " << line.intercept.second << endl; 
+}
+
 void test_hash() {
     test_find_closest_petition();
     test_anagrams();
+    test_find_line_with_most_points();
 }

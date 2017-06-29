@@ -73,4 +73,13 @@ public class HashTest {
 		}
 		printer.close();
 	}
+	
+	@Test
+	public void test_frequent_item() {
+		String values = "a b c a b c a d e a b";
+		for (String s: HashUtil.getFrequentItems(values, 4)) {
+			System.out.print(s + " ");
+		}
+		System.out.println();
+	}
 }
