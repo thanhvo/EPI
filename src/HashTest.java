@@ -82,4 +82,12 @@ public class HashTest {
 		}
 		System.out.println();
 	}
+	
+	@Test
+	public void test_find_smallest_subarray_covering_sub_set() {
+		String[] A = {"a", "b", "c", "d", "a","b","e","f","a","b","d"};
+		String[] Q = {"a", "b", "d"};
+		Pair<Integer, Integer> pair = HashUtil.find_smallest_subarray_covering_subset(A, Q);
+		System.out.println(pair.first + " " + pair.second);
+	}
 }

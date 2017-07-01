@@ -38,9 +38,17 @@ void test_search_frequent_items() {
     cout << endl;
 }
 
+void test_find_smallest_subarray_covering_subset() {
+    vector<string> A = {"a", "b", "c", "d", "a","b","e","f","a","b","d"};
+    vector<string> Q = {"a", "b", "d"};
+    pair<int, int> p = find_smallest_subarray_covering_subset(A, Q);
+    cout << p.first << " " << p.second << endl;
+}
+
 void test_hash() {
     test_find_closest_petition();
     test_anagrams();
     test_find_line_with_most_points();
     test_search_frequent_items();
+    test_find_smallest_subarray_covering_subset();
 }

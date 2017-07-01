@@ -11,4 +11,6 @@ void find_anagrams(const vector<string> &dictionary);
 
 vector<string> search_frequent_items(istringstream &sin, const int &k);
 
+pair<int, int> find_smallest_subarray_covering_subset(const vector<string> &A, const vector<string> &Q);
+
 #endif

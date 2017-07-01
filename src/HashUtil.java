@@ -105,5 +105,45 @@ public class HashUtil {
 		}
 		return list;
 	}
+	
+	public static Pair<Integer, Integer> find_smallest_subarray_covering_subset(String[] A, String[] Q) {
+		HashSet<String> dict = new HashSet<String>(Arrays.asList(Q));
+		HashMap<String, Integer> count_Q = new HashMap<String, Integer>();
+		int l = 0, r = 0;
+		Pair<Integer, Integer> res= new Pair(-1, -1);
+		while (r < A.length) {
+			// Keep moving r until it reaches end or count_Q has |Q| items
+			while (r < A.length && count_Q.size() < Q.length) {
+				if (dict.contains(A[r])) {
+					if (count_Q.containsKey(A[r])) {
+						count_Q.put(A[r], count_Q.get(A[r])+1);
+					} else {
+						count_Q.put(A[r], 1);
+					}					
+				}
+				++r;
+			}
+			if (count_Q.size() == Q.length && (res.first == -1 && res.second == -1)) {
+				res.first = l;
+				res.second = r -1;
+			}
+			// Keep moving l until it reaches end or count_Q has less than |Q| items
+			while (l < A.length && count_Q.size() == Q.length) {
+				if (dict.contains(A[l])) {
+					if (count_Q.get(A[l]) == 1) {						
+						count_Q.remove(A[l]);
+						if ((res.first == -1 && res.second == -1) || r-1-l < res.second - res.first) {
+							res.first = l;
+							res.second = r -1;
+						}
+					} else {
+						count_Q.put(A[l],count_Q.get(A[l]) -1);
+					}
+				}
+				++l;
+			}			
+		}
+		return res;
+	}
 
 }
