@@ -13,4 +13,8 @@ vector<string> search_frequent_items(istringstream &sin, const int &k);
 
 pair<int, int> find_smallest_subarray_covering_subset(const vector<string> &A, const vector<string> &Q);
 
+pair <int, int> improved_find_smallest_subarray_covering_subset(istringstream &sin, const vector<string> &Q);
+
+pair<int, int> find_smallest_sequentially_covering_subset(const vector<string> &A, const vector<string> &Q);
+
 #endif

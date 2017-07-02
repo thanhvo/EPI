@@ -41,8 +41,14 @@ void test_search_frequent_items() {
 void test_find_smallest_subarray_covering_subset() {
     vector<string> A = {"a", "b", "c", "d", "a","b","e","f","a","b","d"};
     vector<string> Q = {"a", "b", "d"};
-    pair<int, int> p = find_smallest_subarray_covering_subset(A, Q);
-    cout << p.first << " " << p.second << endl;
+    pair<int, int> p1 = find_smallest_subarray_covering_subset(A, Q);
+    cout << p1.first << " " << p1.second << endl;
+    string values = "a b c d a b e f a b d";
+    istringstream ss(values);
+    pair<int, int> p2 = improved_find_smallest_subarray_covering_subset(ss, Q);
+    cout << p2.first << " " << p2.second << endl;
+    pair<int, int> p3 = find_smallest_sequentially_covering_subset(A, Q);
+    cout << p3.first << " " << p3.second << endl;
 }
 
 void test_hash() {

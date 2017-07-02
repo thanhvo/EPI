@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <iterator>
 #include <sstream>
+#include <list>
 #include "HashUtil.h"
 
 using namespace std;
@@ -81,7 +82,7 @@ vector<string> search_frequent_items(istringstream &sin, const int &k) {
     return ret;
 }
 
-pair <int, int> find_smallest_subarray_covering_subset(const vector<string> &A, const vector<string> &Q) {
+pair<int, int> find_smallest_subarray_covering_subset(const vector<string> &A, const vector<string> &Q) {
     unordered_set<string> dict(Q.cbegin(), Q.cend());
     unordered_map<string, int> count_Q;
     int l =0, r = 0;
@@ -112,4 +113,57 @@ pair <int, int> find_smallest_subarray_covering_subset(const vector<string> &A, 
         }
     }
     return res;
+}
+
+pair<int, int> improved_find_smallest_subarray_covering_subset(istringstream &sin, const vector<string> &Q) {
+    list<int> loc; // Tracking the last occurrence (index) of each string in Q
+    unordered_map <string, list<int>::iterator> dict;
+    for (const string &s: Q) {
+        dict.emplace(s, loc.end());        
+    }
+    pair<int, int> res(-1, -1);
+    int idx = 0;
+    string s;
+    while (sin >> s) {
+        auto it = dict.find(s);
+        if (it != dict.end()) { // s is in Q
+            if (it->second != loc.end()) {
+                loc.erase(it->second);
+            }
+            loc.emplace_back(idx);
+            it->second = --loc.end();
+        }
+        if (loc.size() == Q.size() && // find |Q| keywords
+            ((res.first == -1 && res.second == -1) || idx - loc.front() < res.second - res.first) ) {
+                res = {loc.front(), idx};
+        }
+        ++idx;
+    }
+    return res;
+}
+
+pair<int, int> find_smallest_sequentially_covering_subset(
+    const vector<string> &A, const vector<string> &Q) {
+    unordered_map <string, int> K;
+    vector<int> L(Q.size(), -1), D(Q.size(), numeric_limits<int>::max());
+    // Initialize K
+    for (unsigned int i = 0; i < Q.size(); ++i) {
+        K.emplace(Q[i], i);        
+    }
+    pair<int, int> res(-1, A.size()); // default value
+    for (unsigned int i = 0; i < A.size(); ++i) {
+        auto it = K.find(A[i]);
+        if (it != K.cend()) {
+            if (it->second == 0) { // first one, no predecessor
+                D[0] = 1; // base condition
+            } else if (D[it->second -1] != numeric_limits<int>::max()) {
+                D[it->second] = i - L[it->second -1] + D[it->second -1];                
+            }
+            L[it->second] = i;
+            if (it->second == Q.size() - 1 && D.back() < res.second - res.first + 1) {
+                res = { i - D.back() + 1, i};
+            }
+        }
+    }
+    return res;        
 }

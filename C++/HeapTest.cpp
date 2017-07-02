@@ -55,7 +55,15 @@ void test_heap_stack_queue() {
 }
 
 void test_k_closest_stars() {
-    string stringvalues ="0,0.0,0.0,0.0\n1,0.0,0.0,1.0\n2,1.0,0.0,0.0\n3,0.0,1.0,0.0\n4,0.0,1.0,0.0\n5,3.0,1.0,0.0\n6,3.0,1.0,2.0\n7,8.0,1.0,9.0\n8,2.0,1.0,0.0\n";  
+    string stringvalues ="0,0.0,0.0,0.0\n"
+                         "1,0.0,0.0,1.0\n"
+                         "2,1.0,0.0,0.0\n"
+                         "3,0.0,1.0,0.0\n"
+                         "4,0.0,1.0,0.0\n"
+                         "5,3.0,1.0,0.0\n"
+                         "6,3.0,1.0,2.0\n"
+                         "7,8.0,1.0,9.0\n"
+                         "8,2.0,1.0,0.0\n";  
     istringstream ss(stringvalues);
     vector<Star> closest_stars = find_closest_k_stars(ss, 4);
     for (Star star : closest_stars) {

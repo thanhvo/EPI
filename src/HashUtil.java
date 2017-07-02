@@ -145,5 +145,34 @@ public class HashUtil {
 		}
 		return res;
 	}
+	
+	public static Pair<Integer, Integer> find_smallest_sequentially_covering_subset(String[] A, String[] Q) {
+		HashMap<String, Integer> K = new HashMap<String, Integer>();
+		int[] L = new int[Q.length];
+		Arrays.fill(L, -1);
+		int[] D = new int[Q.length];
+		Arrays.fill(D, Integer.MAX_VALUE);
+		// Initialize K
+		for (int i = 0; i < Q.length; ++i) {
+			K.put(Q[i], i);
+		}
+		Pair<Integer, Integer> res = new Pair(-1, A.length); // default value
+		for (int i = 0; i < A.length; ++i) {
+			if (K.containsKey(A[i])) {
+				int id = K.get(A[i]);
+				if (id == 0) { // first one, no predecessor
+					D[0] = 1;
+				} else if(D[id -1] != Integer.MAX_VALUE) {
+					D[id] = i - L[id-1] + D[id-1];
+				}
+				L[id] = i;
+				if (id == Q.length -1 && D[id] < res.second - res.first +1) {
+					res.first = i - D[id] + 1;
+					res.second = i;
+				}
+			}
+		}
+		return res;
+	}
 
 }
