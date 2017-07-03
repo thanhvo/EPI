@@ -5,6 +5,7 @@
 #include <iterator>
 #include "HashUtil.h"
 #include "Plane.h"
+#include "LRUCache.h"
 
 void test_find_closest_petition() {
     vector<string> s = {"All", "work", "and", "no", "play", "makes", "for", "no", "work", "no", "fun", "and", "no", "results"};
@@ -51,10 +52,36 @@ void test_find_smallest_subarray_covering_subset() {
     cout << p3.first << " " << p3.second << endl;
 }
 
+void test_LRU_Cache() {
+    LRUCache<string, int, 10> book_cache;
+    book_cache.insert("Pride and Prejudice", 10);
+    book_cache.insert("Wuthering Heights", 20);
+    book_cache.insert("Sherlock Homes", 30);
+    book_cache.insert("Harry Potter", 50);
+    book_cache.insert("The Lord of the Rings", 50);
+    book_cache.insert("The Hobbit", 30);
+    book_cache.insert("Ivanhoe", 10);
+    book_cache.insert("Life of Pi", 20);
+    book_cache.insert("Romeo and Juliet", 10);
+    book_cache.insert("Hamlet", 10);
+    int price;
+    assert(book_cache.lookup("Pride and Prejudice", &price));    
+    assert(price == 10);
+    assert(book_cache.lookup("Twilight", &price) == false);
+    book_cache.insert("Twilight", 20);
+    book_cache.insert("The hunger games", 20);
+    assert(book_cache.lookup("Pride and Prejudice", &price));
+    assert(price == 10);
+    assert(book_cache.lookup("Wuthering Heights", &price) == false);
+    assert(book_cache.lookup("Twilight", &price));
+    assert(price == 20);
+}
+
 void test_hash() {
     test_find_closest_petition();
     test_anagrams();
     test_find_line_with_most_points();
     test_search_frequent_items();
     test_find_smallest_subarray_covering_subset();
+    test_LRU_Cache();
 }
