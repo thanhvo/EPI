@@ -17,4 +17,5 @@ pair <int, int> improved_find_smallest_subarray_covering_subset(istringstream &s
 
 pair<int, int> find_smallest_sequentially_covering_subset(const vector<string> &A, const vector<string> &Q);
 
+
 #endif
