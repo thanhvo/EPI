@@ -18,7 +18,17 @@ void test_counting_test() {
     }
 }
 
+void test_intersect_arrs() {
+    vector<int> a= {0,2,3,4,6,8,10};
+    vector<int> b = {0,1,3,4,7,10};
+    vector<int> c = intersect_arrs(a, b);
+    for (auto i : c)
+        cout << i << " ";
+    cout << endl;
+}
+
 void test_sort() {
     test_indirect_sort();
     test_counting_test();
+    test_intersect_arrs();
 }

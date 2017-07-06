@@ -70,5 +70,22 @@ void counting_sort(vector<Person<KeyType>> &people) {
     }
 }
 
+template <typename T>
+vector<T> intersect_arrs(const vector<T> &A, const vector<T> &B) {
+    vector<T> intersect;
+    unsigned int i =0, j= 0;
+    while (i < A.size() && j < B.size()) {
+        if (A[i] == B[j] && (i == 0 || A[i] != A[i-1])) {
+            intersect.emplace_back(A[i]);
+            ++i, ++j;            
+        } else if (A[i] < B[j]) {
+            ++i;
+        } else { // A[i] > B[j]
+            ++j;
+        }
+    }
+    return intersect;
+}
+
 
 #endif

@@ -73,4 +73,44 @@ public class Sort {
 			}
 		}
 	}
+	
+	public static <T extends Comparable> List<T> intersect_sorted_arrays(List<T> A, List<T> B) {
+		if (A == null || A.isEmpty() || B == null || B.isEmpty()) {
+			return null;
+		}
+		List<T> C = new ArrayList<T>();
+		Iterator<T> it1 = A.iterator();
+		Iterator<T> it2 = B.iterator();
+		T a = it1.next();
+		T b = it2.next();
+		do {
+			if (a.compareTo(b) < 0) {
+				if (it1.hasNext()) {
+					a = it1.next();
+				} else {
+					a = null;
+				}
+			} else if (a.compareTo(b) > 0) {
+				if (it2.hasNext()) {
+					b = it2.next();
+				} else {
+					b = null;
+				}
+			} else {
+				C.add(a);
+				if (it1.hasNext()) {
+					a = it1.next();
+				} else {
+					a = null;
+				} 
+				if (it2.hasNext()) {
+					b = it2.next();	
+				} else {
+					b = null;
+				}
+			}
+		} while (a != null && b != null);
+		
+		return C;
+	}
 }

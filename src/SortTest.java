@@ -27,4 +27,24 @@ public class SortTest {
 	    }
 	    System.out.println();
 	}
+	
+	@Test
+	public void test_intersect_sorted_arrays() {
+		List<Integer> A = new ArrayList<Integer>();
+		List<Integer> B = new ArrayList<Integer>();
+		A.add(1);
+		A.add(4);
+		A.add(7);
+		A.add(10);
+		B.add(0);
+		B.add(2);
+		B.add(4);
+		B.add(6);
+		B.add(10);
+		List<Integer> C = Sort.intersect_sorted_arrays(A, B);
+		for (Integer c: C) {
+			System.out.print(c + " ");
+		}
+		System.out.println();
+	}
 }
