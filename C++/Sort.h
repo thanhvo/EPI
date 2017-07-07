@@ -87,5 +87,44 @@ vector<T> intersect_arrs(const vector<T> &A, const vector<T> &B) {
     return intersect;
 }
 
+template <typename TimeType>
+class Interval {
+    public:
+        TimeType start, finish;
+        Interval(TimeType __start, TimeType __finish): start(__start), finish(__finish) {}
+};
+
+template <typename TimeType>
+class EndPoint {
+    public: 
+        TimeType time;
+        bool isStart;
+        const bool operator<(const EndPoint &e) const {
+            return time != e.time ? time < e.time : (isStart && !e.isStart);
+        }
+};
+
+template <typename TimeType>
+int find_max_concurrent_events(const vector<Interval<TimeType>> &A) {
+    // Build the endpoint array
+    vector<EndPoint<TimeType>> E;
+    for (const Interval<TimeType> &i: A) {
+        E.emplace_back(EndPoint<TimeType>{i.start, true});
+        E.emplace_back(EndPoint<TimeType>{i.finish, false});
+    }
+    // Sort the end point array according to the time
+    sort(E.begin(), E.end());
+    // Find the maximum number of events overlapped
+    int max_count = 0, count = 0;
+    for (const EndPoint<TimeType> &e: E) {
+        if (e.isStart) {
+            max_count = max(++count, max_count);
+        } else {
+            --count;
+        }
+    }
+    return max_count;
+}
+
 
 #endif

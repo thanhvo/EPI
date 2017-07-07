@@ -113,4 +113,23 @@ public class Sort {
 		
 		return C;
 	}
+	
+	public static int getMaxConcurrentEvents(List<Event> events) {
+		Collections.sort(events);		
+		HashMap<Integer, Event> map = new HashMap<Integer, Event>();
+		int max = 0;
+		for (Event event: events) {
+			boolean newLayer = true;
+			for (int i = 1; i <= max; i++) {
+				if (newLayer && !event.intersect(map.get(i))){
+					newLayer = false;
+					map.put(i, event);					
+				}
+			}
+			if (newLayer) {
+				map.put(++max, event);
+			}
+		}
+		return max;
+	}
 }

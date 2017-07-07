@@ -1,6 +1,7 @@
 #include "Sort.h"
 #include "SortTest.h"
 #include <iostream>
+#include <cassert>
 
 using namespace std;
 
@@ -27,8 +28,14 @@ void test_intersect_arrs() {
     cout << endl;
 }
 
+void test_find_max_concurrent_events() {
+    vector<Interval<int>> events = {{1,5}, {6,10}, {11,13}, {14,15}, {2,7}, {8,9}, {12,15}, {4,5}, {9,17}};
+    assert(find_max_concurrent_events(events) == 3);   
+}
+
 void test_sort() {
     test_indirect_sort();
     test_counting_test();
     test_intersect_arrs();
+    test_find_max_concurrent_events();
 }

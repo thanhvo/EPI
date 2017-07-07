@@ -47,4 +47,19 @@ public class SortTest {
 		}
 		System.out.println();
 	}
+	
+	@Test
+	public void test_max_concurrent_events() {
+		List<Event> events = new ArrayList<Event>();
+		events.add(new Event (1,5));
+		events.add(new Event(6,10));
+		events.add(new Event(11, 13));
+		events.add(new Event(2, 7));
+		events.add(new Event(14,15));
+		events.add(new Event(8,9));
+		events.add(new Event(12,15));
+		events.add(new Event(4,5));
+		events.add(new Event(9,17));
+		assertEquals(Sort.getMaxConcurrentEvents(events), 3);
+	}
 }
