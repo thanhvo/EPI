@@ -88,10 +88,10 @@ vector<T> intersect_arrs(const vector<T> &A, const vector<T> &B) {
 }
 
 template <typename TimeType>
-class Interval {
+class Simple_Interval {
     public:
         TimeType start, finish;
-        Interval(TimeType __start, TimeType __finish): start(__start), finish(__finish) {}
+        Simple_Interval(TimeType __start, TimeType __finish): start(__start), finish(__finish) {}
 };
 
 template <typename TimeType>
@@ -99,18 +99,45 @@ class EndPoint {
     public: 
         TimeType time;
         bool isStart;
+        bool isClose;
+        EndPoint(TimeType __time, bool __isStart, bool __isClose): time(__time), isStart(__isStart), isClose(__isClose){}
         const bool operator<(const EndPoint &e) const {
             return time != e.time ? time < e.time : (isStart && !e.isStart);
-        }
+        }    
 };
 
 template <typename TimeType>
-int find_max_concurrent_events(const vector<Interval<TimeType>> &A) {
+class Interval {
+    public:
+        EndPoint<TimeType> left, right;
+        Interval(EndPoint<TimeType> __left, EndPoint<TimeType> __right): left(__left), right(__right) {}
+        const bool operator < (const Interval &i) const {
+            return left.time != i.left.time ? left.time < i.left.time : (left.isClose && !i.left.isClose);
+        }
+};
+
+
+template <typename TimeType>
+ostream& operator<<(ostream &stream, const Interval<TimeType> &i) {
+    if (i.left.isClose)
+        stream << "[";
+    else 
+        stream << "(";
+    stream << i.left.time << "," << i.right.time; 
+    if (i.right.isClose)
+        stream << "]";
+    else
+        stream << ")";
+    return stream;
+} 
+
+template <typename TimeType>
+int find_max_concurrent_events(const vector<Simple_Interval<TimeType>> &A) {
     // Build the endpoint array
     vector<EndPoint<TimeType>> E;
-    for (const Interval<TimeType> &i: A) {
-        E.emplace_back(EndPoint<TimeType>{i.start, true});
-        E.emplace_back(EndPoint<TimeType>{i.finish, false});
+    for (const Simple_Interval<TimeType> &i: A) {
+        E.emplace_back(EndPoint<TimeType>{i.start, true, true});
+        E.emplace_back(EndPoint<TimeType>{i.finish, false, true});
     }
     // Sort the end point array according to the time
     sort(E.begin(), E.end());
@@ -126,5 +153,31 @@ int find_max_concurrent_events(const vector<Interval<TimeType>> &A) {
     return max_count;
 }
 
+
+template <typename TimeType>
+vector<Interval<TimeType>> union_intervals(vector<Interval<TimeType>> I) {
+    // Empty input
+    if (I.empty()) {
+        return {};
+    }
+    // Sort intervals according to their left endpoints
+    sort(I.begin(), I.end());
+    Interval<TimeType> curr(I.front());
+    vector<Interval<TimeType>> uni;
+    for (unsigned int i = 1; i < I.size(); ++i) {
+        if (I[i].left.time < curr.right.time || (I[i].left.time == curr.right.time 
+            && (I[i].left.isClose || curr.right.isClose))) {
+            if (I[i].right.time > curr.right.time || 
+            (I[i].right.time == curr.right.time && I[i].right.isClose)) {
+                curr.right = I[i].right;
+            }
+        } else {
+            uni.emplace_back(curr);
+            curr = I[i];
+        }
+    }
+    uni.emplace_back(curr);
+    return uni;
+}  
 
 #endif

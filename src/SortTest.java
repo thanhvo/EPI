@@ -61,5 +61,34 @@ public class SortTest {
 		events.add(new Event(4,5));
 		events.add(new Event(9,17));
 		assertEquals(Sort.getMaxConcurrentEvents(events), 3);
+		List<Interval<Integer>> intervals = new ArrayList<Interval<Integer>>();
+		intervals.add(new Interval<Integer>(1,5));
+		intervals.add(new Interval<Integer>(6,10));
+		intervals.add(new Interval<Integer>(11, 13));
+		intervals.add(new Interval<Integer>(2, 7));
+		intervals.add(new Interval<Integer>(14,15));
+		intervals.add(new Interval<Integer>(8,9));
+		intervals.add(new Interval<Integer>(12,15));
+		intervals.add(new Interval<Integer>(4,5));
+		intervals.add(new Interval<Integer>(9,17));
+		assertEquals(Sort.find_max_concurrent_events(intervals), 3);
+	}
+	
+	@Test
+	public void test_union_intervals() {
+		List<Interval<Integer>> intervals = new ArrayList<Interval<Integer>>();
+		intervals.add(new Interval<Integer>(1,5));
+		intervals.add(new Interval<Integer>(7,10));
+		intervals.add(new Interval<Integer>(11, 13));
+		intervals.add(new Interval<Integer>(14,15));
+		intervals.add(new Interval<Integer>(8,9));
+		intervals.add(new Interval<Integer>(12,15));
+		intervals.add(new Interval<Integer>(3,5));
+		intervals.add(new Interval<Integer>(9,17));
+		List<Interval<Integer>> union = Sort.union_intervals(intervals);
+		for (Interval<Integer> i: union) {
+			System.out.print(i);
+		}
+		System.out.println();
 	}
 }

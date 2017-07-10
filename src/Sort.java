@@ -132,4 +132,52 @@ public class Sort {
 		}
 		return max;
 	}
+	
+	public static<TimeType extends Comparable> int find_max_concurrent_events(List<Interval<TimeType>> A) {
+		// Build the end point array
+		List<EndPoint<TimeType>> E = new ArrayList<EndPoint<TimeType>>();
+		for (Interval<TimeType> i : A) {
+			E.add(new EndPoint<TimeType>(i.start, true));
+			E.add(new EndPoint<TimeType>(i.finish, false));
+		}
+		// Sort the end point array according to the time
+		Collections.sort(E);
+		// Find the maximum number of events overlapped
+		int max_count = 0, count = 0;
+		for (EndPoint<TimeType> e: E) {
+			if (e.isStart) {
+				max_count = Math.max(++count, max_count);
+			} else {
+				--count;
+			}
+		}
+		return max_count;
+	}
+	
+	public static<TimeType extends Comparable> List<Interval<TimeType>> union_intervals(List<Interval<TimeType>> A) {
+		List<EndPoint<TimeType>> E = new ArrayList<EndPoint<TimeType>>();
+		for (Interval<TimeType> i: A) {
+			E.add(new EndPoint<TimeType>(i.start, true));
+			E.add(new EndPoint<TimeType>(i.finish, false));
+		}
+		// Sort the end point array
+		Collections.sort(E);
+		int count = 0;
+		TimeType start = null;
+		List<Interval<TimeType>> B = new ArrayList<Interval<TimeType>>();
+		for (EndPoint<TimeType> e: E) {
+			if (e.isStart) {
+				if (count == 0) {
+					start = e.time;
+				}
+				count++;
+			} else {
+				count--;
+				if (count == 0) {
+					B.add(new Interval<TimeType>(start, e.time));
+				}
+			}
+		}
+		return B;
+	}
 }
