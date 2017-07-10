@@ -44,10 +44,20 @@ void test_union_intervals() {
     cout << endl;
 }
 
+void test_find_minimum_visits() {
+    vector<Simple_Interval<int>> intervals = {{1,5}, {6,10}, {11,13}, {14,15}, {2,7}, {8,9}, {12,15}, {4,5}, {9,17}};
+    vector<int> visits = find_minimum_visits(intervals);
+    for (int visit: visits) {
+        cout << visit << " ";
+    }
+    cout << endl;
+}
+
 void test_sort() {
     test_indirect_sort();
     test_counting_test();
     test_intersect_arrs();
     test_find_max_concurrent_events();
     test_union_intervals();
+    test_find_minimum_visits();
 }

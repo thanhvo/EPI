@@ -180,4 +180,35 @@ public class Sort {
 		}
 		return B;
 	}
+	
+	public static<TimeType extends Comparable> List<TimeType> find_minimun_visits(List<Interval<TimeType>> I) {
+		Comparator<Interval<TimeType>> left_comparator = 
+					(a, b) -> ((a.start != b.start) ? a.start.compareTo(b.start): a.finish.compareTo(b.finish));
+		Comparator<Interval<TimeType>> right_comparator =
+					(a, b) -> ((a.finish != b.finish) ? a.finish.compareTo(b.finish) : a.start.compareTo(b.start));
+		TreeSet<Interval<TimeType>> L = new TreeSet<Interval<TimeType>>(left_comparator);
+		TreeSet<Interval<TimeType>> R = new TreeSet<Interval<TimeType>>(right_comparator);
+		for (Interval<TimeType> i : I) {
+			L.add(i);
+			R.add(i);
+		}
+		List<TimeType> S = new ArrayList<TimeType>();
+		while (!L.isEmpty() && !R.isEmpty()) {
+			TimeType b = R.first().finish;
+			S.add(b);
+			// Remove intervals which intersect with b
+			Iterator<Interval<TimeType>> it = L.iterator();
+			Interval<TimeType> i = it.next();
+			while (i.start.compareTo(b) <= 0) {
+				R.remove(i);
+				it.remove();
+				if (it.hasNext()) {
+					i = it.next();
+				} else {
+					break;
+				}
+			}
+		}
+		return S;
+	}
 }

@@ -91,4 +91,23 @@ public class SortTest {
 		}
 		System.out.println();
 	}
+	
+	@Test
+	public void test_find_minimum_visits() {
+		List<Interval<Integer>> intervals = new ArrayList<Interval<Integer>>();
+		intervals.add(new Interval<Integer>(1,5));
+		intervals.add(new Interval<Integer>(6,10));
+		intervals.add(new Interval<Integer>(11, 13));
+		intervals.add(new Interval<Integer>(2, 7));
+		intervals.add(new Interval<Integer>(14,15));
+		intervals.add(new Interval<Integer>(8,9));
+		intervals.add(new Interval<Integer>(12,15));
+		intervals.add(new Interval<Integer>(4,5));
+		intervals.add(new Interval<Integer>(9,17));
+		List<Integer> visits = Sort.find_minimun_visits(intervals);
+		for (Integer visit: visits) {
+			System.out.print(visit + " ");
+		}
+		System.out.println();
+	}
 }

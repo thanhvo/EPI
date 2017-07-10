@@ -7,6 +7,7 @@
 #include <fstream>
 #include <algorithm>
 #include <unordered_map>
+#include <set>
 
 using namespace std;
 
@@ -178,6 +179,43 @@ vector<Interval<TimeType>> union_intervals(vector<Interval<TimeType>> I) {
     }
     uni.emplace_back(curr);
     return uni;
+}
+
+template <typename TimeType>
+class LeftComp {
+    public: 
+        const bool operator() (const Simple_Interval<TimeType> &a, const Simple_Interval<TimeType> &b) const {
+            return a.start != b.start ? a.start < b.start : a.finish < b.finish;
+        }
+};
+
+template <typename TimeType>
+class RightComp {
+    public:
+        const bool operator() (const Simple_Interval<TimeType> &a, const Simple_Interval<TimeType> &b) const {
+            return a.finish != b.finish ? a.finish < b.finish : a.start < b.start;
+        } 
+};
+
+template <typename TimeType>
+vector <TimeType> find_minimum_visits(const vector<Simple_Interval<TimeType>> &I) {
+    set<Simple_Interval<TimeType>, LeftComp<TimeType>> L;
+    set<Simple_Interval<TimeType>, RightComp<TimeType>> R;
+    for (const Simple_Interval<TimeType> &i: I) {
+        L.emplace(i), R.emplace(i);
+    }
+    vector <TimeType> S;
+    while (L.size() && R.size()) {
+        TimeType b = R.cbegin()->finish;
+        S.emplace_back(R.begin()->finish);
+        // Remove intervals which intersect with R.cbegin()
+        auto it = L.cbegin();
+        while (it != L.end() && it ->start <= b) {
+            R.erase(*it);
+            L.erase(it++);
+        }
+    }
+    return S;
 }  
 
 #endif
