@@ -18,7 +18,7 @@ vector<Star> find_closest_k_stars(istringstream &sin, const int &k) {
             data[i] = stod(buf);            
         }
         Star s {ID, data[0], data[1], data[2]};
-        if (max_heap.size() == k) {
+        if ((int)max_heap.size() == k) {
             Star far_star = max_heap.top();
             if (s < far_star) {
                 max_heap.pop();
@@ -42,7 +42,7 @@ vector<Num> generate_first_k(const int &k) {
     unordered_set<Num, HashNum> hash;
     min_heap.emplace(0, 0);
     hash.emplace(0, 0);
-    while (smallest.size() < k) {
+    while ((int)smallest.size() < k) {
         Num s(min_heap.top());
         smallest.emplace_back(s);
         hash.erase(s);

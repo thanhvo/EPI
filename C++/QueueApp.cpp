@@ -6,7 +6,7 @@ using namespace std;
 
 void traffic_volumes(const vector<TrafficElement> &A, const int &w) {
         MaxQueue<TrafficElement> Q;
-        for (int i = 0; i < A.size(); i++) {
+        for (unsigned int i = 0; i < A.size(); i++) {
             Q.enqueue(A[i]);
             while(A[i].time - Q.front().time > w) {
                 Q.dequeue();

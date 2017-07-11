@@ -216,6 +216,33 @@ vector <TimeType> find_minimum_visits(const vector<Simple_Interval<TimeType>> &I
         }
     }
     return S;
+}
+
+template <typename T>
+bool has_2_sum(const vector<T> &A, const T &t) {
+    int j = 0, k = A.size() - 1;
+    while (j <= k) {
+        if (A[j] + A[k] == t) {
+            return true;
+        } else if (A[j] + A[k] < t) {
+            ++j;
+        } else { // A[j] + A[k] > t
+            --k;
+        }
+    }
+    return false;
+}
+
+template <typename T>
+bool has_3_sum(vector<T> A, const T &t) {
+    sort(A.begin(), A.end());
+    for (const T &a: A) {
+        // find if the sum of two numbers in A equals to t - a
+        if (has_2_sum(A, t-a)) {
+            return true;
+        }
+    }
+    return false;
 }  
 
 #endif

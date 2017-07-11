@@ -211,4 +211,29 @@ public class Sort {
 		}
 		return S;
 	}
+	
+	public static boolean has_2_sum(int[] A, int sum) {
+		int j = 0, k = A.length - 1;
+		while (j <= k) {
+			if (A[j] + A[k] == sum) {
+				return true;
+			} else if (A[j] + A[k] < sum) {
+				++j;
+			} else {
+				--k;
+			}
+		}
+		return false;
+	}
+	
+	public static boolean has_3_sum(int[] A, int sum) {
+		Arrays.sort(A);
+		for (int a : A) {
+			// find if the sum of two numbers in A equals to t - a
+			if (has_2_sum(A, sum-a)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

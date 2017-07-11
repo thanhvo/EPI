@@ -28,7 +28,7 @@ double completion_search(vector<double> &A, const double &budget) {
     vector<double> prefix_sum;
     partial_sum(A.cbegin(), A.cend(), back_inserter(prefix_sum));
     vector<double> costs;
-    for (int i = 0; i < prefix_sum.size(); ++i) {
+    for (unsigned int i = 0; i < prefix_sum.size(); ++i) {
         costs.emplace_back(prefix_sum[i] + (A.size() - i -1) * A[i]);
     }
     auto lower = lower_bound(costs.cbegin(), costs.cend(), budget);
@@ -70,11 +70,11 @@ double square_root(const double &x) {
 
 pair<int, int> find_duplicate_missing( const vector<int> &A) {
     int miss_XOR_dup = 0;
-    for (int i = 0; i < A.size(); ++i) {
+    for (unsigned int i = 0; i < A.size(); ++i) {
         miss_XOR_dup ^= i ^ A[i];
     }
     int differ_bit = miss_XOR_dup & (~(miss_XOR_dup -1)), miss_or_dup = 0;
-    for (int i = 0; i < A.size(); ++i) {
+    for (unsigned int i = 0; i < A.size(); ++i) {
         if (i & differ_bit) {
             miss_or_dup ^= i;
         }

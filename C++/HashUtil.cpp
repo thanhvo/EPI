@@ -160,7 +160,7 @@ pair<int, int> find_smallest_sequentially_covering_subset(
                 D[it->second] = i - L[it->second -1] + D[it->second -1];                
             }
             L[it->second] = i;
-            if (it->second == Q.size() - 1 && D.back() < res.second - res.first + 1) {
+            if (it->second == (int)Q.size() - 1 && D.back() < res.second - res.first + 1) {
                 res = { i - D.back() + 1, i};
             }
         }

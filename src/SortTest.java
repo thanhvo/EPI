@@ -110,4 +110,14 @@ public class SortTest {
 		}
 		System.out.println();
 	}
+	
+	@Test
+	public void test_3_sum() {
+		int[] A = {-3, 4, -2, 3, 12, 5, 9, 1, 3};
+	    assert(Sort.has_3_sum(A, -1));
+	    assert(Sort.has_3_sum(A, 5));
+	    assert(!Sort.has_3_sum(A, 37));
+	    assert(!Sort.has_3_sum(A, -10));
+	    assert(Sort.has_3_sum(A, -3));
+	}
 }

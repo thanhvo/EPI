@@ -53,6 +53,15 @@ void test_find_minimum_visits() {
     cout << endl;
 }
 
+void test_3_sum() {
+    vector<int> A = {-3, 4, -2, 3, 12, 5, 9, 1, 3};
+    assert(has_3_sum<int>(A, -1));
+    assert(has_3_sum(A, 5));
+    assert(!has_3_sum(A, 37));
+    assert(!has_3_sum(A, -10));
+    assert(has_3_sum(A, -3));
+}
+
 void test_sort() {
     test_indirect_sort();
     test_counting_test();
@@ -60,4 +69,5 @@ void test_sort() {
     test_find_max_concurrent_events();
     test_union_intervals();
     test_find_minimum_visits();
+    test_3_sum();
 }
