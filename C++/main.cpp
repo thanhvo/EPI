@@ -6,6 +6,7 @@
 #include "SearchTest.h"
 #include "HashTest.h"
 #include "SortTest.h"
+#include "BinarySearchTreeTest.h"
 
 int main(int argc, char **argv)
 {
@@ -16,6 +17,7 @@ int main(int argc, char **argv)
     //test_heap();
     //test_search();
     //test_hash();
-    test_sort();
+    //test_sort();
+    test_binary_search_tree();
 	return 0;
 }
