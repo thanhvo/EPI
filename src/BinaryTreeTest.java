@@ -99,19 +99,19 @@ public class BinaryTreeTest {
 	
 	@Test
 	public void test_lock_binary_tree() {
-		BTNode<String> A = new BTNode<String>("A");
-		BTNode<String> B = new BTNode<String>("B");
-		BTNode<String> C = new BTNode<String>("C");
-		BTNode<String> D = new BTNode<String>("D");
-		BTNode<String> E = new BTNode<String>("E");
-		BTNode<String> F = new BTNode<String>("F");
-		BTNode<String> G = new BTNode<String>("G");
-		BTNode<String> H = new BTNode<String>("H");
-		BTNode<String> I = new BTNode<String>("I");
-		BTNode<String> J = new BTNode<String>("J");
-		BTNode<String> K = new BTNode<String>("K");
-		BTNode<String> L = new BTNode<String>("L");
-		BTNode<String> M = new BTNode<String>("M");
+		LockableBTNode<String> A = new LockableBTNode<String>("A");
+		LockableBTNode<String> B = new LockableBTNode<String>("B");
+		LockableBTNode<String> C = new LockableBTNode<String>("C");
+		LockableBTNode<String> D = new LockableBTNode<String>("D");
+		LockableBTNode<String> E = new LockableBTNode<String>("E");
+		LockableBTNode<String> F = new LockableBTNode<String>("F");
+		LockableBTNode<String> G = new LockableBTNode<String>("G");
+		LockableBTNode<String> H = new LockableBTNode<String>("H");
+		LockableBTNode<String> I = new LockableBTNode<String>("I");
+		LockableBTNode<String> J = new LockableBTNode<String>("J");
+		LockableBTNode<String> K = new LockableBTNode<String>("K");
+		LockableBTNode<String> L = new LockableBTNode<String>("L");
+		LockableBTNode<String> M = new LockableBTNode<String>("M");
 		A.left = B;
 		B.parent = A;
 		A.right = C;

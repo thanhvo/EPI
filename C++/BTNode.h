@@ -13,9 +13,6 @@ using namespace std;
 
 template<typename T>
 class BTNode {
-	private:
-		bool locked;
-		int numChildrenLocks;
 	public:
         T data;
         shared_ptr<BTNode<T>> left;
@@ -24,9 +21,7 @@ class BTNode {
 		int size;
       
         BTNode(T __data) {
-            data = __data;
-			locked = false;
-			numChildrenLocks = 0;
+            data = __data;			
             left = nullptr;
             right = nullptr;
 			parent = nullptr;
@@ -36,43 +31,57 @@ class BTNode {
 			data = __data;
 			left = __left;
 			right = __right;
+            if (left) left->parent = make_shared<BTNode<T>>(*this);
+            if (right) right->parent = make_shared<BTNode<T>>(*this);
             parent = nullptr;
 		}
-		
-		const bool &isLock(void) const {
-			return locked;
+        
+        BTNode(T __data, shared_ptr<BTNode<T>> __left, shared_ptr<BTNode<T>> __right, shared_ptr<BTNode<T>> __parent) {
+			data = __data;
+			left = __left;
+			right = __right;
+            parent = __parent;
 		}
-		
-		void lock(void) {
-			if (numChildrenLocks == 0 && locked == false) {
-				shared_ptr<BTNode<T>> n = parent;
-				/* Check if any ancestor is locked. If so, return right away */
-				while (n) {
-					if (n->locked) {
-						return;
-					}
-					n = n->parent;
-				}
-				locked = true;
-				n = parent;
-				while (n) {
-					++n->numChildrenLocks;
-					n = n->parent;
-				}
-			}
-		}
-		
-		void unlock(void) {
-			if (locked) {
-				locked = false;
-				shared_ptr<BTNode<T>> n = parent;
-				while (n) {
-					--n->numChildrenLocks;
-					n = n->parent;
-				}
-			}
-		}
+        
+        void printTree() {
+            if (right) {
+                right->printTree(true, "");
+            }
+            printNodeValue();
+            if (left) {
+                left->printTree(false, "");
+            }
+        }
+        
+        virtual ~BTNode() {}
     
+    private:
+        void printNodeValue() {
+            if (!data) {
+                cout << "<null>";
+            } else {
+                cout << data;
+            }
+            cout << endl;
+        }
+        
+        // Use string and not stringbuffer on purpose as we need to change the indent at each recursion
+        void printTree(bool isRight, string indent) { 
+            if (right) {
+                right->printTree(true, indent + (isRight ? "        " : " |      "));
+            }
+            cout << indent;
+            if (isRight) {
+                cout << " /";
+            } else {
+                cout << " \\";
+            }
+            cout << "----- ";
+            printNodeValue();
+            if (left) {
+                left->printTree(false, indent + (isRight ? " |      " : "        "));
+            }
+        }
 };
 
 template <typename T>

@@ -1,19 +1,11 @@
 
-public class BSTNode<T extends Comparable> {
-	T data;
-	BSTNode<T> left;
-	BSTNode<T> right;
-	boolean visited;
-	
+public class BSTNode<T extends Comparable<T>> extends BTNode<T> implements Comparable<BSTNode<T>>{
 	public BSTNode(T data) {
-		this.data = data;
-		left = null;
-		right = null;
+		super(data);
 		visited = false;
 	}
 	
-	public boolean printable() {
-		return (left == null || left.visited);
-	}
-	
+	public int compareTo(BSTNode<T> other) {
+		return data.compareTo(other.data);
+	}	
 }

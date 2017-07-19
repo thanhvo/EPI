@@ -1,19 +1,19 @@
 import java.util.*;
+import java.io.*;
 
 public class BTNode<T> {
 	T data;
-	BTNode<T> left, right, parent;
-	int key;
-	Integer cachedHash;
-	private boolean locked;
-	private int numChildrenLocks;
+	BTNode<T> left, right, parent;	
+	
 	public int size;
 	public boolean visited = false;
 	
+	public boolean printable() {
+		return (left == null || left.visited);
+	}
+	
 	public BTNode(T __data) {
-		data = __data;
-		locked = false;
-		numChildrenLocks = 0;
+		data = __data;		
 		left = null;
 		right = null;
 		parent = null;		
@@ -23,82 +23,84 @@ public class BTNode<T> {
 		data = __data;
 		left = __left;
 		right = __right;
-		key = __data.hashCode();
-		cachedHash = null;	
-	}	
-	
-	@Override
-	public int hashCode() {
-		if (this.cachedHash != null) {
-			return this.cachedHash;			
-		}
-		int x = 3 * key;
-		int y = this.left == null ? 5 : 5 * this.left.hashCode();
-		int z = this.right == null ? 7 : 7 * this.right.hashCode();
-		this.cachedHash = x + y + z;
-		return this.cachedHash;
+			
 	}
 	
-	@Override
-	public boolean equals(Object o) {
-		if (o == this) {
-			return true;
-		}
-		if (!(o instanceof BTNode)) {
-			return false;
-		}
-		BTNode<T> n = (BTNode<T>)o;
-		if (n == null || key != n.key) {
-			return false;
-		}
-		return (left == n.left && right == n.right);
-	}
-	
-	public static Map<BTNode, BTNode> nodeToCanonicalNode = new HashMap<BTNode, BTNode>();
-	
-	public static BTNode getCanonical(BTNode n) {
-		BTNode lc = (n.left == null) ? null: getCanonical(n.left);
-		BTNode rc = (n.right == null) ? null : getCanonical(n.right);
-		BTNode nc = new BTNode(n.data, lc, rc);
-		if (nodeToCanonicalNode.containsKey(nc)) {
-			return nodeToCanonicalNode.get(nc);
-		}
-		nodeToCanonicalNode.put(nc, nc);
-		return nc;
-	}
-	
-	public boolean isLock() {
-		return locked;
-	}
-	
-	public void lock() {
-		if (numChildrenLocks == 0 && locked == false) {
-			BTNode<T> n = parent;
-			while (n != null) {
-				if (n.locked) {
-					return;
+	public static<T> void printBT_using_visited_field(BTNode<T> root) {
+		if (root == null)
+			return;
+		Stack<BTNode<T>> stack = new Stack<BTNode<T>>();
+		stack.push(root);
+		root.visited = true;
+		while(!stack.isEmpty()) {
+			BTNode<T> node = stack.pop();			
+			if (node.right != null && !node.right.visited) {
+				stack.push(node.right);
+				node.right.visited = true;
+			}
+			if (node.printable()) {				
+				System.out.print(node.data + " ");				
+			} else {
+				stack.push(node);
+				if (node.left != null && !node.left.visited) {
+					stack.push(node.left);
+					node.left.visited = true;
 				}
-				n = n.parent;
-			}
-			locked = true;
-			n = parent;
-			while (n != null) {
-				++n.numChildrenLocks;
-				n = n.parent;
 			}
 		}
+		System.out.println();
 	}
 	
-	public void unlock() {
-		if (locked) {
-			locked = false;
-			BTNode<T> n = parent;
-			while (n != null) {
-				--n.numChildrenLocks;
-				n = n.parent;
+	public static<T> void printBT(BTNode<T> root) {
+		Stack<BTNode<T>> stack = new Stack<BTNode<T>>();
+		BTNode<T> curr = root;
+		while (!stack.isEmpty() || curr != null) {
+			if (curr != null) {
+				stack.push(curr);
+				curr = curr.left;
+			} else {
+				curr = stack.pop();
+				System.out.print(curr.data + " ");
+				curr = curr.right;
 			}
 		}
+		System.out.println();
 	}
 	
-	
+	public void printTree() throws IOException {
+        if (right != null) {
+            right.printTree(true, "");
+        }
+        printNodeValue();
+        if (left != null) {
+            left.printTree(false, "");
+        }
+    }
+    
+	private void printNodeValue() throws IOException {
+        if (data == null) {
+            System.out.print("<null>");
+        } else {
+            System.out.print(data.toString());
+        }
+        System.out.print('\n');
+    }
+    
+    // Use string and not stringbuffer on purpose as we need to change the indent at each recursion
+    private void printTree(boolean isRight, String indent) throws IOException {
+        if (right != null) {
+            right.printTree(true, indent + (isRight ? "        " : " |      "));
+        }
+        System.out.print(indent);
+        if (isRight) {
+            System.out.print(" /");
+        } else {
+            System.out.print(" \\");
+        }
+        System.out.print("----- ");
+        printNodeValue();
+        if (left != null) {
+            left.printTree(false, indent + (isRight ? " |      " : "        "));
+        }
+    }
 }

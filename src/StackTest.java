@@ -50,7 +50,7 @@ public class StackTest {
 		n3.left = n6;
 		n3.right = n7;
 		n7.right = n8;
-		StackUtil.printBST(n1);
+		BTNode.printBT(n1);
 	}
 	
 	@Test

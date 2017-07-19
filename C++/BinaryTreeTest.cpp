@@ -4,6 +4,7 @@
 #include "BTNode.h"
 #include "BinaryTreeTest.h"
 #include "Trie.h"
+#include "LockableBTNode.h"
 
 using namespace std;
 
@@ -99,19 +100,19 @@ void test_symmetric_binary_tree() {
 }
 
 void test_lock_binary_tree() {
-	shared_ptr<BTNode<string>> A(make_shared<BTNode<string>>("A"));
-	shared_ptr<BTNode<string>> B(make_shared<BTNode<string>>("B"));
-	shared_ptr<BTNode<string>> C(make_shared<BTNode<string>>("C"));
-	shared_ptr<BTNode<string>> D(make_shared<BTNode<string>>("D"));
-	shared_ptr<BTNode<string>> E(make_shared<BTNode<string>>("E"));
-	shared_ptr<BTNode<string>> F(make_shared<BTNode<string>>("F"));
-	shared_ptr<BTNode<string>> G(make_shared<BTNode<string>>("G"));
-	shared_ptr<BTNode<string>> H(make_shared<BTNode<string>>("H"));
-	shared_ptr<BTNode<string>> I(make_shared<BTNode<string>>("I"));
-	shared_ptr<BTNode<string>> J(make_shared<BTNode<string>>("J"));
-	shared_ptr<BTNode<string>> K(make_shared<BTNode<string>>("K"));
-	shared_ptr<BTNode<string>> L(make_shared<BTNode<string>>("L"));
-	shared_ptr<BTNode<string>> M(make_shared<BTNode<string>>("M"));		
+	shared_ptr<LockableBTNode<string>> A(make_shared<LockableBTNode<string>>("A"));
+	shared_ptr<LockableBTNode<string>> B(make_shared<LockableBTNode<string>>("B"));
+	shared_ptr<LockableBTNode<string>> C(make_shared<LockableBTNode<string>>("C"));
+	shared_ptr<LockableBTNode<string>> D(make_shared<LockableBTNode<string>>("D"));
+	shared_ptr<LockableBTNode<string>> E(make_shared<LockableBTNode<string>>("E"));
+	shared_ptr<LockableBTNode<string>> F(make_shared<LockableBTNode<string>>("F"));
+	shared_ptr<LockableBTNode<string>> G(make_shared<LockableBTNode<string>>("G"));
+	shared_ptr<LockableBTNode<string>> H(make_shared<LockableBTNode<string>>("H"));
+	shared_ptr<LockableBTNode<string>> I(make_shared<LockableBTNode<string>>("I"));
+	shared_ptr<LockableBTNode<string>> J(make_shared<LockableBTNode<string>>("J"));
+	shared_ptr<LockableBTNode<string>> K(make_shared<LockableBTNode<string>>("K"));
+	shared_ptr<LockableBTNode<string>> L(make_shared<LockableBTNode<string>>("L"));
+	shared_ptr<LockableBTNode<string>> M(make_shared<LockableBTNode<string>>("M"));		
 	A->left = B;
 	B->parent = A;
 	A->right = C;

@@ -17,41 +17,41 @@ public class HashTest {
 	
 	@Test
 	public void test_canonical_binary_tree() {
-		BTNode A = new BTNode(3);
-		BTNode B = new BTNode(2);
-		BTNode C = new BTNode(1);
-		BTNode D = new BTNode(0);
+		CacheBTNode A = new CacheBTNode(3);
+		CacheBTNode B = new CacheBTNode(2);
+		CacheBTNode C = new CacheBTNode(1);
+		CacheBTNode D = new CacheBTNode(0);
 		A.left = B;
 		B.left = C;
 		C.left = D;
-		BTNode E = new BTNode(9);
-		BTNode F = new BTNode(5);
-		BTNode G = new BTNode(3);
-		BTNode H = new BTNode(7);
-		BTNode I = new BTNode(11);
+		CacheBTNode E = new CacheBTNode(9);
+		CacheBTNode F = new CacheBTNode(5);
+		CacheBTNode G = new CacheBTNode(3);
+		CacheBTNode H = new CacheBTNode(7);
+		CacheBTNode I = new CacheBTNode(11);
 		E.left = F;
 		E.right = I;
 		F.left = G;
 		F.right = H;
-		BTNode J = new BTNode(2);
-		BTNode K = new BTNode(1);
-		BTNode L = new BTNode(0);
-		BTNode M = new BTNode(5);
-		BTNode N = new BTNode(3);
-		BTNode O = new BTNode(7);
+		CacheBTNode J = new CacheBTNode(2);
+		CacheBTNode K = new CacheBTNode(1);
+		CacheBTNode L = new CacheBTNode(0);
+		CacheBTNode M = new CacheBTNode(5);
+		CacheBTNode N = new CacheBTNode(3);
+		CacheBTNode O = new CacheBTNode(7);
 		J.left = K;
 		J.right = M;
 		K.left = L;
 		M.left = N;
 		M.right = O;
 		
-		BTNode A1 = BTNode.getCanonical(A);
-		BTNode E1 = BTNode.getCanonical(E);
-		BTNode J1 = BTNode.getCanonical(J);
+		CacheBTNode A1 = CacheBTNode.getCanonical(A);
+		CacheBTNode E1 = CacheBTNode.getCanonical(E);
+		CacheBTNode J1 = CacheBTNode.getCanonical(J);
 		
-		BTNode[] list = {A, B, C, D, E, F, G, H, I, J, K, L, M, N, O};
-		for (BTNode node: list) {
-			BTNode canonical_node = BTNode.getCanonical(node);
+		CacheBTNode[] list = {A, B, C, D, E, F, G, H, I, J, K, L, M, N, O};
+		for (CacheBTNode node: list) {
+			CacheBTNode canonical_node = CacheBTNode.getCanonical(node);
 			assertEquals(node.data, canonical_node.data);
 			//System.out.println(node + " " + canonical_node);
 		}
