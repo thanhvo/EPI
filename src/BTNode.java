@@ -71,7 +71,7 @@ public class BTNode<T> {
 		System.out.println();
 	}
 	
-	public void printTree() throws IOException {
+	public void printTree() {
         if (right != null) {
             right.printTree(true, "");
         }
@@ -81,7 +81,7 @@ public class BTNode<T> {
         }
     }
     
-	private void printNodeValue() throws IOException {
+	private void printNodeValue() {
         if (data == null) {
             System.out.print("<null>");
         } else {
@@ -91,7 +91,7 @@ public class BTNode<T> {
     }
     
     // Use string and not stringbuffer on purpose as we need to change the indent at each recursion
-    private void printTree(boolean isRight, String indent) throws IOException {
+    private void printTree(boolean isRight, String indent) {
         if (right != null) {
             right.printTree(true, indent + (isRight ? "        " : " |      "));
         }

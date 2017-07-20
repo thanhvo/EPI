@@ -150,6 +150,12 @@ void test_find_first_larger_than() {
     assert(find_first_larger_than_k_with_k_exist(A, 32) == nullptr);
 }
 
+void test_build_BST() {
+    vector<int> v = {1, 3, 5, 6, 7, 9, 12, 15, 25, 34, 35, 45, 67};
+    shared_ptr<BSTNode<int>> root = build_BST(v);
+    root->printTree();
+}
+
 void test_binary_search_tree() {
     test_is_BST();
     test_find_successor_BST();
@@ -157,4 +163,5 @@ void test_binary_search_tree() {
     test_find_first_equal_k();
     test_search_min_first_BST();
     test_find_first_larger_than();
+    test_build_BST();
 }

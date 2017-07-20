@@ -277,4 +277,22 @@ shared_ptr<BSTNode<T>> find_first_larger_than_k_with_k_exist(shared_ptr<BSTNode<
     return found_k ? first : nullptr;
 }
 
+// Build BST based on subarray A[start:end-1]
+template <typename T>
+shared_ptr<BSTNode<T>> build_BST_helper(const vector<T> &A, const int &start, const int &end) {
+    if (start < end) {
+        int mid = start + ((end - start)>>1);
+        return shared_ptr<BSTNode<T>>(new BSTNode<T>{A[mid], 
+            build_BST_helper(A, start, mid-1),
+            build_BST_helper(A, mid +1, end)
+        });
+    }
+    return nullptr;
+}
+
+template <typename T>
+shared_ptr<BSTNode<T>> build_BST( const vector<T> &A) {
+    return build_BST_helper(A, 0, A.size());
+}
+
 #endif

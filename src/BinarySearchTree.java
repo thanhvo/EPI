@@ -136,5 +136,18 @@ public class BinarySearchTree {
 		}
 		return found_k ? first : null;
 	}
+	
+	private static<T extends Comparable<T>> BSTNode<T> construct_BST_helper(T[] A, int start, int end) {
+		if (start > end) return null;
+		int mid = start + (end - start)/ 2;
+		BSTNode<T> root = new BSTNode<T>(A[mid]);
+		root.left = construct_BST_helper(A, start, mid-1);
+		root.right = construct_BST_helper(A, mid +1, end);
+		return root;
+	}
+	
+	public static<T extends Comparable<T>> BSTNode<T> construct_BST(T[] A) {
+		return construct_BST_helper(A, 0, A.length -1);
+	}
 
 }

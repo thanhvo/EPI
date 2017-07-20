@@ -1,6 +1,8 @@
 import org.junit.*;
 import static org.junit.Assert.*;
 
+import java.io.IOException;
+
 public class BinarySearchTreeTest {
 	@Test
 	public void test_is_BST() {
@@ -157,5 +159,12 @@ public class BinarySearchTreeTest {
 		BSTNode<Integer> A = new BSTNode<Integer>(19, B, I);
 		assertEquals(BinarySearchTree.find_first_larger_than_k_with_k_exist(A, 23), L);
 		assertEquals(BinarySearchTree.find_first_larger_than_k_with_k_exist(A, 32), null);
+	}
+	
+	@Test
+	public void test_construct_BST() {
+		Integer[] A = {1, 3, 5, 6, 7, 9, 12, 15, 25, 34, 35, 45, 67};
+		BSTNode<Integer> root = BinarySearchTree.construct_BST(A);
+		root.printTree();
 	}
 }
