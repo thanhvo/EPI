@@ -23,7 +23,11 @@ public class BTNode<T> {
 		data = __data;
 		left = __left;
 		right = __right;
-			
+		if (left != null)
+			left.parent = this;
+		if (right != null)
+			right.parent = this;
+		parent = null;			
 	}
 	
 	public static<T> void printBT_using_visited_field(BTNode<T> root) {

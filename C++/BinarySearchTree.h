@@ -211,6 +211,42 @@ class BinarySearchTree {
         const void printTree() {
             root->printTree();
         }
+        
+        shared_ptr<BSTNode<T>> find_first_equal_k_recursive(const shared_ptr<BSTNode<T>> &root, const T &k) {
+            if (!root) {
+                return nullptr; // No match
+            } else if (root->data == k) {
+                // Recursively search left subtree for first one == k
+                shared_ptr<BSTNode<T>> n = find_first_equal_k_recursive(root->getLeft(), k);
+                return n ? n : root;
+            }
+            // Search left or right tree according to root->data and k
+            return find_first_equal_k_recursive(root->data < k ? root->getRight() : root->getLeft(), k);
+        }
+        
+        shared_ptr<BSTNode<T>> find_first_equal_k_iterative(const T &k) {
+            return find_first_equal_k_iterative(root, k);
+        }
+        
+        shared_ptr<BSTNode<T>> find_first_equal_k_iterative(shared_ptr<BSTNode<T>> root, const T &k) {
+            shared_ptr<BSTNode<T>> first = nullptr;
+            while (root) {
+                if (root->data < k) {
+                    root = root->getRight();
+                } else if (root->data > k) {
+                    root = root->getLeft();
+                } else { // r->data == k
+                    // Search for the left most in the left subtree
+                    first = root;
+                    root = root->getLeft();
+                }
+            }
+            return first;
+        }
+        
+        shared_ptr<BSTNode<T>> find_first_equal_k_recursive(const T &k) {
+            return find_first_equal_k_recursive(root, k);
+        }
 };
 
 #endif
