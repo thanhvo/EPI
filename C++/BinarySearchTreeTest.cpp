@@ -128,10 +128,33 @@ void test_search_min_first_BST() {
 	assert(!search_min_first_BST(I, 10));
 }
 
+void test_find_first_larger_than() {
+    shared_ptr<BSTNode<int>> D(make_shared<BSTNode<int>>(2));
+    shared_ptr<BSTNode<int>> E(make_shared<BSTNode<int>>(5));    
+    shared_ptr<BSTNode<int>> H(make_shared<BSTNode<int>>(13));    
+    shared_ptr<BSTNode<int>> M(make_shared<BSTNode<int>>(31));
+    shared_ptr<BSTNode<int>> N(make_shared<BSTNode<int>>(41));    
+    shared_ptr<BSTNode<int>> P(make_shared<BSTNode<int>>(53));
+    shared_ptr<BSTNode<int>> O(make_shared<BSTNode<int>>(47, nullptr, P));
+    shared_ptr<BSTNode<int>> L(make_shared<BSTNode<int>>(29, nullptr, M));
+    shared_ptr<BSTNode<int>> K(make_shared<BSTNode<int>>(37, L, N));
+    shared_ptr<BSTNode<int>> J(make_shared<BSTNode<int>>(23, nullptr, K));
+    shared_ptr<BSTNode<int>> I(make_shared<BSTNode<int>>(43, J, O));
+    shared_ptr<BSTNode<int>> G(make_shared<BSTNode<int>>(17, H, nullptr));
+    shared_ptr<BSTNode<int>> F(make_shared<BSTNode<int>>(11, nullptr, G));
+    shared_ptr<BSTNode<int>> C(make_shared<BSTNode<int>>(3, D, E));
+    shared_ptr<BSTNode<int>> B(make_shared<BSTNode<int>>(7, C, F));    
+    shared_ptr<BSTNode<int>> A(make_shared<BSTNode<int>>(19, B, I));
+    assert(is_BST(static_pointer_cast<BTNode<int>>(A)));
+    assert(find_first_larger_than_k_with_k_exist(A, 23)->data == 29);
+    assert(find_first_larger_than_k_with_k_exist(A, 32) == nullptr);
+}
+
 void test_binary_search_tree() {
     test_is_BST();
     test_find_successor_BST();
     test_modify_binary_search_tree();
     test_find_first_equal_k();
     test_search_min_first_BST();
+    test_find_first_larger_than();
 }

@@ -259,4 +259,22 @@ bool search_min_first_BST(const shared_ptr<BSTNode<T>> &r, const T &k) {
     return search_min_first_BST(r->getLeft(), k) || search_min_first_BST(r->getRight(), k);
 }
 
+template <typename T>
+shared_ptr<BSTNode<T>> find_first_larger_than_k_with_k_exist(shared_ptr<BSTNode<T>> r, const T &k) {
+    bool found_k = false;
+    shared_ptr<BSTNode<T>> first = nullptr;
+    while (r) {
+        if (r->data == k) {
+            found_k = true;
+            r = r->getRight();            
+        } else if (r->data > k) {
+            first = r;
+            r = r->getLeft();
+        } else { // r-> data < k
+            r = r->getRight();
+        }
+    }
+    return found_k ? first : nullptr;
+}
+
 #endif

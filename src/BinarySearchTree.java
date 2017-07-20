@@ -119,5 +119,22 @@ public class BinarySearchTree {
 			return min_first_search(root.getLeft(), key);
 		return min_first_search(root.getRight(), key);		
 	}
+	
+	public static<T extends Comparable<T>> BSTNode<T> find_first_larger_than_k_with_k_exist(BSTNode<T> root, T k) {
+		boolean found_k = false;
+		BSTNode<T> first = null;
+		while (root != null) {
+			if (root.data.compareTo(k) == 0) {
+				found_k = true;
+				root = root.getRight();
+			} else if (root.data.compareTo(k) > 0) {
+				first = root;
+				root = root.getLeft();
+			} else { // root.data < k
+				root = root.getRight();
+			}
+		}
+		return found_k ? first : null;
+	}
 
 }
