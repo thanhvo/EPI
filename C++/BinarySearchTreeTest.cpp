@@ -113,9 +113,25 @@ void test_find_first_equal_k() {
     BST.find_first_equal_k_recursive(7)->printTree();
 }
 
+void test_search_min_first_BST() {
+    shared_ptr<BSTNode<int>> A(make_shared<BSTNode<int>>(7));
+    shared_ptr<BSTNode<int>> B(make_shared<BSTNode<int>>(11));
+    shared_ptr<BSTNode<int>> C(make_shared<BSTNode<int>>(5, A, B));
+    shared_ptr<BSTNode<int>> D(make_shared<BSTNode<int>>(17));
+    shared_ptr<BSTNode<int>> E(make_shared<BSTNode<int>>(23));
+	shared_ptr<BSTNode<int>> F(make_shared<BSTNode<int>>(19, E, nullptr));
+    shared_ptr<BSTNode<int>> G(make_shared<BSTNode<int>>(13, D, F));
+	shared_ptr<BSTNode<int>> H(make_shared<BSTNode<int>>(3, nullptr, C));
+	shared_ptr<BSTNode<int>> I(make_shared<BSTNode<int>>(2, H, G));
+	assert(search_min_first_BST(I, 11));
+	assert(search_min_first_BST(I, 23));
+	assert(!search_min_first_BST(I, 10));
+}
+
 void test_binary_search_tree() {
     test_is_BST();
     test_find_successor_BST();
     test_modify_binary_search_tree();
     test_find_first_equal_k();
+    test_search_min_first_BST();
 }

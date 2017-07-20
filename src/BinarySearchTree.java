@@ -111,5 +111,13 @@ public class BinarySearchTree {
 		}
 		return first;
 	}
+	
+	public static<T extends Comparable<T>> BSTNode<T> min_first_search(BSTNode<T> root, T key) {
+		if (root == null || root.data.compareTo(key) > 0) return null;
+		if (root.data.compareTo(key) == 0) return root;
+		if (root.right == null || root.right.data.compareTo(key) > 0) 
+			return min_first_search(root.getLeft(), key);
+		return min_first_search(root.getRight(), key);		
+	}
 
 }

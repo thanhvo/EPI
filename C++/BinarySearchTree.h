@@ -249,4 +249,14 @@ class BinarySearchTree {
         }
 };
 
+template <typename T>
+bool search_min_first_BST(const shared_ptr<BSTNode<T>> &r, const T &k) {
+    if (!r || r->data > k) {
+        return false;
+    } else if (r->data == k) {
+        return true;
+    }
+    return search_min_first_BST(r->getLeft(), k) || search_min_first_BST(r->getRight(), k);
+}
+
 #endif

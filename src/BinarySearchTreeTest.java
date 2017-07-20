@@ -86,8 +86,7 @@ public class BinarySearchTreeTest {
 	
 	@Test
 	public void test_search_BST() {
-		BSTNode<Integer> D = new BSTNode<Integer>(2);
-		
+		BSTNode<Integer> D = new BSTNode<Integer>(2);		
 		BSTNode<Integer> E = new BSTNode<Integer>(5);		
 		BSTNode<Integer> H = new BSTNode<Integer>(13);
 		BSTNode<Integer> G = new BSTNode<Integer>(17, H, null);
@@ -117,8 +116,24 @@ public class BinarySearchTreeTest {
 		BSTNode<Integer> Q = new BSTNode<Integer>(7);
 		E.right = Q;
 		Q.parent = E;
+		assert(BinarySearchTree.isBST(A));
 		assertEquals(BinarySearchTree.find_first_equal_k_iterative(A, 7), Q);
-		assertEquals(BinarySearchTree.find_first_equal_k_recursive(A, 7), Q);
-		
+		assertEquals(BinarySearchTree.find_first_equal_k_recursive(A, 7), Q);		
+	}
+	
+	@Test
+	public void test_first_min_search() {
+		BSTNode<Integer> A = new BSTNode<Integer>(7);
+		BSTNode<Integer> B = new BSTNode<Integer>(11);
+		BSTNode<Integer> C = new BSTNode<Integer>(5, A, B);
+		BSTNode<Integer> D = new BSTNode<Integer>(17);
+		BSTNode<Integer> E = new BSTNode<Integer>(23);
+		BSTNode<Integer> F = new BSTNode<Integer>(19, E, null);
+		BSTNode<Integer> G = new BSTNode<Integer>(13, D, F);
+		BSTNode<Integer> I = new BSTNode<Integer>(3, null, C);
+		BSTNode<Integer> J = new BSTNode<Integer>(2, I, G);
+		assertEquals(BinarySearchTree.min_first_search(J, 11), B);
+		assertEquals(BinarySearchTree.min_first_search(J, 23), E);
+		assertEquals(BinarySearchTree.min_first_search(J, 10), null);
 	}
 }
