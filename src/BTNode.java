@@ -12,11 +12,19 @@ public class BTNode<T> {
 		return (left == null || left.visited);
 	}
 	
+	public BTNode() {
+		data = null;
+		left = null;
+		right = null;
+		parent = null;		
+	}
+	
 	public BTNode(T __data) {
 		data = __data;		
 		left = null;
 		right = null;
-		parent = null;		
+		parent = null;
+		visited = false;
 	}
 	
 	public BTNode(T __data, BTNode<T> __left, BTNode<T> __right) {

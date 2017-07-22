@@ -16,12 +16,12 @@ class node_t {
             next = nullptr;
             jump = nullptr;
         }
+        
         node_t(T __data, shared_ptr<node_t<T>> __next, shared_ptr<node_t<T>> __jump) {
             data = __data;
             next = __next;
             jump = __jump;
-        }
-        
+        }        
 };
 
 #endif

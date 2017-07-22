@@ -8,7 +8,8 @@ using namespace std;
 
 template <typename T>
 class BSTNode : public BTNode<T> {
-    public:
+public:
+        BSTNode(): BTNode<T>(){}
         BSTNode(T __data): BTNode<T>(__data) {}
         BSTNode(T __data, shared_ptr<BSTNode<T>> __left, shared_ptr<BSTNode<T>> __right):
             BTNode<T>(__data, __left, __right) {}

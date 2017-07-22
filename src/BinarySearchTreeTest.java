@@ -167,4 +167,34 @@ public class BinarySearchTreeTest {
 		BSTNode<Integer> root = BinarySearchTree.construct_BST(A);
 		root.printTree();
 	}
+	
+	@Test
+	public void test_build_BST_from_linked_list() {
+		Node<Integer> A = new Node<Integer>(1);
+		Node<Integer> B = new Node<Integer>(3);
+		Node<Integer> C = new Node<Integer>(5);
+		Node<Integer> D = new Node<Integer>(6);
+		Node<Integer> E = new Node<Integer>(7);
+		Node<Integer> F = new Node<Integer>(9);
+		Node<Integer> G = new Node<Integer>(12);
+		Node<Integer> H = new Node<Integer>(15);
+		Node<Integer> I = new Node<Integer>(25);
+		Node<Integer> J = new Node<Integer>(34);
+		Node<Integer> K = new Node<Integer>(35);
+		Node<Integer> L = new Node<Integer>(45);
+		A.next = B;
+		B.next = C;
+		C.next = D;
+		D.next = E;
+		E.next = F;
+		F.next = G;
+		G.next = H;
+		H.next = I;
+		I.next = J;
+		J.next = K;
+		K.next = L;
+		BSTNode<Integer> root = BinarySearchTree.build_BST_from_sorted_doubly_list(A);
+		assert(BinarySearchTree.isBST(root));
+		root.printTree();
+	}
 }

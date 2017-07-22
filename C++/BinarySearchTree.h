@@ -4,6 +4,7 @@
 #include <memory>
 #include <limits>
 #include <queue>
+#include "Node.h"
 #include "BSTNode.h"
 
 using namespace std;
@@ -293,6 +294,26 @@ shared_ptr<BSTNode<T>> build_BST_helper(const vector<T> &A, const int &start, co
 template <typename T>
 shared_ptr<BSTNode<T>> build_BST( const vector<T> &A) {
     return build_BST_helper(A, 0, A.size());
+}
+
+// Build a BST from (s+1)-th to e-th node in L
+template <typename T>
+shared_ptr<BSTNode<T>> build_BST_from_sorted_doubly_list_helper(shared_ptr<node_t<T>> &L, const int &s, const int &e) {
+    shared_ptr<BSTNode<T>> curr = nullptr;
+    if (s < e) {
+        int m = s + ((e -s) >> 1);
+        curr = shared_ptr<BSTNode<T>>(new BSTNode<T>());
+        curr->left = build_BST_from_sorted_doubly_list_helper(L, s, m);
+        curr->data = L->data;
+        L = L->next;
+        curr->right = build_BST_from_sorted_doubly_list_helper(L, m+1, e);        
+    }
+    return curr;
+}
+
+template <typename T>
+shared_ptr<BSTNode<T>> build_BST_from_sorted_doubly_list(shared_ptr<node_t<T>> L, const int &n) {
+    return build_BST_from_sorted_doubly_list_helper(L, 0, n);
 }
 
 #endif

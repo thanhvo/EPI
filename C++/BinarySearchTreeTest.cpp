@@ -1,8 +1,8 @@
 #include <memory>
 #include <cassert>
 #include "BinarySearchTreeTest.h"
-#include "BTNode.h"
 #include "BinarySearchTree.h"
+#include "LinkedList.h"
 
 using namespace std;
 
@@ -153,6 +153,37 @@ void test_find_first_larger_than() {
 void test_build_BST() {
     vector<int> v = {1, 3, 5, 6, 7, 9, 12, 15, 25, 34, 35, 45, 67};
     shared_ptr<BSTNode<int>> root = build_BST(v);
+    assert(is_BST(static_pointer_cast<BTNode<int>>(root)));
+    root->printTree();
+}
+
+void test_build_BST_from_sorted_doubly_list() {
+    shared_ptr<node_t<int>> A(make_shared<node_t<int>>(1));
+    shared_ptr<node_t<int>> B(make_shared<node_t<int>>(3));
+    shared_ptr<node_t<int>> C(make_shared<node_t<int>>(5));
+    shared_ptr<node_t<int>> D(make_shared<node_t<int>>(6));
+    shared_ptr<node_t<int>> E(make_shared<node_t<int>>(7));
+    shared_ptr<node_t<int>> F(make_shared<node_t<int>>(9));
+    shared_ptr<node_t<int>> G(make_shared<node_t<int>>(12));
+    shared_ptr<node_t<int>> H(make_shared<node_t<int>>(15));
+    shared_ptr<node_t<int>> I(make_shared<node_t<int>>(25));
+    shared_ptr<node_t<int>> J(make_shared<node_t<int>>(34));
+    shared_ptr<node_t<int>> K(make_shared<node_t<int>>(35));
+    shared_ptr<node_t<int>> L(make_shared<node_t<int>>(45));
+    A->next = B;
+    B->next = C;
+    C->next = D;
+    D->next = E;
+    E->next = F;
+    F->next = G;
+    G->next = H;
+    H->next = I;
+    I->next = J;
+    J->next = K;
+    K->next = L;
+    
+    shared_ptr<BSTNode<int>> root = build_BST_from_sorted_doubly_list(A, count_len(A));
+    assert(is_BST(static_pointer_cast<BTNode<int>>(root)));
     root->printTree();
 }
 
@@ -164,4 +195,5 @@ void test_binary_search_tree() {
     test_search_min_first_BST();
     test_find_first_larger_than();
     test_build_BST();
+    test_build_BST_from_sorted_doubly_list();
 }

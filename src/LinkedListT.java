@@ -1,6 +1,7 @@
 import java.util.*;
 
-class LinkedListT<T extends Comparable> {
+class LinkedListT<T extends Comparable<T>> {
+	
 	Node<T> has_cycle_using_set(Node<T> head) {
 		Set<Node<T>> set = new HashSet<Node<T>>();
 		Node<T> node = head;
@@ -213,10 +214,10 @@ class LinkedListT<T extends Comparable> {
 		return L;
 	}
 	
-	public int size(Node<T> head) {
+	/* Get the size of the list */
+	public static<T extends Comparable<T>> int size(Node<T> head) {
 		int size = 0;
-		Node<T> node = head;
-		/* Get the size of the list */
+		Node<T> node = head;		
 		while (node != null) {
 			size ++;
 			node = node.next;

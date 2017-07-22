@@ -19,6 +19,8 @@ class BTNode {
         shared_ptr<BTNode<T>> right;
 		shared_ptr<BTNode<T>> parent;
 		int size;
+        
+        BTNode() {}
       
         BTNode(T __data) {
             data = __data;			

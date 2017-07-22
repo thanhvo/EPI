@@ -1,8 +1,11 @@
 
 public class BSTNode<T extends Comparable<T>> extends BTNode<T> implements Comparable<BSTNode<T>>{
+	public BSTNode() {
+		super();
+	}
+	
 	public BSTNode(T data) {
 		super(data);
-		visited = false;
 	}
 	
 	public BSTNode(T data, BSTNode<T> __left, BSTNode<T> __right) {

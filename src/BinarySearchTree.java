@@ -149,5 +149,27 @@ public class BinarySearchTree {
 	public static<T extends Comparable<T>> BSTNode<T> construct_BST(T[] A) {
 		return construct_BST_helper(A, 0, A.length -1);
 	}
+	
+	// Build a BST from (s+1)-th to the e-th node in L
+	private static<T extends Comparable<T>> Pair<BSTNode<T>, Node<T>> build_BST_from_sorted_doubly_list_helper(Node<T> L, int s, int e) {
+		BSTNode<T> curr = null;
+		if (s < e) {
+			int m = s + ((e-s)>>1);
+			curr = new BSTNode<T>();
+			Pair<BSTNode<T>, Node<T>> leftPair = build_BST_from_sorted_doubly_list_helper(L, s, m);
+			curr.left = leftPair.first;
+			L = leftPair.second;
+			curr.data = L.data;
+			L = L.next;
+			Pair<BSTNode<T>, Node<T>> rightPair = build_BST_from_sorted_doubly_list_helper(L, m + 1, e);
+			curr.right = rightPair.first;
+			L = rightPair.second;
+		}
+		return new Pair(curr, L);
+	}
+	
+	public static<T extends Comparable<T>> BSTNode<T> build_BST_from_sorted_doubly_list(Node<T> L) {
+		return build_BST_from_sorted_doubly_list_helper(L, 0, LinkedListT.size(L)).first;
+	}
 
 }
