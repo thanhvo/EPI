@@ -171,5 +171,33 @@ public class BinarySearchTree {
 	public static<T extends Comparable<T>> BSTNode<T> build_BST_from_sorted_doubly_list(Node<T> L) {
 		return build_BST_from_sorted_doubly_list_helper(L, 0, LinkedListT.size(L)).first;
 	}
-
+	
+	private static<T extends Comparable<T>> Pair<Node<T>, Node<T>> convert_BST_to_doubly_linked_list_helper(BSTNode<T> root) {
+		if(root == null) {
+			return null;
+		}
+		Pair<Node<T>, Node<T>> leftList = convert_BST_to_doubly_linked_list_helper(root.getLeft());
+		Pair<Node<T>, Node<T>> rightList = convert_BST_to_doubly_linked_list_helper(root.getRight());
+		Node<T> curr = new Node<T>(root.data);
+		Node<T> first, last;
+		if (leftList != null) {
+			leftList.second.next = curr;
+			curr.previous = leftList.second;
+			first = leftList.first;
+		} else {
+			first = curr;
+		} 
+		if (rightList != null) {
+			curr.next = rightList.first;
+			rightList.first.previous = curr;
+			last = rightList.second;
+		} else {
+			last = curr;
+		}
+		return new Pair(first, last);
+	}
+	
+	public static<T extends Comparable<T>> Node<T> convert_BST_to_doubly_linked_list(BSTNode<T> root) {
+		return convert_BST_to_doubly_linked_list_helper(root).first;
+	}
 }

@@ -316,4 +316,48 @@ shared_ptr<BSTNode<T>> build_BST_from_sorted_doubly_list(shared_ptr<node_t<T>> L
     return build_BST_from_sorted_doubly_list_helper(L, 0, n);
 }
 
+// Transform a BST into a circular sorted doubly linked list in-place, return the head of the list
+template <typename T>
+shared_ptr<BTNode<T>> BST_to_doubly_list(const shared_ptr<BTNode<T>> &n) {
+    // Empty subtree
+    if (!n) {
+        return nullptr;
+    }
+    // Recursively build the list from left and right subtrees
+    auto l_head(BST_to_doubly_list(n->left));
+    auto r_head(BST_to_doubly_list(n->right));
+    // Append n to the list of left subtree
+    shared_ptr<BTNode<T>> l_tail = nullptr;
+    if (l_head) {
+        l_tail = l_head->left;
+        l_tail->right = n;
+        n->left = l_tail;
+        l_tail = n;
+    } else {
+        l_head = l_tail = n;
+    }
+    // Append the list from right subtree to n
+    shared_ptr<BTNode<T>> r_tail = nullptr;
+    if (r_head) {
+        r_tail = r_head->left;
+        l_tail->right = r_head;
+        r_head->left = l_tail;
+    } else {
+        r_tail = l_tail;
+    }
+    r_tail->right = l_head, l_head->left = r_tail;
+    return l_head;
+}
+
+// Print a binary search tree as a doubly list
+template <typename T>
+void print_as_doubly_list(shared_ptr<BTNode<T>> node) {
+    shared_ptr<BTNode<T>> n = node;
+    do {
+        cout << n->data << " ";
+        n = n->right;
+    } while (n && n != node);
+    cout << endl;
+}
+
 #endif

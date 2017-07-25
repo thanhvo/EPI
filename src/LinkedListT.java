@@ -123,7 +123,7 @@ class LinkedListT<T extends Comparable<T>> {
 		return head;
 	}
 	
-	public void print(Node<T> node) {
+	public static<T extends Comparable<T>> void print(Node<T> node) {
 		while (node != null) {
 			System.out.print(node.data + "\t");
 			node = node.next;
