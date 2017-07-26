@@ -220,4 +220,45 @@ public class BinarySearchTreeTest {
 		Node<Integer> first = BinarySearchTree.convert_BST_to_doubly_linked_list(A);
 		LinkedListT.print(first);
 	}
+	
+	@Test
+	public void test_merge_BSTs() {
+		System.out.println("Merging two BSTs");
+		BSTNode<Integer> D = new BSTNode<Integer>(2);		
+		BSTNode<Integer> E = new BSTNode<Integer>(5);		
+		BSTNode<Integer> H = new BSTNode<Integer>(13);
+		BSTNode<Integer> G = new BSTNode<Integer>(17, H, null);
+		BSTNode<Integer> F = new BSTNode<Integer>(11, null, G);		
+		BSTNode<Integer> M = new BSTNode<Integer>(31);
+		BSTNode<Integer> L = new BSTNode<Integer>(29, null, M);
+		BSTNode<Integer> N = new BSTNode<Integer>(41);
+		BSTNode<Integer> K = new BSTNode<Integer>(37, L, N);
+		BSTNode<Integer> P = new BSTNode<Integer>(53);
+		BSTNode<Integer> O = new BSTNode<Integer>(47, null, P);
+		BSTNode<Integer> J = new BSTNode<Integer>(23, null, K);
+		BSTNode<Integer> I = new BSTNode<Integer>(43, J, O);
+		BSTNode<Integer> C = new BSTNode<Integer>(3, D, E);
+		BSTNode<Integer> B = new BSTNode<Integer>(7, C, F);
+		BSTNode<Integer> A = new BSTNode<Integer>(19, B, I);
+		assert(BinarySearchTree.isBST(A));
+		
+		BSTNode<Integer> H1 = new BSTNode<Integer>(1);
+		BSTNode<Integer> I1 = new BSTNode<Integer>(6);
+		BSTNode<Integer> J1 = new BSTNode<Integer>(10);
+		BSTNode<Integer> K1 = new BSTNode<Integer>(14);
+		BSTNode<Integer> L1 = new BSTNode<Integer>(22);
+		BSTNode<Integer> M1 = new BSTNode<Integer>(26);
+		BSTNode<Integer> D1 = new BSTNode<Integer>(4, H1, I1);
+		BSTNode<Integer> E1 = new BSTNode<Integer>(12, J1, K1);
+		BSTNode<Integer> F1 = new BSTNode<Integer>(18);
+		BSTNode<Integer> G1 = new BSTNode<Integer>(24, L1, M1);
+		BSTNode<Integer> B1 = new BSTNode<Integer>(8, D1, E1);
+		BSTNode<Integer> C1 = new BSTNode<Integer>(20, F1, G1);
+		BSTNode<Integer> A1 = new BSTNode<Integer>(16, B1, C1);
+		assert(BinarySearchTree.isBST(A1));
+		
+		BSTNode<Integer> root = BinarySearchTree.merge_BSTs(A, A1);
+		assert(BinarySearchTree.isBST(root));
+		root.printTree();
+	}
 }

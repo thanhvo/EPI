@@ -316,20 +316,40 @@ shared_ptr<BSTNode<T>> build_BST_from_sorted_doubly_list(shared_ptr<node_t<T>> L
     return build_BST_from_sorted_doubly_list_helper(L, 0, n);
 }
 
+// Build a BST from (s+1)-th to e-th node in L
+template <typename T>
+shared_ptr<BSTNode<T>> build_BST_from_sorted_doubly_list_helper_2(shared_ptr<BSTNode<T>> &L, const int &s, const int &e) {
+    shared_ptr<BSTNode<T>> curr = nullptr;
+    if (s < e) {
+        int m = s + ((e -s) >> 1);
+        curr = shared_ptr<BSTNode<T>>(new BSTNode<T>());
+        curr->left = build_BST_from_sorted_doubly_list_helper_2(L, s, m);
+        curr->data = L->data;
+        L = L->getRight();
+        curr->right = build_BST_from_sorted_doubly_list_helper_2(L, m+1, e);        
+    }
+    return curr;
+}
+
+template <typename T>
+shared_ptr<BSTNode<T>> build_BST_from_sorted_doubly_list_2(shared_ptr<BSTNode<T>> L, const int &n) {
+    return build_BST_from_sorted_doubly_list_helper_2(L, 0, n);
+}
+
 // Transform a BST into a circular sorted doubly linked list in-place, return the head of the list
 template <typename T>
-shared_ptr<BTNode<T>> BST_to_doubly_list(const shared_ptr<BTNode<T>> &n) {
+shared_ptr<BSTNode<T>> BST_to_doubly_list(const shared_ptr<BSTNode<T>> &n) {
     // Empty subtree
     if (!n) {
         return nullptr;
     }
     // Recursively build the list from left and right subtrees
-    auto l_head(BST_to_doubly_list(n->left));
-    auto r_head(BST_to_doubly_list(n->right));
+    auto l_head(BST_to_doubly_list(n->getLeft()));
+    auto r_head(BST_to_doubly_list(n->getRight()));
     // Append n to the list of left subtree
-    shared_ptr<BTNode<T>> l_tail = nullptr;
+    shared_ptr<BSTNode<T>> l_tail = nullptr;
     if (l_head) {
-        l_tail = l_head->left;
+        l_tail = l_head->getLeft();
         l_tail->right = n;
         n->left = l_tail;
         l_tail = n;
@@ -337,9 +357,9 @@ shared_ptr<BTNode<T>> BST_to_doubly_list(const shared_ptr<BTNode<T>> &n) {
         l_head = l_tail = n;
     }
     // Append the list from right subtree to n
-    shared_ptr<BTNode<T>> r_tail = nullptr;
+    shared_ptr<BSTNode<T>> r_tail = nullptr;
     if (r_head) {
-        r_tail = r_head->left;
+        r_tail = r_head->getLeft();
         l_tail->right = r_head;
         r_head->left = l_tail;
     } else {
@@ -351,13 +371,70 @@ shared_ptr<BTNode<T>> BST_to_doubly_list(const shared_ptr<BTNode<T>> &n) {
 
 // Print a binary search tree as a doubly list
 template <typename T>
-void print_as_doubly_list(shared_ptr<BTNode<T>> node) {
-    shared_ptr<BTNode<T>> n = node;
+void print_as_doubly_list(shared_ptr<BSTNode<T>> node) {
+    shared_ptr<BSTNode<T>> n = node;
     do {
         cout << n->data << " ";
-        n = n->right;
+        n = n->getRight();
     } while (n && n != node);
     cout << endl;
+}
+
+template <typename T>
+void append_node(shared_ptr<BSTNode<T>> &head, shared_ptr<BSTNode<T>> &tail, shared_ptr<BSTNode<T>> &n) {
+    if (head) {
+        tail->right = n, n->left = tail;        
+    } else {
+        head = n;
+    }
+    tail = n;
+}
+
+template <typename T>
+void append_node_and_advance(shared_ptr<BSTNode<T>> &head, shared_ptr<BSTNode<T>> &tail, shared_ptr<BSTNode<T>> &n) {
+    append_node(head, tail, n);
+    n = n->getRight(); // advance n
+}
+
+// Merge two sorted linked lists, return the head of the list
+template <typename T>
+shared_ptr<BSTNode<T>> merge_sorted_linked_lists(shared_ptr<BSTNode<T>> A, shared_ptr<BSTNode<T>> B) {
+    shared_ptr<BSTNode<T>> sorted_list = nullptr, tail = nullptr;
+    while (A && B) {
+        append_node_and_advance(sorted_list, tail, A->data < B->data ? A : B);
+    }
+    // Append the remaining of A
+    if (A) {
+        append_node(sorted_list, tail, A);
+    }
+    // Append the remaining of B
+    if (B) {
+        append_node(sorted_list, tail, B);        
+    }
+    return sorted_list;
+}
+
+// Identify the length of BST as a linked list
+template<typename T>
+int count_len_BST(shared_ptr<BSTNode<T>> head) {
+    int len = 0;
+    while (head) {
+        len++;
+        head = head->getRight();
+    }
+    return len;
+}
+
+template <typename T>
+shared_ptr<BSTNode<T>> merge_BSTs(shared_ptr<BSTNode<T>> A, shared_ptr<BSTNode<T>> B) {
+    // Transform BSTs A and B into sorted doubly lists
+    A = BST_to_doubly_list(A);
+    B = BST_to_doubly_list(B);
+    A->left->right = B->left->right = nullptr;
+    A->left = B->left = nullptr;
+    int len_A = count_len_BST(A);    
+    int len_B = count_len_BST(B);    
+    return build_BST_from_sorted_doubly_list_2(merge_sorted_linked_lists(A, B), len_A + len_B);
 }
 
 #endif

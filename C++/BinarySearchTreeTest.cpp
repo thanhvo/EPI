@@ -206,8 +206,47 @@ void test_BST_to_doubly_list() {
     shared_ptr<BSTNode<int>> A(make_shared<BSTNode<int>>(19, B, I));
     assert(is_BST(static_pointer_cast<BTNode<int>>(A)));
     A->printTree();
-    shared_ptr<BTNode<int>> head = BST_to_doubly_list(static_pointer_cast<BTNode<int>>(A));
+    shared_ptr<BSTNode<int>> head = BST_to_doubly_list(A);
     print_as_doubly_list(head);
+}
+
+void test_merge_BSTs() {
+    shared_ptr<BSTNode<int>> D(make_shared<BSTNode<int>>(2));
+    shared_ptr<BSTNode<int>> E(make_shared<BSTNode<int>>(5));    
+    shared_ptr<BSTNode<int>> H(make_shared<BSTNode<int>>(13));    
+    shared_ptr<BSTNode<int>> M(make_shared<BSTNode<int>>(31));
+    shared_ptr<BSTNode<int>> N(make_shared<BSTNode<int>>(41));    
+    shared_ptr<BSTNode<int>> P(make_shared<BSTNode<int>>(53));
+    shared_ptr<BSTNode<int>> O(make_shared<BSTNode<int>>(47, nullptr, P));
+    shared_ptr<BSTNode<int>> L(make_shared<BSTNode<int>>(29, nullptr, M));
+    shared_ptr<BSTNode<int>> K(make_shared<BSTNode<int>>(37, L, N));
+    shared_ptr<BSTNode<int>> J(make_shared<BSTNode<int>>(23, nullptr, K));
+    shared_ptr<BSTNode<int>> I(make_shared<BSTNode<int>>(43, J, O));
+    shared_ptr<BSTNode<int>> G(make_shared<BSTNode<int>>(17, H, nullptr));
+    shared_ptr<BSTNode<int>> F(make_shared<BSTNode<int>>(11, nullptr, G));
+    shared_ptr<BSTNode<int>> C(make_shared<BSTNode<int>>(3, D, E));
+    shared_ptr<BSTNode<int>> B(make_shared<BSTNode<int>>(7, C, F));    
+    shared_ptr<BSTNode<int>> A(make_shared<BSTNode<int>>(19, B, I));
+    assert(is_BST(static_pointer_cast<BTNode<int>>(A)));
+    
+    shared_ptr<BSTNode<int>> H1(make_shared<BSTNode<int>>(1));
+    shared_ptr<BSTNode<int>> I1(make_shared<BSTNode<int>>(6));
+    shared_ptr<BSTNode<int>> J1(make_shared<BSTNode<int>>(10));
+    shared_ptr<BSTNode<int>> K1(make_shared<BSTNode<int>>(14));
+    shared_ptr<BSTNode<int>> L1(make_shared<BSTNode<int>>(22));
+    shared_ptr<BSTNode<int>> M1(make_shared<BSTNode<int>>(26));
+    shared_ptr<BSTNode<int>> D1(make_shared<BSTNode<int>>(4, H1, I1));
+    shared_ptr<BSTNode<int>> E1(make_shared<BSTNode<int>>(12, J1, K1));
+    shared_ptr<BSTNode<int>> F1(make_shared<BSTNode<int>>(18));
+    shared_ptr<BSTNode<int>> G1(make_shared<BSTNode<int>>(24, L1, M1));
+    shared_ptr<BSTNode<int>> B1(make_shared<BSTNode<int>>(8, D1, E1));
+    shared_ptr<BSTNode<int>> C1(make_shared<BSTNode<int>>(20, F1, G1));
+    shared_ptr<BSTNode<int>> A1(make_shared<BSTNode<int>>(16, B1, C1));
+    assert(is_BST(static_pointer_cast<BTNode<int>>(A1)));
+    
+    shared_ptr<BSTNode<int>> root = merge_BSTs(A, A1);
+    assert(is_BST(static_pointer_cast<BTNode<int>>(root)));
+    root->printTree();
 }
 
 void test_binary_search_tree() {
@@ -220,4 +259,6 @@ void test_binary_search_tree() {
     test_build_BST();
     test_build_BST_from_sorted_doubly_list();
     test_BST_to_doubly_list();
+    test_merge_BSTs();
 }
+

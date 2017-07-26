@@ -151,7 +151,8 @@ public class BinarySearchTree {
 	}
 	
 	// Build a BST from (s+1)-th to the e-th node in L
-	private static<T extends Comparable<T>> Pair<BSTNode<T>, Node<T>> build_BST_from_sorted_doubly_list_helper(Node<T> L, int s, int e) {
+	private static<T extends Comparable<T>> Pair<BSTNode<T>, Node<T>> build_BST_from_sorted_doubly_list_helper
+			(Node<T> L, int s, int e) {
 		BSTNode<T> curr = null;
 		if (s < e) {
 			int m = s + ((e-s)>>1);
@@ -166,10 +167,74 @@ public class BinarySearchTree {
 			L = rightPair.second;
 		}
 		return new Pair(curr, L);
-	}
+	}	
 	
 	public static<T extends Comparable<T>> BSTNode<T> build_BST_from_sorted_doubly_list(Node<T> L) {
 		return build_BST_from_sorted_doubly_list_helper(L, 0, LinkedListT.size(L)).first;
+	}
+	
+	// Build a BST from (s+1)-th to the e-th BST node in L
+	private static<T extends Comparable<T>> Pair<BSTNode<T>, BSTNode<T>> build_BST_from_sorted_doubly_list_helper
+			(BSTNode<T> L, int s, int e) {
+		BSTNode<T> curr = null;
+		if (s < e) {
+			int m = s + ((e-s)>>1);
+			curr = new BSTNode<T>();
+			Pair<BSTNode<T>, BSTNode<T>> leftPair = build_BST_from_sorted_doubly_list_helper(L, s, m);
+			curr.left = leftPair.first;
+			L = leftPair.second;
+			curr.data = L.data;
+			L = L.getRight();
+			Pair<BSTNode<T>, BSTNode<T>> rightPair = build_BST_from_sorted_doubly_list_helper(L, m + 1, e);
+			curr.right = rightPair.first;
+			L = rightPair.second;
+		}
+		return new Pair(curr, L);
+	}
+	
+	private static <T extends Comparable<T>>int length(BSTNode<T> node) {
+		int len = 0;
+		while (node != null) {
+			len++;
+			node = node.getRight();
+		}
+		return len;
+	}
+	
+	public static<T extends Comparable<T>> BSTNode<T> build_BST_from_sorted_doubly_list(BSTNode<T> L) {
+		return build_BST_from_sorted_doubly_list_helper(L, 0, length(L)).first;
+	}
+
+	
+	private static<T extends Comparable<T>> Pair<BSTNode<T>, BSTNode<T>> convert_BST_to_doubly_linked_list_helper_2(BSTNode<T> root) {
+		if(root == null) {
+			return null;
+		}
+		Pair<BSTNode<T>, BSTNode<T>> leftList = convert_BST_to_doubly_linked_list_helper_2(root.getLeft());
+		Pair<BSTNode<T>, BSTNode<T>> rightList = convert_BST_to_doubly_linked_list_helper_2(root.getRight());
+		BSTNode<T> curr = new BSTNode<T>(root.data);
+		BSTNode<T> first, last;
+		if (leftList != null) {
+			leftList.second.right = curr;
+			curr.left = leftList.second;
+			first = leftList.first;
+		} else {
+			first = curr;
+		} 
+		if (rightList != null) {
+			curr.right = rightList.first;
+			rightList.first.left = curr;
+			last = rightList.second;
+		} else {
+			last = curr;
+		}
+		last.right = first;
+		first.left = last;
+		return new Pair(first, last);
+	}
+	
+	public static<T extends Comparable<T>> BSTNode<T> convert_BST_to_doubly_linked_list_2(BSTNode<T> root) {
+		return convert_BST_to_doubly_linked_list_helper_2(root).first;
 	}
 	
 	private static<T extends Comparable<T>> Pair<Node<T>, Node<T>> convert_BST_to_doubly_linked_list_helper(BSTNode<T> root) {
@@ -199,5 +264,62 @@ public class BinarySearchTree {
 	
 	public static<T extends Comparable<T>> Node<T> convert_BST_to_doubly_linked_list(BSTNode<T> root) {
 		return convert_BST_to_doubly_linked_list_helper(root).first;
+	}
+		
+	private static<T extends Comparable<T>> BSTNode<T> merge_sorted_lists(BSTNode<T> A, BSTNode<T> B) {
+		BSTNode<T> head = null, tail = null;
+		while (A != null && B != null) {
+			if (A.compareTo(B) < 0) {
+				if (head == null) {
+					head = A; 
+					tail = A;
+				} else {
+					tail.right = A;
+					A.left = tail;
+					tail = A;
+				}
+				A = A.getRight();
+			} else {
+				if (head == null) {
+					head = B;
+					tail = B;
+				} else {
+					tail.right = B;
+					B.left = tail;
+					tail = B;
+				}
+				B = B.getRight();
+			}
+		}
+		if (A != null) {
+			tail.right = A;
+		}
+		if (B != null) {
+			tail.right = B;
+		}
+		return head;
+	}
+	
+	private static<T extends Comparable<T>> void print_BST_as_list(BSTNode<T> node) {
+		while (node != null) {
+			System.out.print(node.data + " ");
+			node = node.getRight();
+		}
+		System.out.println();
+	}
+	
+	public static<T extends Comparable<T>> BSTNode<T> merge_BSTs(BSTNode<T> A, BSTNode<T> B) {
+		A = convert_BST_to_doubly_linked_list_2(A);
+		A.left.right = null;
+		A.left = null;
+		print_BST_as_list(A);
+		B = convert_BST_to_doubly_linked_list_2(B);
+		B.left.right = null;
+		B.left = null;
+		print_BST_as_list(B);
+		
+		BSTNode<T> C = merge_sorted_lists(A, B);
+		print_BST_as_list(C);
+		return build_BST_from_sorted_doubly_list(C);		
 	}
 }
