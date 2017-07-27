@@ -437,4 +437,23 @@ shared_ptr<BSTNode<T>> merge_BSTs(shared_ptr<BSTNode<T>> A, shared_ptr<BSTNode<T
     return build_BST_from_sorted_doubly_list_2(merge_sorted_linked_lists(A, B), len_A + len_B);
 }
 
+template <typename T>
+void find_k_largest_in_BST_helper(const shared_ptr<BSTNode<T>> &r, const int &k, vector<T> &k_elements) {
+    // Perform reverse inorder traversal
+    if (r && (int)k_elements.size() < k) {
+        find_k_largest_in_BST_helper(r->getRight(), k, k_elements);
+        if ((int)k_elements.size() < k) {
+            k_elements.emplace_back(r->data);
+            find_k_largest_in_BST_helper(r->getLeft(), k, k_elements);
+        }
+    }
+}
+
+template <typename T>
+vector<T> find_k_largest_in_BST(const shared_ptr<BSTNode<T>> &root, const int &k) {
+    vector<T> k_elements;
+    find_k_largest_in_BST_helper(root, k, k_elements);
+    return k_elements;
+}
+
 #endif

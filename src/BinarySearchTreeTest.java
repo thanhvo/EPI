@@ -2,6 +2,7 @@ import org.junit.*;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
+import java.util.*;
 
 public class BinarySearchTreeTest {
 	@Test
@@ -223,7 +224,6 @@ public class BinarySearchTreeTest {
 	
 	@Test
 	public void test_merge_BSTs() {
-		System.out.println("Merging two BSTs");
 		BSTNode<Integer> D = new BSTNode<Integer>(2);		
 		BSTNode<Integer> E = new BSTNode<Integer>(5);		
 		BSTNode<Integer> H = new BSTNode<Integer>(13);
@@ -260,5 +260,31 @@ public class BinarySearchTreeTest {
 		BSTNode<Integer> root = BinarySearchTree.merge_BSTs(A, A1);
 		assert(BinarySearchTree.isBST(root));
 		root.printTree();
+	}
+	
+	@Test
+	public void test_find_k_largest_elements() {
+		System.out.println("Find k largest elements");
+		BSTNode<Integer> D = new BSTNode<Integer>(2);		
+		BSTNode<Integer> E = new BSTNode<Integer>(5);		
+		BSTNode<Integer> H = new BSTNode<Integer>(13);
+		BSTNode<Integer> G = new BSTNode<Integer>(17, H, null);
+		BSTNode<Integer> F = new BSTNode<Integer>(11, null, G);		
+		BSTNode<Integer> M = new BSTNode<Integer>(31);
+		BSTNode<Integer> L = new BSTNode<Integer>(29, null, M);
+		BSTNode<Integer> N = new BSTNode<Integer>(41);
+		BSTNode<Integer> K = new BSTNode<Integer>(37, L, N);
+		BSTNode<Integer> P = new BSTNode<Integer>(53);
+		BSTNode<Integer> O = new BSTNode<Integer>(47, null, P);
+		BSTNode<Integer> J = new BSTNode<Integer>(23, null, K);
+		BSTNode<Integer> I = new BSTNode<Integer>(43, J, O);
+		BSTNode<Integer> C = new BSTNode<Integer>(3, D, E);
+		BSTNode<Integer> B = new BSTNode<Integer>(7, C, F);
+		BSTNode<Integer> A = new BSTNode<Integer>(19, B, I);
+		assert(BinarySearchTree.isBST(A));
+		List<Integer> list = BinarySearchTree.find_k_largest_elements(A, 3);
+		for (Integer val: list)
+			System.out.print(val + " ");
+		System.out.println();
 	}
 }

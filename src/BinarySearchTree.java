@@ -1,3 +1,4 @@
+import java.util.*;
 
 public class BinarySearchTree {
 	private static class Lowest<T extends Comparable> implements Comparable<T> {
@@ -321,5 +322,23 @@ public class BinarySearchTree {
 		BSTNode<T> C = merge_sorted_lists(A, B);
 		print_BST_as_list(C);
 		return build_BST_from_sorted_doubly_list(C);		
+	}
+	
+	private static<T extends Comparable<T>> void 
+		find_k_largest_elements_helper(BSTNode<T> root, int k, List<T> k_elements) {
+		if (root != null && k_elements.size() < k) {
+			// Perform reverse in-order traversal
+			find_k_largest_elements_helper(root.getRight(), k, k_elements);
+			if (k_elements.size() < k) {
+				k_elements.add(root.data);
+				find_k_largest_elements_helper(root.getLeft(), k, k_elements);
+			}
+		}
+	}
+	
+	public static<T extends Comparable<T>> List<T> find_k_largest_elements(BSTNode<T> root, int k) {
+		List<T> k_elements = new ArrayList<T>();
+		find_k_largest_elements_helper(root, k, k_elements);
+		return k_elements;	
 	}
 }
