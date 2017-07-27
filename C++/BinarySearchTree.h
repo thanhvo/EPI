@@ -456,4 +456,24 @@ vector<T> find_k_largest_in_BST(const shared_ptr<BSTNode<T>> &root, const int &k
     return k_elements;
 }
 
+// Build a BST based on preorder [s: e-1], return its root
+template <typename T>
+shared_ptr<BSTNode<T>> rebuild_BST_from_preorder_helper(const vector<T> &preorder, const int &s, const int &e) {
+    if (s < e) {
+        int x = s + 1;
+        while (x < e && preorder[x] < preorder[s]) {
+            ++x;
+        }
+        return shared_ptr<BSTNode<T>>(new BSTNode<T>(preorder[s], rebuild_BST_from_preorder_helper(preorder, s+1, x),
+                rebuild_BST_from_preorder_helper(preorder, x, e)));
+    }
+    return nullptr;
+}
+
+// Given a preorder traversal of a BST, return its root 
+template <typename T>
+shared_ptr<BSTNode<T>> rebuild_BST_preorder(const vector<T> &preorder) {
+    return rebuild_BST_from_preorder_helper(preorder, 0, preorder.size());
+}
+
 #endif

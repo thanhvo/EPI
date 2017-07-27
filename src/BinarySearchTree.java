@@ -341,4 +341,19 @@ public class BinarySearchTree {
 		find_k_largest_elements_helper(root, k, k_elements);
 		return k_elements;	
 	}
+	
+	private static<T extends Comparable<T>> BSTNode<T> build_BST_from_pre_order(ArrayList<T> pre_order, int start, int end) {
+		if (start > end ) return null;
+		BSTNode<T> root = new BSTNode(pre_order.get(start));
+		int mid = start + 1;
+		while (mid <= end && pre_order.get(mid).compareTo(root.data) < 0)
+			mid++;
+		root.left = build_BST_from_pre_order(pre_order, start+1, mid - 1);
+		root.right = build_BST_from_pre_order(pre_order, mid, end);
+		return root;
+	}
+	
+	public static<T extends Comparable<T>> BSTNode<T> build_BST_from_pre_order(ArrayList<T> pre_order) {
+		return build_BST_from_pre_order(pre_order, 0, pre_order.size() -1);
+	}
 }

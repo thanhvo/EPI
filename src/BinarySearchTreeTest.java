@@ -287,4 +287,12 @@ public class BinarySearchTreeTest {
 			System.out.print(val + " ");
 		System.out.println();
 	}
+	
+	@Test
+	public void test_build_BST_from_pre_order() {
+		ArrayList<Integer> pre_order = new ArrayList<>(Arrays.asList(16, 8, 4, 1, 6, 12, 10, 14, 20, 18, 24, 22, 26));
+		BSTNode<Integer> root = BinarySearchTree.build_BST_from_pre_order(pre_order);
+		assert(BinarySearchTree.isBST(root));
+		root.printTree();
+	}
 }

@@ -274,6 +274,13 @@ void test_find_k_largest_in_BST() {
     cout << endl;
 }
 
+void test_rebuild_BST_from_preorder() {
+    vector<int> preorder = {16, 8, 4, 1, 6, 12, 10, 14, 20, 18, 24, 22, 26};
+    shared_ptr<BSTNode<int>> root = rebuild_BST_preorder(preorder);
+    assert(is_BST(static_pointer_cast<BTNode<int>>(root)));
+    root->printTree();
+}
+
 void test_binary_search_tree() {
     test_is_BST();
     test_find_successor_BST();
@@ -286,5 +293,6 @@ void test_binary_search_tree() {
     test_BST_to_doubly_list();
     test_merge_BSTs();
     test_find_k_largest_in_BST();
+    test_rebuild_BST_from_preorder();
 }
 
