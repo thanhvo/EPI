@@ -356,4 +356,44 @@ public class BinarySearchTree {
 	public static<T extends Comparable<T>> BSTNode<T> build_BST_from_pre_order(ArrayList<T> pre_order) {
 		return build_BST_from_pre_order(pre_order, 0, pre_order.size() -1);
 	}
+	
+	private static<T extends Comparable<T>> 
+	Pair<BSTNode<T>, Integer> rebuild_BST_from_preorder_helper2(ArrayList<T> preorder, int idx, T min, T max) {
+		if (idx == preorder.size()) {
+			return null;
+		}
+		T curr = preorder.get(idx);
+		if (min.compareTo(curr) > 0 || max.compareTo(curr) < 0) {
+			return null;
+		}
+		++idx;
+		Pair<BSTNode<T>, Integer> leftPair = rebuild_BST_from_preorder_helper2(preorder, idx, min, curr);
+		Pair<BSTNode<T>, Integer> rightPair = null;
+		if (leftPair == null)
+			rightPair = rebuild_BST_from_preorder_helper2(preorder, idx, curr, max);
+		else rightPair = rebuild_BST_from_preorder_helper2(preorder, leftPair.second.intValue(), curr, max);
+		BSTNode<T> root = new BSTNode<T>(curr, leftPair != null ? leftPair.first : null, 
+				rightPair != null ? rightPair.first : null);
+		if (rightPair == null) 
+			return new Pair(root, idx);
+		return new Pair(root, rightPair.second.intValue());
+	}
+	
+	public static <T extends Comparable<T>> BSTNode<T> rebuild_BST_from_preorder2(ArrayList<T> preorder) {
+		int idx = 0;
+		T lowest = (T)new Lowest<T>();
+		T highest = (T)new Highest<T>();
+		return rebuild_BST_from_preorder_helper2(preorder, idx, lowest, highest).first;
+	}
+	
+	public static<T extends Comparable<T>> BSTNode<T> LCA(BSTNode<T> A, BSTNode<T> B) {
+		BSTNode<T> LCA = null;
+		BSTNode<T> parent = B;
+		while (parent != null ) {
+			if(A.compareTo(parent) <= 0 && B.compareTo(parent) >= 0) 
+				LCA = parent;
+			parent = parent.getParent();
+		}
+		return LCA;
+	}
 }

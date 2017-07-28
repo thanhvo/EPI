@@ -294,5 +294,32 @@ public class BinarySearchTreeTest {
 		BSTNode<Integer> root = BinarySearchTree.build_BST_from_pre_order(pre_order);
 		assert(BinarySearchTree.isBST(root));
 		root.printTree();
+		BSTNode<Integer> root2 = BinarySearchTree.rebuild_BST_from_preorder2(pre_order);
+		assert(BinarySearchTree.isBST(root2));
+		root2.printTree();
+	}
+	
+	@Test
+	public void test_LCA() {
+		BSTNode<Integer> D = new BSTNode<Integer>(2);		
+		BSTNode<Integer> E = new BSTNode<Integer>(5);		
+		BSTNode<Integer> H = new BSTNode<Integer>(13);
+		BSTNode<Integer> G = new BSTNode<Integer>(17, H, null);
+		BSTNode<Integer> F = new BSTNode<Integer>(11, null, G);		
+		BSTNode<Integer> M = new BSTNode<Integer>(31);
+		BSTNode<Integer> L = new BSTNode<Integer>(29, null, M);
+		BSTNode<Integer> N = new BSTNode<Integer>(41);
+		BSTNode<Integer> K = new BSTNode<Integer>(37, L, N);
+		BSTNode<Integer> P = new BSTNode<Integer>(53);
+		BSTNode<Integer> O = new BSTNode<Integer>(47, null, P);
+		BSTNode<Integer> J = new BSTNode<Integer>(23, null, K);
+		BSTNode<Integer> I = new BSTNode<Integer>(43, J, O);
+		BSTNode<Integer> C = new BSTNode<Integer>(3, D, E);
+		BSTNode<Integer> B = new BSTNode<Integer>(7, C, F);
+		BSTNode<Integer> A = new BSTNode<Integer>(19, B, I);
+		assert(BinarySearchTree.isBST(A));
+		assertEquals(BinarySearchTree.LCA(M, N), K);
+		assertEquals(BinarySearchTree.LCA(M, P), I);
+		assertEquals(BinarySearchTree.LCA(E, P), A);
 	}
 }

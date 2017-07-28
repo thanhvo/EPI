@@ -476,4 +476,39 @@ shared_ptr<BSTNode<T>> rebuild_BST_preorder(const vector<T> &preorder) {
     return rebuild_BST_from_preorder_helper(preorder, 0, preorder.size());
 }
 
+template <typename T>
+shared_ptr<BSTNode<T>> rebuild_BST_from_preorder_helper2(const vector<T> &preorder, int &idx, const T &min, const T &max) {
+    if (idx == (int)preorder.size()) {
+        return nullptr;
+    }
+    T curr = preorder[idx];
+    if (curr < min || curr > max) {
+        return nullptr;
+    }
+    ++idx;
+    shared_ptr<BSTNode<T>> root (new BSTNode<T> { curr, rebuild_BST_from_preorder_helper2(preorder, idx, min, curr),
+    rebuild_BST_from_preorder_helper2(preorder, idx, curr, max)});
+    return root;
+}
+
+template <typename T>
+shared_ptr<BSTNode<T>> rebuild_BST_from_preorder2(const vector<T> &preorder) {
+    int idx = 0;
+    return rebuild_BST_from_preorder_helper2(preorder, idx, numeric_limits<T>::min(), numeric_limits<T>::max());
+}
+
+template <typename T>
+shared_ptr<BSTNode<T>> find_LCA(shared_ptr<BSTNode<T>> x, const shared_ptr<BSTNode<T>> &s, const shared_ptr<BSTNode<T>> &b) {
+    while (x->data < s->data || x->data > b->data) {
+        if (x->data < s->data) {
+            x = x->getRight(); // LCA must be in x's right child
+        }
+        if (x->data > b->data) {
+            x = x->getLeft(); // LCA must be in x's left child
+        }
+    }
+    // x->data >= s->data && x->data <= b->data
+    return x; // x is LCA
+}
+
 #endif
