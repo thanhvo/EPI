@@ -396,4 +396,22 @@ public class BinarySearchTree {
 		}
 		return LCA;
 	}
+	
+	public static<T extends Comparable<T>>  
+		boolean is_r_s_descendant_ancestor_of_m(BSTNode<T> r, BSTNode<T> s, BSTNode<T> m) {
+		BSTNode<T> curr_r = r, curr_s = s;
+		boolean found_m = false;
+		// Interleaving searches from r and s
+		while (curr_r != s && curr_s != r && (curr_r != null || curr_s != null)) {
+			if (curr_r == m || curr_s == m) {
+				found_m = true;
+			}
+			if (curr_r != null)
+				curr_r = curr_r.compareTo(s) > 0 ? curr_r.getLeft() : curr_r.getRight();
+			 
+			if (curr_s != null)
+				curr_s = curr_s.compareTo(r) > 0 ? curr_s.getLeft() : curr_s.getRight();			
+		}
+		return (curr_r == s || curr_s == r) && found_m;				
+	}
 }

@@ -511,4 +511,21 @@ shared_ptr<BSTNode<T>> find_LCA(shared_ptr<BSTNode<T>> x, const shared_ptr<BSTNo
     return x; // x is LCA
 }
 
+template <typename T>
+bool is_r_s_descendant_ancestor_of_m(const shared_ptr<BSTNode<T>> &r, const shared_ptr<BSTNode<T>> &s, const shared_ptr<BSTNode<T>> &m) {
+    shared_ptr<BSTNode<T>> curr_r = r, curr_s = s;
+    bool found_m = false;
+    // Interleaving searches from r and s
+    while (curr_r != s && curr_s != r && (curr_r || curr_s )) {
+        if (curr_r == m || curr_s == m) {
+            found_m = true;
+        }
+        if (curr_r != nullptr)
+            curr_r = curr_r->data > s->data ? curr_r->getLeft(): curr_r->getRight();
+        if (curr_s != nullptr)
+            curr_s = curr_s->data > r->data ? curr_s->getLeft() : curr_s->getRight();
+    }
+    return (curr_r == s || curr_s == r) && found_m;    
+}   
+
 #endif
