@@ -18,12 +18,12 @@ void print_BST_in_sorted_order(const shared_ptr<BSTNode<T>> &n) {
     while(!s.empty() || curr) {
         if (curr) {
             s.push(curr);
-            curr = dynamic_pointer_cast<BSTNode<T>>(curr->left);
+            curr = static_pointer_cast<BSTNode<T>>(curr->left);
         } else {
             curr = s.top();
             s.pop();
             cout << curr->data << endl;
-            curr = dynamic_pointer_cast<BSTNode<T>>(curr->right);
+            curr = static_pointer_cast<BSTNode<T>>(curr->right);
         }
     }
 }

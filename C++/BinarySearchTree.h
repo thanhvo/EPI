@@ -4,6 +4,7 @@
 #include <memory>
 #include <limits>
 #include <queue>
+#include <list>
 #include "Node.h"
 #include "BSTNode.h"
 
@@ -89,17 +90,21 @@ shared_ptr <BSTNode<T>> find_successor_BST(shared_ptr<BSTNode<T>> n) {
     shared_ptr<BSTNode<T>> node = n;
     if (node->right) {
         // Find the smallest element in n's right subtree
+        //cout << node->data << endl;
         node = node->getRight();
         while (node->left) {
             node = node->getLeft();
+            //cout << node->data << endl;
         }
         return node;
     }
     // Find the first parent which is larger than n
-    while (node->parent && node->parent->right == node) {
+    while (node->parent && node->getParent()->getRight() == node) {
+        //cout << node->data << endl;
         node = node->getParent();
     }
     // Return nullptr means n is the largest in this BST
+    //cout << node->data << endl;
     return node->getParent();
 }
 
@@ -526,6 +531,28 @@ bool is_r_s_descendant_ancestor_of_m(const shared_ptr<BSTNode<T>> &r, const shar
             curr_s = curr_s->data > r->data ? curr_s->getLeft() : curr_s->getRight();
     }
     return (curr_r == s || curr_s == r) && found_m;    
-}   
+}
+
+template <typename T>
+shared_ptr<BSTNode<T>> find_first_larger_equal_k(const shared_ptr<BSTNode<T>> &r, const T &k) {
+    if (!r) {
+        return nullptr;
+    } else if (r->data >= k) {
+        // Recursively search the left subtree for first one >= k
+        auto n = find_first_larger_equal_k(r->getLeft(), k);
+        return n ? n : r;
+    }
+    // r->data < k so search the right subtree
+    return find_first_larger_equal_k(r->getRight(), k);    
+}
+
+template <typename T>
+list<shared_ptr<BSTNode<T>>> range_query_on_BST(shared_ptr<BSTNode<T>> n, const T &L, const T &U) {
+    list<shared_ptr<BSTNode<T>>> res;
+    for (auto it = find_first_larger_equal_k(n, L); it && it->data <= U; it = find_successor_BST(it)) {
+        res.emplace_back(it);
+    }
+    return res;
+}
 
 #endif

@@ -397,7 +397,7 @@ public class BinarySearchTree {
 		return LCA;
 	}
 	
-	public static<T extends Comparable<T>>  
+	public static <T extends Comparable<T>>  
 		boolean is_r_s_descendant_ancestor_of_m(BSTNode<T> r, BSTNode<T> s, BSTNode<T> m) {
 		BSTNode<T> curr_r = r, curr_s = s;
 		boolean found_m = false;
@@ -413,5 +413,24 @@ public class BinarySearchTree {
 				curr_s = curr_s.compareTo(r) > 0 ? curr_s.getLeft() : curr_s.getRight();			
 		}
 		return (curr_r == s || curr_s == r) && found_m;				
+	}
+	
+	private static <T extends Comparable<T>> void range_query_helper(BSTNode<T> root, T L, T U, List<BSTNode<T>> list) {
+		if (root == null) return;
+		if (root.data.compareTo(U) > 0) {
+			range_query_helper(root.getLeft(), L, U, list);
+		} else if (root.data.compareTo(L) < 0) {
+			range_query_helper(root.getRight(), L, U, list);
+		} else {
+			list.add(root);
+			range_query_helper(root.getLeft(), L, U, list);
+			range_query_helper(root.getRight(), L, U, list);
+		}
+	}
+	
+	public static <T extends Comparable<T>> List<BSTNode<T>> range_query(BSTNode<T> root, T L, T U) {
+		List<BSTNode<T>> list = new ArrayList<BSTNode<T>>();
+		range_query_helper(root, L, U, list);
+		return list;
 	}
 }

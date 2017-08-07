@@ -25,17 +25,17 @@ class BTNode {
         BTNode(T __data) {
             data = __data;			
             left = nullptr;
-            right = nullptr;
-			parent = nullptr;
+            right = nullptr;            
         }
 		
 		BTNode(T __data, shared_ptr<BTNode<T>> __left, shared_ptr<BTNode<T>> __right) {
 			data = __data;
 			left = __left;
 			right = __right;
-            if (left) left->parent = make_shared<BTNode<T>>(*this);
-            if (right) right->parent = make_shared<BTNode<T>>(*this);
-            parent = nullptr;
+            //if (left) left->parent = make_shared<BTNode<T>>(*this);
+            //if (left) left->parent = this_ptr;
+            //if (right) right->parent = make_shared<BTNode<T>>(*this);
+            //if (right) right->parent = this_ptr;            
 		}
         
         BTNode(T __data, shared_ptr<BTNode<T>> __left, shared_ptr<BTNode<T>> __right, shared_ptr<BTNode<T>> __parent) {
@@ -55,7 +55,9 @@ class BTNode {
             }
         }
         
-        virtual ~BTNode() {}
+        /*~BTNode() {
+            left = right = parent = nullptr;            
+        }*/
     
     private:
         void printNodeValue() {

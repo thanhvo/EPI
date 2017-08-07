@@ -6,6 +6,42 @@
 
 using namespace std;
 
+shared_ptr<BSTNode<int>> A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P;
+
+void create_sample_BST() {
+    D = make_shared<BSTNode<int>>(2);
+    E = make_shared<BSTNode<int>>(5);    
+    C = make_shared<BSTNode<int>>(3, D, E);
+    D->parent = C;
+    E->parent = C;
+    H = make_shared<BSTNode<int>>(13);    
+    M = make_shared<BSTNode<int>>(31);
+    N = make_shared<BSTNode<int>>(41);    
+    P = make_shared<BSTNode<int>>(53);
+    O = make_shared<BSTNode<int>>(47, nullptr, P);
+    P->parent = O;
+    L = make_shared<BSTNode<int>>(29, nullptr, M);
+    M->parent = L;
+    K = make_shared<BSTNode<int>>(37, L, N);
+    L->parent = K;
+    N->parent = K;
+    J = make_shared<BSTNode<int>>(23, nullptr, K);
+    K->parent = J;
+    I = make_shared<BSTNode<int>>(43, J, O);
+    J->parent = I;
+    O->parent = I;
+    G = make_shared<BSTNode<int>>(17, H, nullptr);
+    H->parent = G;
+    F = make_shared<BSTNode<int>>(11, nullptr, G);
+    G->parent = F;
+    B = make_shared<BSTNode<int>>(7, C, F);    
+    C->parent = B;
+    F->parent = B;
+    A = make_shared<BSTNode<int>>(19, B, I); 
+    B->parent = A;
+    I->parent = A;
+}
+
 void test_is_BST() {
     shared_ptr<BTNode<int>> D(make_shared<BTNode<int>>(2));
     shared_ptr<BTNode<int>> E(make_shared<BTNode<int>>(5));    
@@ -34,44 +70,15 @@ void test_is_BST() {
 }
 
 void test_find_successor_BST() {    
-    shared_ptr<BSTNode<int>> D(make_shared<BSTNode<int>>(2));
-    shared_ptr<BSTNode<int>> E(make_shared<BSTNode<int>>(5));    
-    shared_ptr<BSTNode<int>> H(make_shared<BSTNode<int>>(13));    
-    shared_ptr<BSTNode<int>> M(make_shared<BSTNode<int>>(31));
-    shared_ptr<BSTNode<int>> N(make_shared<BSTNode<int>>(41));    
-    shared_ptr<BSTNode<int>> P(make_shared<BSTNode<int>>(53));
-    shared_ptr<BSTNode<int>> O(make_shared<BSTNode<int>>(47, nullptr, P));
-    shared_ptr<BSTNode<int>> L(make_shared<BSTNode<int>>(29, nullptr, M));
-    shared_ptr<BSTNode<int>> K(make_shared<BSTNode<int>>(37, L, N));
-    shared_ptr<BSTNode<int>> J(make_shared<BSTNode<int>>(23, nullptr, K));
-    shared_ptr<BSTNode<int>> I(make_shared<BSTNode<int>>(43, J, O));
-    shared_ptr<BSTNode<int>> G(make_shared<BSTNode<int>>(17, H, nullptr));
-    shared_ptr<BSTNode<int>> F(make_shared<BSTNode<int>>(11, nullptr, G));
-    shared_ptr<BSTNode<int>> C(make_shared<BSTNode<int>>(3, D, E));
-    shared_ptr<BSTNode<int>> B(make_shared<BSTNode<int>>(7, C, F));    
-    shared_ptr<BSTNode<int>> A(make_shared<BSTNode<int>>(19, B, I));
-    assert(find_successor_BST(A)->data == J->data);
-    assert(find_successor_BST(D)->data == C->data);
+    cout << "Test find successor" << endl;
+    create_sample_BST();
+    assert(find_successor_BST(A) == J);
+    assert(find_successor_BST(D) == C);
     assert(find_successor_BST(P) == nullptr);
 }
 
 void test_modify_binary_search_tree() {
-    shared_ptr<BSTNode<int>> D(make_shared<BSTNode<int>>(2));
-    shared_ptr<BSTNode<int>> E(make_shared<BSTNode<int>>(5));    
-    shared_ptr<BSTNode<int>> H(make_shared<BSTNode<int>>(13));    
-    shared_ptr<BSTNode<int>> M(make_shared<BSTNode<int>>(31));
-    shared_ptr<BSTNode<int>> N(make_shared<BSTNode<int>>(41));    
-    shared_ptr<BSTNode<int>> P(make_shared<BSTNode<int>>(53));
-    shared_ptr<BSTNode<int>> O(make_shared<BSTNode<int>>(47, nullptr, P));
-    shared_ptr<BSTNode<int>> L(make_shared<BSTNode<int>>(29, nullptr, M));
-    shared_ptr<BSTNode<int>> K(make_shared<BSTNode<int>>(37, L, N));
-    shared_ptr<BSTNode<int>> J(make_shared<BSTNode<int>>(23, nullptr, K));
-    shared_ptr<BSTNode<int>> I(make_shared<BSTNode<int>>(43, J, O));
-    shared_ptr<BSTNode<int>> G(make_shared<BSTNode<int>>(17, H, nullptr));
-    shared_ptr<BSTNode<int>> F(make_shared<BSTNode<int>>(11, nullptr, G));
-    shared_ptr<BSTNode<int>> C(make_shared<BSTNode<int>>(3, D, E));
-    shared_ptr<BSTNode<int>> B(make_shared<BSTNode<int>>(7, C, F));    
-    shared_ptr<BSTNode<int>> A(make_shared<BSTNode<int>>(19, B, I));
+    create_sample_BST();
     assert(is_BST(static_pointer_cast<BTNode<int>>(A)));
     BinarySearchTree<int> BST(A);
     BST.insert(57);
@@ -83,22 +90,7 @@ void test_modify_binary_search_tree() {
 }
 
 void test_find_first_equal_k() {
-    shared_ptr<BSTNode<int>> D(make_shared<BSTNode<int>>(2));
-    shared_ptr<BSTNode<int>> E(make_shared<BSTNode<int>>(5));    
-    shared_ptr<BSTNode<int>> H(make_shared<BSTNode<int>>(13));    
-    shared_ptr<BSTNode<int>> M(make_shared<BSTNode<int>>(31));
-    shared_ptr<BSTNode<int>> N(make_shared<BSTNode<int>>(41));    
-    shared_ptr<BSTNode<int>> P(make_shared<BSTNode<int>>(53));
-    shared_ptr<BSTNode<int>> O(make_shared<BSTNode<int>>(47, nullptr, P));
-    shared_ptr<BSTNode<int>> L(make_shared<BSTNode<int>>(23, nullptr, M));
-    shared_ptr<BSTNode<int>> K(make_shared<BSTNode<int>>(37, L, N));
-    shared_ptr<BSTNode<int>> J(make_shared<BSTNode<int>>(23, nullptr, K));
-    shared_ptr<BSTNode<int>> I(make_shared<BSTNode<int>>(43, J, O));
-    shared_ptr<BSTNode<int>> G(make_shared<BSTNode<int>>(17, H, nullptr));
-    shared_ptr<BSTNode<int>> F(make_shared<BSTNode<int>>(11, nullptr, G));
-    shared_ptr<BSTNode<int>> C(make_shared<BSTNode<int>>(3, D, E));
-    shared_ptr<BSTNode<int>> B(make_shared<BSTNode<int>>(7, C, F));    
-    shared_ptr<BSTNode<int>> A(make_shared<BSTNode<int>>(19, B, I));
+    create_sample_BST();
     assert(is_BST(static_pointer_cast<BTNode<int>>(A)));
     BinarySearchTree<int> BST(A);    
     BST.find_first_equal_k_iterative(23)->printTree();
@@ -129,24 +121,9 @@ void test_search_min_first_BST() {
 }
 
 void test_find_first_larger_than() {
-    shared_ptr<BSTNode<int>> D(make_shared<BSTNode<int>>(2));
-    shared_ptr<BSTNode<int>> E(make_shared<BSTNode<int>>(5));    
-    shared_ptr<BSTNode<int>> H(make_shared<BSTNode<int>>(13));    
-    shared_ptr<BSTNode<int>> M(make_shared<BSTNode<int>>(31));
-    shared_ptr<BSTNode<int>> N(make_shared<BSTNode<int>>(41));    
-    shared_ptr<BSTNode<int>> P(make_shared<BSTNode<int>>(53));
-    shared_ptr<BSTNode<int>> O(make_shared<BSTNode<int>>(47, nullptr, P));
-    shared_ptr<BSTNode<int>> L(make_shared<BSTNode<int>>(29, nullptr, M));
-    shared_ptr<BSTNode<int>> K(make_shared<BSTNode<int>>(37, L, N));
-    shared_ptr<BSTNode<int>> J(make_shared<BSTNode<int>>(23, nullptr, K));
-    shared_ptr<BSTNode<int>> I(make_shared<BSTNode<int>>(43, J, O));
-    shared_ptr<BSTNode<int>> G(make_shared<BSTNode<int>>(17, H, nullptr));
-    shared_ptr<BSTNode<int>> F(make_shared<BSTNode<int>>(11, nullptr, G));
-    shared_ptr<BSTNode<int>> C(make_shared<BSTNode<int>>(3, D, E));
-    shared_ptr<BSTNode<int>> B(make_shared<BSTNode<int>>(7, C, F));    
-    shared_ptr<BSTNode<int>> A(make_shared<BSTNode<int>>(19, B, I));
+    create_sample_BST();
     assert(is_BST(static_pointer_cast<BTNode<int>>(A)));
-    assert(find_first_larger_than_k_with_k_exist(A, 23)->data == 29);
+    assert(find_first_larger_than_k_with_k_exist(A, 23) == L);
     assert(find_first_larger_than_k_with_k_exist(A, 32) == nullptr);
 }
 
@@ -188,22 +165,7 @@ void test_build_BST_from_sorted_doubly_list() {
 }
 
 void test_BST_to_doubly_list() {
-    shared_ptr<BSTNode<int>> D(make_shared<BSTNode<int>>(2));
-    shared_ptr<BSTNode<int>> E(make_shared<BSTNode<int>>(5));    
-    shared_ptr<BSTNode<int>> H(make_shared<BSTNode<int>>(13));    
-    shared_ptr<BSTNode<int>> M(make_shared<BSTNode<int>>(31));
-    shared_ptr<BSTNode<int>> N(make_shared<BSTNode<int>>(41));    
-    shared_ptr<BSTNode<int>> P(make_shared<BSTNode<int>>(53));
-    shared_ptr<BSTNode<int>> O(make_shared<BSTNode<int>>(47, nullptr, P));
-    shared_ptr<BSTNode<int>> L(make_shared<BSTNode<int>>(29, nullptr, M));
-    shared_ptr<BSTNode<int>> K(make_shared<BSTNode<int>>(37, L, N));
-    shared_ptr<BSTNode<int>> J(make_shared<BSTNode<int>>(23, nullptr, K));
-    shared_ptr<BSTNode<int>> I(make_shared<BSTNode<int>>(43, J, O));
-    shared_ptr<BSTNode<int>> G(make_shared<BSTNode<int>>(17, H, nullptr));
-    shared_ptr<BSTNode<int>> F(make_shared<BSTNode<int>>(11, nullptr, G));
-    shared_ptr<BSTNode<int>> C(make_shared<BSTNode<int>>(3, D, E));
-    shared_ptr<BSTNode<int>> B(make_shared<BSTNode<int>>(7, C, F));    
-    shared_ptr<BSTNode<int>> A(make_shared<BSTNode<int>>(19, B, I));
+    create_sample_BST();
     assert(is_BST(static_pointer_cast<BTNode<int>>(A)));
     A->printTree();
     shared_ptr<BSTNode<int>> head = BST_to_doubly_list(A);
@@ -211,22 +173,7 @@ void test_BST_to_doubly_list() {
 }
 
 void test_merge_BSTs() {
-    shared_ptr<BSTNode<int>> D(make_shared<BSTNode<int>>(2));
-    shared_ptr<BSTNode<int>> E(make_shared<BSTNode<int>>(5));    
-    shared_ptr<BSTNode<int>> H(make_shared<BSTNode<int>>(13));    
-    shared_ptr<BSTNode<int>> M(make_shared<BSTNode<int>>(31));
-    shared_ptr<BSTNode<int>> N(make_shared<BSTNode<int>>(41));    
-    shared_ptr<BSTNode<int>> P(make_shared<BSTNode<int>>(53));
-    shared_ptr<BSTNode<int>> O(make_shared<BSTNode<int>>(47, nullptr, P));
-    shared_ptr<BSTNode<int>> L(make_shared<BSTNode<int>>(29, nullptr, M));
-    shared_ptr<BSTNode<int>> K(make_shared<BSTNode<int>>(37, L, N));
-    shared_ptr<BSTNode<int>> J(make_shared<BSTNode<int>>(23, nullptr, K));
-    shared_ptr<BSTNode<int>> I(make_shared<BSTNode<int>>(43, J, O));
-    shared_ptr<BSTNode<int>> G(make_shared<BSTNode<int>>(17, H, nullptr));
-    shared_ptr<BSTNode<int>> F(make_shared<BSTNode<int>>(11, nullptr, G));
-    shared_ptr<BSTNode<int>> C(make_shared<BSTNode<int>>(3, D, E));
-    shared_ptr<BSTNode<int>> B(make_shared<BSTNode<int>>(7, C, F));    
-    shared_ptr<BSTNode<int>> A(make_shared<BSTNode<int>>(19, B, I));
+    create_sample_BST();
     assert(is_BST(static_pointer_cast<BTNode<int>>(A)));
     
     shared_ptr<BSTNode<int>> H1(make_shared<BSTNode<int>>(1));
@@ -250,22 +197,7 @@ void test_merge_BSTs() {
 }
 
 void test_find_k_largest_in_BST() {
-    shared_ptr<BSTNode<int>> D(make_shared<BSTNode<int>>(2));
-    shared_ptr<BSTNode<int>> E(make_shared<BSTNode<int>>(5));    
-    shared_ptr<BSTNode<int>> H(make_shared<BSTNode<int>>(13));    
-    shared_ptr<BSTNode<int>> M(make_shared<BSTNode<int>>(31));
-    shared_ptr<BSTNode<int>> N(make_shared<BSTNode<int>>(41));    
-    shared_ptr<BSTNode<int>> P(make_shared<BSTNode<int>>(53));
-    shared_ptr<BSTNode<int>> O(make_shared<BSTNode<int>>(47, nullptr, P));
-    shared_ptr<BSTNode<int>> L(make_shared<BSTNode<int>>(29, nullptr, M));
-    shared_ptr<BSTNode<int>> K(make_shared<BSTNode<int>>(37, L, N));
-    shared_ptr<BSTNode<int>> J(make_shared<BSTNode<int>>(23, nullptr, K));
-    shared_ptr<BSTNode<int>> I(make_shared<BSTNode<int>>(43, J, O));
-    shared_ptr<BSTNode<int>> G(make_shared<BSTNode<int>>(17, H, nullptr));
-    shared_ptr<BSTNode<int>> F(make_shared<BSTNode<int>>(11, nullptr, G));
-    shared_ptr<BSTNode<int>> C(make_shared<BSTNode<int>>(3, D, E));
-    shared_ptr<BSTNode<int>> B(make_shared<BSTNode<int>>(7, C, F));    
-    shared_ptr<BSTNode<int>> A(make_shared<BSTNode<int>>(19, B, I));
+    create_sample_BST();
     assert(is_BST(static_pointer_cast<BTNode<int>>(A)));
     vector<int> k_elements = find_k_largest_in_BST(A, 3);
     for (int a: k_elements) {
@@ -285,22 +217,7 @@ void test_rebuild_BST_from_preorder() {
 }
 
 void test_find_LCA() {
-    shared_ptr<BSTNode<int>> D(make_shared<BSTNode<int>>(2));
-    shared_ptr<BSTNode<int>> E(make_shared<BSTNode<int>>(5));    
-    shared_ptr<BSTNode<int>> H(make_shared<BSTNode<int>>(13));    
-    shared_ptr<BSTNode<int>> M(make_shared<BSTNode<int>>(31));
-    shared_ptr<BSTNode<int>> N(make_shared<BSTNode<int>>(41));    
-    shared_ptr<BSTNode<int>> P(make_shared<BSTNode<int>>(53));
-    shared_ptr<BSTNode<int>> O(make_shared<BSTNode<int>>(47, nullptr, P));
-    shared_ptr<BSTNode<int>> L(make_shared<BSTNode<int>>(29, nullptr, M));
-    shared_ptr<BSTNode<int>> K(make_shared<BSTNode<int>>(37, L, N));
-    shared_ptr<BSTNode<int>> J(make_shared<BSTNode<int>>(23, nullptr, K));
-    shared_ptr<BSTNode<int>> I(make_shared<BSTNode<int>>(43, J, O));
-    shared_ptr<BSTNode<int>> G(make_shared<BSTNode<int>>(17, H, nullptr));
-    shared_ptr<BSTNode<int>> F(make_shared<BSTNode<int>>(11, nullptr, G));
-    shared_ptr<BSTNode<int>> C(make_shared<BSTNode<int>>(3, D, E));
-    shared_ptr<BSTNode<int>> B(make_shared<BSTNode<int>>(7, C, F));    
-    shared_ptr<BSTNode<int>> A(make_shared<BSTNode<int>>(19, B, I));
+    create_sample_BST();
     assert(is_BST(static_pointer_cast<BTNode<int>>(A)));
     assert(find_LCA(A, M, N)->data == 37);
     assert(find_LCA(A, M, P)->data == 43);
@@ -308,26 +225,20 @@ void test_find_LCA() {
 }
 
 void test_ancestor_descendant() {
-    shared_ptr<BSTNode<int>> D(make_shared<BSTNode<int>>(2));
-    shared_ptr<BSTNode<int>> E(make_shared<BSTNode<int>>(5));    
-    shared_ptr<BSTNode<int>> H(make_shared<BSTNode<int>>(13));    
-    shared_ptr<BSTNode<int>> M(make_shared<BSTNode<int>>(31));
-    shared_ptr<BSTNode<int>> N(make_shared<BSTNode<int>>(41));    
-    shared_ptr<BSTNode<int>> P(make_shared<BSTNode<int>>(53));
-    shared_ptr<BSTNode<int>> O(make_shared<BSTNode<int>>(47, nullptr, P));
-    shared_ptr<BSTNode<int>> L(make_shared<BSTNode<int>>(29, nullptr, M));
-    shared_ptr<BSTNode<int>> K(make_shared<BSTNode<int>>(37, L, N));
-    shared_ptr<BSTNode<int>> J(make_shared<BSTNode<int>>(23, nullptr, K));
-    shared_ptr<BSTNode<int>> I(make_shared<BSTNode<int>>(43, J, O));
-    shared_ptr<BSTNode<int>> G(make_shared<BSTNode<int>>(17, H, nullptr));
-    shared_ptr<BSTNode<int>> F(make_shared<BSTNode<int>>(11, nullptr, G));
-    shared_ptr<BSTNode<int>> C(make_shared<BSTNode<int>>(3, D, E));
-    shared_ptr<BSTNode<int>> B(make_shared<BSTNode<int>>(7, C, F));    
-    shared_ptr<BSTNode<int>> A(make_shared<BSTNode<int>>(19, B, I));
+    create_sample_BST();
     assert(is_BST(static_pointer_cast<BTNode<int>>(A)));
     assert(is_r_s_descendant_ancestor_of_m(A, K, J));
     assert(!is_r_s_descendant_ancestor_of_m(I, P, J));
     assert(!is_r_s_descendant_ancestor_of_m(C, M, E));
+}
+
+void test_range_query_on_BST() {
+    create_sample_BST();
+    assert(is_BST(static_pointer_cast<BTNode<int>>(A)));
+    for (auto node: range_query_on_BST(A, 10, 30)) {
+        cout << node->data << " ";
+    }
+    cout << endl;
 }
 
 void test_binary_search_tree() {
@@ -345,5 +256,5 @@ void test_binary_search_tree() {
     test_rebuild_BST_from_preorder();
     test_find_LCA();
     test_ancestor_descendant();
+    test_range_query_on_BST();
 }
-

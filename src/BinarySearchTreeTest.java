@@ -5,46 +5,35 @@ import java.io.IOException;
 import java.util.*;
 
 public class BinarySearchTreeTest {
+	BSTNode<Integer> A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P;
+	private void create_sample_BST() {
+		D = new BSTNode<Integer>(2);
+		E = new BSTNode<Integer>(5);		
+		H = new BSTNode<Integer>(13);
+		G = new BSTNode<Integer>(17, H, null);
+		F = new BSTNode<Integer>(11, null, G);		
+		M = new BSTNode<Integer>(31);
+		L = new BSTNode<Integer>(29, null, M);
+		N = new BSTNode<Integer>(41);
+		K = new BSTNode<Integer>(37, L, N);
+		P = new BSTNode<Integer>(53);
+		O = new BSTNode<Integer>(47, null, P);
+		J = new BSTNode<Integer>(23, null, K);
+		I = new BSTNode<Integer>(43, J, O);
+		C = new BSTNode<Integer>(3, D, E);
+		B = new BSTNode<Integer>(7, C, F);
+		A = new BSTNode<Integer>(19, B, I);
+	}
+	
 	@Test
 	public void test_is_BST() {
-		BSTNode<Integer> D = new BSTNode<Integer>(2);
-		BSTNode<Integer> E = new BSTNode<Integer>(5);		
-		BSTNode<Integer> H = new BSTNode<Integer>(13);
-		BSTNode<Integer> G = new BSTNode<Integer>(17, H, null);
-		BSTNode<Integer> F = new BSTNode<Integer>(11, null, G);		
-		BSTNode<Integer> M = new BSTNode<Integer>(31);
-		BSTNode<Integer> L = new BSTNode<Integer>(29, null, M);
-		BSTNode<Integer> N = new BSTNode<Integer>(41);
-		BSTNode<Integer> K = new BSTNode<Integer>(37, L, N);
-		BSTNode<Integer> P = new BSTNode<Integer>(53);
-		BSTNode<Integer> O = new BSTNode<Integer>(47, null, P);
-		BSTNode<Integer> J = new BSTNode<Integer>(23, null, K);
-		BSTNode<Integer> I = new BSTNode<Integer>(43, J, O);
-		BSTNode<Integer> C = new BSTNode<Integer>(3, D, E);
-		BSTNode<Integer> B = new BSTNode<Integer>(7, C, F);
-		BSTNode<Integer> A = new BSTNode<Integer>(19, B, I);		
+		create_sample_BST();		
 		assert(BinarySearchTree.isBST(A));
 	}
 	
 	@Test
 	public void test_successor() {
-		BSTNode<Integer> D = new BSTNode<Integer>(2);
-		BSTNode<Integer> E = new BSTNode<Integer>(5);		
-		BSTNode<Integer> H = new BSTNode<Integer>(13);
-		BSTNode<Integer> G = new BSTNode<Integer>(17, H, null);
-		BSTNode<Integer> F = new BSTNode<Integer>(11, null, G);		
-		BSTNode<Integer> M = new BSTNode<Integer>(31);
-		BSTNode<Integer> L = new BSTNode<Integer>(29, null, M);
-		BSTNode<Integer> N = new BSTNode<Integer>(41);
-		BSTNode<Integer> K = new BSTNode<Integer>(37, L, N);
-		BSTNode<Integer> P = new BSTNode<Integer>(53);
-		BSTNode<Integer> O = new BSTNode<Integer>(47, null, P);
-		BSTNode<Integer> J = new BSTNode<Integer>(23, null, K);
-		BSTNode<Integer> I = new BSTNode<Integer>(43, J, O);
-		BSTNode<Integer> C = new BSTNode<Integer>(3, D, E);
-		BSTNode<Integer> B = new BSTNode<Integer>(7, C, F);
-		BSTNode<Integer> A = new BSTNode<Integer>(19, B, I);
-		
+		create_sample_BST();		
 		assertEquals(BinarySearchTree.successor(A), J);
 		assertEquals(BinarySearchTree.successor(B), F);
 		assertEquals(BinarySearchTree.successor(C), E);
@@ -53,22 +42,7 @@ public class BinarySearchTreeTest {
 	
 	@Test
 	public void test_BST_modification() throws Exception{
-		BSTNode<Integer> D = new BSTNode<Integer>(2);
-		BSTNode<Integer> E = new BSTNode<Integer>(5);		
-		BSTNode<Integer> H = new BSTNode<Integer>(13);
-		BSTNode<Integer> G = new BSTNode<Integer>(17, H, null);
-		BSTNode<Integer> F = new BSTNode<Integer>(11, null, G);		
-		BSTNode<Integer> M = new BSTNode<Integer>(31);
-		BSTNode<Integer> L = new BSTNode<Integer>(29, null, M);
-		BSTNode<Integer> N = new BSTNode<Integer>(41);
-		BSTNode<Integer> K = new BSTNode<Integer>(37, L, N);
-		BSTNode<Integer> P = new BSTNode<Integer>(53);
-		BSTNode<Integer> O = new BSTNode<Integer>(47, null, P);
-		BSTNode<Integer> J = new BSTNode<Integer>(23, null, K);
-		BSTNode<Integer> I = new BSTNode<Integer>(43, J, O);
-		BSTNode<Integer> C = new BSTNode<Integer>(3, D, E);
-		BSTNode<Integer> B = new BSTNode<Integer>(7, C, F);
-		BSTNode<Integer> A = new BSTNode<Integer>(19, B, I);
+		create_sample_BST();
 		
 		BinarySearchTree.insert(A, 57);		
 		assert(BinarySearchTree.isBST(A));
@@ -89,22 +63,7 @@ public class BinarySearchTreeTest {
 	
 	@Test
 	public void test_search_BST() {
-		BSTNode<Integer> D = new BSTNode<Integer>(2);		
-		BSTNode<Integer> E = new BSTNode<Integer>(5);		
-		BSTNode<Integer> H = new BSTNode<Integer>(13);
-		BSTNode<Integer> G = new BSTNode<Integer>(17, H, null);
-		BSTNode<Integer> F = new BSTNode<Integer>(11, null, G);		
-		BSTNode<Integer> M = new BSTNode<Integer>(31);
-		BSTNode<Integer> L = new BSTNode<Integer>(29, null, M);
-		BSTNode<Integer> N = new BSTNode<Integer>(41);
-		BSTNode<Integer> K = new BSTNode<Integer>(37, L, N);
-		BSTNode<Integer> P = new BSTNode<Integer>(53);
-		BSTNode<Integer> O = new BSTNode<Integer>(47, null, P);
-		BSTNode<Integer> J = new BSTNode<Integer>(23, null, K);
-		BSTNode<Integer> I = new BSTNode<Integer>(43, J, O);
-		BSTNode<Integer> C = new BSTNode<Integer>(3, D, E);
-		BSTNode<Integer> B = new BSTNode<Integer>(7, C, F);
-		BSTNode<Integer> A = new BSTNode<Integer>(19, B, I);
+		create_sample_BST();
 		assert(BinarySearchTree.isBST(A));
 		assertEquals(BinarySearchTree.find_first_equal_k_iterative(A, 19), A);
 		assertEquals(BinarySearchTree.find_first_equal_k_iterative(A, 13), H);
@@ -142,22 +101,7 @@ public class BinarySearchTreeTest {
 	
 	@Test
 	public void test_first_larger() {
-		BSTNode<Integer> D = new BSTNode<Integer>(2);		
-		BSTNode<Integer> E = new BSTNode<Integer>(5);		
-		BSTNode<Integer> H = new BSTNode<Integer>(13);
-		BSTNode<Integer> G = new BSTNode<Integer>(17, H, null);
-		BSTNode<Integer> F = new BSTNode<Integer>(11, null, G);		
-		BSTNode<Integer> M = new BSTNode<Integer>(31);
-		BSTNode<Integer> L = new BSTNode<Integer>(29, null, M);
-		BSTNode<Integer> N = new BSTNode<Integer>(41);
-		BSTNode<Integer> K = new BSTNode<Integer>(37, L, N);
-		BSTNode<Integer> P = new BSTNode<Integer>(53);
-		BSTNode<Integer> O = new BSTNode<Integer>(47, null, P);
-		BSTNode<Integer> J = new BSTNode<Integer>(23, null, K);
-		BSTNode<Integer> I = new BSTNode<Integer>(43, J, O);
-		BSTNode<Integer> C = new BSTNode<Integer>(3, D, E);
-		BSTNode<Integer> B = new BSTNode<Integer>(7, C, F);
-		BSTNode<Integer> A = new BSTNode<Integer>(19, B, I);
+		create_sample_BST();
 		assertEquals(BinarySearchTree.find_first_larger_than_k_with_k_exist(A, 23), L);
 		assertEquals(BinarySearchTree.find_first_larger_than_k_with_k_exist(A, 32), null);
 	}
@@ -201,22 +145,7 @@ public class BinarySearchTreeTest {
 	
 	@Test
 	public void test_convert_BST_to_doubly_linked_list() {
-		BSTNode<Integer> D = new BSTNode<Integer>(2);		
-		BSTNode<Integer> E = new BSTNode<Integer>(5);		
-		BSTNode<Integer> H = new BSTNode<Integer>(13);
-		BSTNode<Integer> G = new BSTNode<Integer>(17, H, null);
-		BSTNode<Integer> F = new BSTNode<Integer>(11, null, G);		
-		BSTNode<Integer> M = new BSTNode<Integer>(31);
-		BSTNode<Integer> L = new BSTNode<Integer>(29, null, M);
-		BSTNode<Integer> N = new BSTNode<Integer>(41);
-		BSTNode<Integer> K = new BSTNode<Integer>(37, L, N);
-		BSTNode<Integer> P = new BSTNode<Integer>(53);
-		BSTNode<Integer> O = new BSTNode<Integer>(47, null, P);
-		BSTNode<Integer> J = new BSTNode<Integer>(23, null, K);
-		BSTNode<Integer> I = new BSTNode<Integer>(43, J, O);
-		BSTNode<Integer> C = new BSTNode<Integer>(3, D, E);
-		BSTNode<Integer> B = new BSTNode<Integer>(7, C, F);
-		BSTNode<Integer> A = new BSTNode<Integer>(19, B, I);
+		create_sample_BST();
 		assert(BinarySearchTree.isBST(A));
 		Node<Integer> first = BinarySearchTree.convert_BST_to_doubly_linked_list(A);
 		LinkedListT.print(first);
@@ -224,22 +153,7 @@ public class BinarySearchTreeTest {
 	
 	@Test
 	public void test_merge_BSTs() {
-		BSTNode<Integer> D = new BSTNode<Integer>(2);		
-		BSTNode<Integer> E = new BSTNode<Integer>(5);		
-		BSTNode<Integer> H = new BSTNode<Integer>(13);
-		BSTNode<Integer> G = new BSTNode<Integer>(17, H, null);
-		BSTNode<Integer> F = new BSTNode<Integer>(11, null, G);		
-		BSTNode<Integer> M = new BSTNode<Integer>(31);
-		BSTNode<Integer> L = new BSTNode<Integer>(29, null, M);
-		BSTNode<Integer> N = new BSTNode<Integer>(41);
-		BSTNode<Integer> K = new BSTNode<Integer>(37, L, N);
-		BSTNode<Integer> P = new BSTNode<Integer>(53);
-		BSTNode<Integer> O = new BSTNode<Integer>(47, null, P);
-		BSTNode<Integer> J = new BSTNode<Integer>(23, null, K);
-		BSTNode<Integer> I = new BSTNode<Integer>(43, J, O);
-		BSTNode<Integer> C = new BSTNode<Integer>(3, D, E);
-		BSTNode<Integer> B = new BSTNode<Integer>(7, C, F);
-		BSTNode<Integer> A = new BSTNode<Integer>(19, B, I);
+		create_sample_BST();
 		assert(BinarySearchTree.isBST(A));
 		
 		BSTNode<Integer> H1 = new BSTNode<Integer>(1);
@@ -265,22 +179,7 @@ public class BinarySearchTreeTest {
 	@Test
 	public void test_find_k_largest_elements() {
 		System.out.println("Find k largest elements");
-		BSTNode<Integer> D = new BSTNode<Integer>(2);		
-		BSTNode<Integer> E = new BSTNode<Integer>(5);		
-		BSTNode<Integer> H = new BSTNode<Integer>(13);
-		BSTNode<Integer> G = new BSTNode<Integer>(17, H, null);
-		BSTNode<Integer> F = new BSTNode<Integer>(11, null, G);		
-		BSTNode<Integer> M = new BSTNode<Integer>(31);
-		BSTNode<Integer> L = new BSTNode<Integer>(29, null, M);
-		BSTNode<Integer> N = new BSTNode<Integer>(41);
-		BSTNode<Integer> K = new BSTNode<Integer>(37, L, N);
-		BSTNode<Integer> P = new BSTNode<Integer>(53);
-		BSTNode<Integer> O = new BSTNode<Integer>(47, null, P);
-		BSTNode<Integer> J = new BSTNode<Integer>(23, null, K);
-		BSTNode<Integer> I = new BSTNode<Integer>(43, J, O);
-		BSTNode<Integer> C = new BSTNode<Integer>(3, D, E);
-		BSTNode<Integer> B = new BSTNode<Integer>(7, C, F);
-		BSTNode<Integer> A = new BSTNode<Integer>(19, B, I);
+		create_sample_BST();
 		assert(BinarySearchTree.isBST(A));
 		List<Integer> list = BinarySearchTree.find_k_largest_elements(A, 3);
 		for (Integer val: list)
@@ -301,22 +200,7 @@ public class BinarySearchTreeTest {
 	
 	@Test
 	public void test_LCA() {
-		BSTNode<Integer> D = new BSTNode<Integer>(2);		
-		BSTNode<Integer> E = new BSTNode<Integer>(5);		
-		BSTNode<Integer> H = new BSTNode<Integer>(13);
-		BSTNode<Integer> G = new BSTNode<Integer>(17, H, null);
-		BSTNode<Integer> F = new BSTNode<Integer>(11, null, G);		
-		BSTNode<Integer> M = new BSTNode<Integer>(31);
-		BSTNode<Integer> L = new BSTNode<Integer>(29, null, M);
-		BSTNode<Integer> N = new BSTNode<Integer>(41);
-		BSTNode<Integer> K = new BSTNode<Integer>(37, L, N);
-		BSTNode<Integer> P = new BSTNode<Integer>(53);
-		BSTNode<Integer> O = new BSTNode<Integer>(47, null, P);
-		BSTNode<Integer> J = new BSTNode<Integer>(23, null, K);
-		BSTNode<Integer> I = new BSTNode<Integer>(43, J, O);
-		BSTNode<Integer> C = new BSTNode<Integer>(3, D, E);
-		BSTNode<Integer> B = new BSTNode<Integer>(7, C, F);
-		BSTNode<Integer> A = new BSTNode<Integer>(19, B, I);
+		create_sample_BST();
 		assert(BinarySearchTree.isBST(A));
 		assertEquals(BinarySearchTree.LCA(M, N), K);
 		assertEquals(BinarySearchTree.LCA(M, P), I);
@@ -325,25 +209,27 @@ public class BinarySearchTreeTest {
 	
 	@Test
 	public void test_ancestor_descendant() {
-		BSTNode<Integer> D = new BSTNode<Integer>(2);		
-		BSTNode<Integer> E = new BSTNode<Integer>(5);		
-		BSTNode<Integer> H = new BSTNode<Integer>(13);
-		BSTNode<Integer> G = new BSTNode<Integer>(17, H, null);
-		BSTNode<Integer> F = new BSTNode<Integer>(11, null, G);		
-		BSTNode<Integer> M = new BSTNode<Integer>(31);
-		BSTNode<Integer> L = new BSTNode<Integer>(29, null, M);
-		BSTNode<Integer> N = new BSTNode<Integer>(41);
-		BSTNode<Integer> K = new BSTNode<Integer>(37, L, N);
-		BSTNode<Integer> P = new BSTNode<Integer>(53);
-		BSTNode<Integer> O = new BSTNode<Integer>(47, null, P);
-		BSTNode<Integer> J = new BSTNode<Integer>(23, null, K);
-		BSTNode<Integer> I = new BSTNode<Integer>(43, J, O);
-		BSTNode<Integer> C = new BSTNode<Integer>(3, D, E);
-		BSTNode<Integer> B = new BSTNode<Integer>(7, C, F);
-		BSTNode<Integer> A = new BSTNode<Integer>(19, B, I);
+		create_sample_BST();
 		assert(BinarySearchTree.isBST(A));
 		assert(BinarySearchTree.is_r_s_descendant_ancestor_of_m(A, K, J));
 		assert(!BinarySearchTree.is_r_s_descendant_ancestor_of_m(I, P, J));
 		assert(!BinarySearchTree.is_r_s_descendant_ancestor_of_m(C, M, E));
+	}
+	
+	@Test
+	public void test_range_query() {
+		System.out.println("Range Querry");
+		create_sample_BST();
+		assert(BinarySearchTree.isBST(A));
+		
+		for (BSTNode<Integer> node : BinarySearchTree.range_query(A, 10, 20)) {
+			System.out.print(node.data + " " );
+		}
+		System.out.println();
+		
+		for (BSTNode<Integer> node : BinarySearchTree.range_query(A, 5, 35)) {
+			System.out.print(node.data + " " );
+		}
+		System.out.println();
 	}
 }
