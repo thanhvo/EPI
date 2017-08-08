@@ -433,4 +433,44 @@ public class BinarySearchTree {
 		range_query_helper(root, L, U, list);
 		return list;
 	}
+	
+	private static class ArrData implements Comparable<ArrData> {
+		public int idx;
+		public int val;
+		public ArrData(int __idx, int __val) {
+			idx = __idx;
+			val = __val;
+		}
+		
+		public int compareTo(ArrData a) {
+			if (val != a.val) return val - a.val;
+			else {
+				return (idx - a.idx);
+			}
+		}
+	}
+	
+	public static int find_min_distance_sorted_arrays(ArrayList<ArrayList<Integer>> arrs) {
+		// Pointers for each of arrs
+		int[] idx = new int[arrs.size()];
+		int min_dis = Integer.MAX_VALUE;
+		TreeSet<ArrData> current_heads = new TreeSet<ArrData>();
+		// Each of arrs, puts its minimum element into current_head
+		for (int i = 0; i < arrs.size(); ++i) {
+			if (idx[i] >= arrs.get(i).size()) {
+				return min_dis;
+			}
+			current_heads.add(new ArrData(i, arrs.get(i).get(idx[i])));
+		}
+		while (true) {
+			min_dis = Math.min(min_dis, current_heads.last().val - current_heads.first().val);
+			int tar = current_heads.first().idx;
+			// Return if there is no remaining element in one array
+			if (++idx[tar] >= arrs.get(tar).size()) {
+				return min_dis;
+			}
+			current_heads.remove(current_heads.first());
+			current_heads.add(new ArrData(tar, arrs.get(tar).get(idx[tar])));
+		}
+	}
 }

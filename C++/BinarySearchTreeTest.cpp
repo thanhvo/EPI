@@ -241,6 +241,11 @@ void test_range_query_on_BST() {
     cout << endl;
 }
 
+void test_find_min_distance_sorted_arrays() {
+    vector<vector<int>> v = {{1,5,9,13}, {2,10,16,22},{6,26,46,66},{7,17,27,37}};
+    cout << find_min_distance_sorted_arrays(v) << endl;
+}
+
 void test_binary_search_tree() {
     test_is_BST();
     test_find_successor_BST();
@@ -257,4 +262,5 @@ void test_binary_search_tree() {
     test_find_LCA();
     test_ancestor_descendant();
     test_range_query_on_BST();
+    test_find_min_distance_sorted_arrays();
 }

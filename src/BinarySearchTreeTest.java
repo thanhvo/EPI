@@ -232,4 +232,15 @@ public class BinarySearchTreeTest {
 		}
 		System.out.println();
 	}
+	
+	@Test
+	public void test_find_min_distance_sorted_arrays() {		
+		System.out.println("Find min distance");
+		ArrayList<Integer> arr1 = new ArrayList<Integer>(Arrays.asList(1,5,9,13));
+		ArrayList<Integer> arr2 = new ArrayList<Integer>(Arrays.asList(2,10,16,22));
+		ArrayList<Integer> arr3 = new ArrayList<Integer>(Arrays.asList(6,26,46,66));
+		ArrayList<Integer> arr4 = new ArrayList<Integer>(Arrays.asList(7,17,27,37));
+		ArrayList<ArrayList<Integer>> arrs = new ArrayList<ArrayList<Integer>>(Arrays.asList(arr1, arr2, arr3, arr4));
+		assertEquals(BinarySearchTree.find_min_distance_sorted_arrays(arrs), 4);		
+	}
 }

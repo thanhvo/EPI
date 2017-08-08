@@ -5,6 +5,7 @@
 #include <limits>
 #include <queue>
 #include <list>
+#include <set>
 #include "Node.h"
 #include "BSTNode.h"
 
@@ -553,6 +554,45 @@ list<shared_ptr<BSTNode<T>>> range_query_on_BST(shared_ptr<BSTNode<T>> n, const 
         res.emplace_back(it);
     }
     return res;
+}
+
+template <typename T>
+class ArrData {
+    public:
+        int idx;
+        T val;
+        const bool operator<(const ArrData &a) const {
+            if (val != a.val) {
+                return val < a.val;
+            } else {
+                return idx < a.idx;
+            }
+        }
+};
+
+template <typename T>
+T find_min_distance_sorted_arrays(const vector<vector<T>> &arrs) {
+    // Pointers for each of arrs
+    vector<int> idx(arrs.size(), 0);
+    T min_dis = numeric_limits<T>::max();
+    set<ArrData<T>> current_heads;
+    // Each of arrs puts its minimum element into current_heads
+    for (int i = 0; i < (int)arrs.size(); ++i) {
+        if(idx[i] >= (int)arrs[i].size()) {
+            return min_dis;
+        }
+        current_heads.emplace(ArrData<T> {i, arrs[i][idx[i]]});
+    }
+    while (true) {
+        min_dis = min(min_dis, current_heads.crbegin()->val - current_heads.cbegin()->val);
+        int tar = current_heads.cbegin()->idx;
+        // Return if there is no remaining element in one array
+        if (++idx[tar] >= (int)arrs[tar].size()){
+            return min_dis;
+        }
+        current_heads.erase(current_heads.begin());
+        current_heads.emplace(ArrData<T> {tar, arrs[tar][idx[tar]]});
+    }
 }
 
 #endif
