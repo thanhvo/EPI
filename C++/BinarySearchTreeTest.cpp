@@ -246,6 +246,13 @@ void test_find_min_distance_sorted_arrays() {
     cout << find_min_distance_sorted_arrays(v) << endl;
 }
 
+void test_generate_Guassian_primes() {
+    vector<complex<int>> primes = generate_Guassian_primes(2);
+    for (auto p : primes) {
+        cout << p.real() << " " << p.imag() << endl;
+    }
+}
+
 void test_binary_search_tree() {
     test_is_BST();
     test_find_successor_BST();
@@ -263,4 +270,5 @@ void test_binary_search_tree() {
     test_ancestor_descendant();
     test_range_query_on_BST();
     test_find_min_distance_sorted_arrays();
+    test_generate_Guassian_primes();
 }
