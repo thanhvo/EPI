@@ -7,6 +7,7 @@
 #include <list>
 #include <set>
 #include <complex>
+#include <map>
 #include "Node.h"
 #include "BSTNode.h"
 
@@ -642,6 +643,66 @@ vector<complex<int>> generate_Guassian_primes(const int &n) {
         }
     }
     return primes;
+}
+
+template <typename XaxisType, typename ColorType, typename HeightType> 
+class LineSegment {
+    public:
+        XaxisType left, right; // specifies the interval
+        ColorType color;
+        HeightType height;
+        const bool operator<(const LineSegment &that) const {
+            return height < that.height;
+        }
+};
+
+template <typename XaxisType, typename ColorType, typename HeightType>
+class EndPoint {
+    public:
+        bool isLeft;
+        const LineSegment<XaxisType, ColorType, HeightType> *l;
+        const bool operator<(const EndPoint &that) const {
+            return val() < that.val();
+        }
+        const XaxisType &val(void) const {
+            return isLeft ? l->left : l->right;
+        }    
+};
+
+template <typename XaxisType, typename ColorType, typename HeightType>
+void calculate_view_from_above(const vector<LineSegment<XaxisType, ColorType, HeightType>> &A) {
+    vector<EndPoint<XaxisType, ColorType, HeightType>> E;
+    for (unsigned int i = 0; i < A.size(); ++i) {
+        E.emplace_back(EndPoint<XaxisType, ColorType, HeightType>{true, &A[i]});
+        E.emplace_back(EndPoint<XaxisType, ColorType, HeightType>{false, &A[i]});
+    }
+    sort(E.begin(), E.end());
+    XaxisType prev_xaxis = E.front().val();
+    // The first left end point
+    shared_ptr<LineSegment<XaxisType, ColorType, HeightType>> prev = nullptr;
+    map<HeightType, const LineSegment<XaxisType, ColorType, HeightType>*> T;
+    for (const EndPoint<XaxisType, ColorType, HeightType> &e: E) {
+        if(T.empty() == false && prev_xaxis != e.val()) {
+            if (prev == nullptr) { // found first segment
+                prev = shared_ptr<LineSegment<XaxisType, ColorType, HeightType>>( 
+                    new LineSegment<XaxisType, ColorType, HeightType>{prev_xaxis, e.val(), T.crbegin()->second->color, T.crbegin()->second->height}
+                );
+            } else {
+                cout << "[" << prev->left << ", " << prev->right << "]" << ", color = " << prev->color << ", height = " << prev->height << endl;
+                *prev = {prev_xaxis, e.val(), T.crbegin()->second->color, T.crbegin()->second->height};
+            }
+        }
+        prev_xaxis = e.val();
+        if (e.isLeft == true) { // left end point
+            T.emplace(e.l->height, e.l);
+        } else {
+            T.erase(e.l->height);
+        }        
+    }
+    // Output the remaining segment if any
+    if (prev) {
+        cout << "[" << prev->left << ", " << prev->right << "]" << ", color = " << prev->color << ", height = " << prev->height << endl;
+    }
 }
 
 #endif

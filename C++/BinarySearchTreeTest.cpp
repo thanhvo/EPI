@@ -253,6 +253,11 @@ void test_generate_Guassian_primes() {
     }
 }
 
+void test_calculate_view_from_above() {
+    vector<LineSegment<int, int, int>> v = {{1,4,0,1}, {3,7,1,4}, {5,10,2,3}, {2,11,1,2}};
+    calculate_view_from_above(v);
+}
+
 void test_binary_search_tree() {
     test_is_BST();
     test_find_successor_BST();
@@ -271,4 +276,5 @@ void test_binary_search_tree() {
     test_range_query_on_BST();
     test_find_min_distance_sorted_arrays();
     test_generate_Guassian_primes();
+    test_calculate_view_from_above();
 }

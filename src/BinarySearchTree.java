@@ -473,4 +473,60 @@ public class BinarySearchTree {
 			current_heads.add(new ArrData(tar, arrs.get(tar).get(idx[tar])));
 		}
 	}
+	
+	private static class EndPoint<XaxisType extends Comparable, ColorType extends Comparable, HeightType extends Comparable> 
+		implements Comparable<EndPoint<XaxisType, ColorType, HeightType>>{
+		public boolean isLeft;
+		public LineSegment<XaxisType, ColorType, HeightType> l;
+		public int compareTo(EndPoint<XaxisType, ColorType, HeightType> that) {
+			return val().compareTo(that.val());
+		}
+		public XaxisType val() {
+			return isLeft ? l.left : l.right;
+		}
+		public EndPoint(boolean __isLeft, LineSegment<XaxisType, ColorType, HeightType> __l) {
+			isLeft = __isLeft;
+			l = __l;
+		}
+	}
+	
+	public static<XaxisType extends Comparable, ColorType extends Comparable, HeightType extends Comparable> 
+		void calculate_view_from_above(List<LineSegment<XaxisType, ColorType, HeightType>> A) {
+		List<EndPoint<XaxisType, ColorType, HeightType>> E = new ArrayList<EndPoint<XaxisType, ColorType, HeightType>>();
+		for (int i = 0; i < A.size(); ++i) {
+			E.add(new EndPoint<XaxisType, ColorType, HeightType>(true, A.get(i)));
+			E.add(new EndPoint<XaxisType, ColorType, HeightType>(false, A.get(i)));
+		}
+		Collections.sort(E);
+		XaxisType prev_xaxis = E.get(0).val();
+		// The first left end point
+		LineSegment<XaxisType, ColorType, HeightType> prev = null;
+		TreeMap<HeightType, LineSegment<XaxisType, ColorType, HeightType>> T = 
+				new TreeMap<HeightType, LineSegment<XaxisType, ColorType, HeightType>>();
+		for (EndPoint<XaxisType, ColorType, HeightType> e: E) {
+			if (!T.isEmpty() && prev_xaxis != e.val()) {
+				if (prev == null) { // found first segment
+					prev = new LineSegment<XaxisType, ColorType, HeightType>
+					(prev_xaxis, e.val(), T.lastEntry().getValue().color, T.lastEntry().getValue().height);
+				} else {
+					System.out.print("[" + prev.left + "," + prev.right + "]" + ", color = " + prev.color + ", height = " + prev.height + "\n");
+					prev.left = prev_xaxis;
+					prev.right = e.val();
+					prev.color = T.lastEntry().getValue().color;
+					prev.height = T.lastEntry().getValue().height;					
+				}				
+			}
+			prev_xaxis = e.val();
+			if (e.isLeft) { // left end point
+				T.put(e.l.height, e.l);
+			} else {
+				T.remove(e.l.height);
+			}
+		}
+		
+		// Output the remaining segment if any
+		if (prev != null) {
+			System.out.print("[" + prev.left + "," + prev.right + "]" + ", color = " + prev.color + ", height = " + prev.height + "\n");
+		}		
+	}
 }

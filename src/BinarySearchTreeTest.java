@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 import java.util.*;
 
+import javax.swing.event.ListSelectionEvent;
+
 public class BinarySearchTreeTest {
 	BSTNode<Integer> A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P;
 	private void create_sample_BST() {
@@ -242,5 +244,16 @@ public class BinarySearchTreeTest {
 		ArrayList<Integer> arr4 = new ArrayList<Integer>(Arrays.asList(7,17,27,37));
 		ArrayList<ArrayList<Integer>> arrs = new ArrayList<ArrayList<Integer>>(Arrays.asList(arr1, arr2, arr3, arr4));
 		assertEquals(BinarySearchTree.find_min_distance_sorted_arrays(arrs), 4);		
+	}
+	
+	@Test
+	public void test_calculate_view_from_above() {
+		System.out.println("View from above");
+		List<LineSegment<Integer, Integer, Integer>> v = 
+				Arrays.asList(new LineSegment<Integer, Integer, Integer>(1,4,0,1), 
+				new LineSegment<Integer, Integer, Integer>(3,7,1,4), 
+				new LineSegment<Integer, Integer, Integer>(5,10,2,3), 
+				new LineSegment<Integer, Integer, Integer>(2,11,1,2));
+		BinarySearchTree.calculate_view_from_above(v);
 	}
 }
