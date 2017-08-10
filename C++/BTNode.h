@@ -53,12 +53,8 @@ class BTNode {
             if (left) {
                 left->printTree(false, "");
             }
-        }
-        
-        /*~BTNode() {
-            left = right = parent = nullptr;            
-        }*/
-    
+        }     
+            
     private:
         void printNodeValue() {
             if (!data) {

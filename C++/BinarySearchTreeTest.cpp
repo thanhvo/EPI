@@ -258,6 +258,23 @@ void test_calculate_view_from_above() {
     calculate_view_from_above(v);
 }
 
+void test_clients_credits_info() {
+    ClientsCreditsInfo ccInfo;
+    ccInfo.insert("A", 1);
+    ccInfo.insert("B", 2);
+    ccInfo.insert("C", 4);
+    ccInfo.insert("D", 6);
+    assert(ccInfo.lookup("C") == 4);
+    assert(ccInfo.lookup("D") == 6);
+    assert(ccInfo.max() == "D");
+    ccInfo.addAll(3);
+    assert(ccInfo.max() == "D");
+    assert(ccInfo.lookup("D") == 9);
+    ccInfo.remove("D");
+    assert(ccInfo.lookup("D") == -1);
+    assert(ccInfo.max() == "C");
+}
+
 void test_binary_search_tree() {
     test_is_BST();
     test_find_successor_BST();
@@ -277,4 +294,5 @@ void test_binary_search_tree() {
     test_find_min_distance_sorted_arrays();
     test_generate_Guassian_primes();
     test_calculate_view_from_above();
+    test_clients_credits_info();
 }

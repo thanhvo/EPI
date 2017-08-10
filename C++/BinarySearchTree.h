@@ -8,6 +8,7 @@
 #include <set>
 #include <complex>
 #include <map>
+#include <unordered_map>
 #include "Node.h"
 #include "BSTNode.h"
 
@@ -704,5 +705,41 @@ void calculate_view_from_above(const vector<LineSegment<XaxisType, ColorType, He
         cout << "[" << prev->left << ", " << prev->right << "]" << ", color = " << prev->color << ", height = " << prev->height << endl;
     }
 }
+
+class ClientsCreditsInfo {
+    private:
+        int offset;
+        unordered_map<string, int> credits;
+        map<int, unordered_set<string>> inverse_credits;
+    public:
+        ClientsCreditsInfo(void): offset(0) {}
+        void insert(const string &s, const int &c) {
+            credits.emplace(s, c - offset);
+            inverse_credits[c-offset].emplace(s);
+        }
+        void remove(const string &s) {
+            auto credits_it = credits.find(s);
+            if (credits_it != credits.end()) {
+                inverse_credits[credits_it->second].erase(s);
+                if (inverse_credits[credits_it->second].empty())
+                    inverse_credits.erase(credits_it->second);
+                credits.erase(credits_it);
+            }
+        }
+        
+        int lookup(const string &s) const {
+            auto it = credits.find(s);
+            return it == credits.cend() ? -1 : it->second + offset;
+        }
+        
+        void addAll(const int &c) {
+            offset += c;
+        }
+        
+        string max(void) const {
+            auto it = inverse_credits.crbegin();
+            return (it == inverse_credits.crend() || it->second.empty()) ? "" : *it->second.cbegin();
+        }
+};
 
 #endif
