@@ -10,4 +10,10 @@ public class AlgorithmsTest {
 	    for (Skyline<Integer, Integer> skyline : drawn_skylines) 
 	        skyline.print();
 	}
+	
+	@Test
+	public void test_count_inversions() {
+		List<Integer> v = Arrays.asList(4,3,1,5,8,7,10,9);
+		assertEquals(Algorithms.count_inversions(v), 5);
+	}
 }

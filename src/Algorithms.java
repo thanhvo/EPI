@@ -104,8 +104,39 @@ public class Algorithms {
 		return merge_skylines(L, R);
 	}
 	
-	public static <CoordType extends Comparable, HeightType extends Comparable> 
+	public static <CoordType extends Comparable, HeightType extends Comparable>
 		List<Skyline<CoordType, HeightType>> draw_skylines(List<Skyline<CoordType, HeightType>> skylines) {
 		return draw_skylines_helper(skylines, 0, skylines.size());
+	}
+	
+	private static<T extends Comparable<T>> int merge(List<T> A, int start, int mid, int end) {
+		List<T> sorted_A = new ArrayList<T>();
+		int left_start = start, right_start = mid, invert_count = 0;
+		while (left_start < mid && right_start < end) {
+			if (A.get(left_start).compareTo(A.get(right_start)) <= 0) {
+				sorted_A.add(A.get(left_start++));
+			} else {
+				// A[left_start : mid -1] will be the inversions
+				invert_count += mid - left_start;
+				sorted_A.add(A.get(right_start++));
+			}
+		}
+		sorted_A.addAll(A.subList(left_start, mid));
+		sorted_A.addAll(A.subList(right_start, A.size()));
+		for (int i = 0; i < end - start; i++)
+			A.set(i + start, sorted_A.get(i));
+		return invert_count;
+	}
+	
+	public static<T extends Comparable<T>> int count_inversions_helper(List<T> A, int start, int end) {
+		if (end - start <= 1) {
+			return 0;
+		}
+		int mid = start + ((end - start) >> 1);
+		return count_inversions_helper(A, start, mid) + count_inversions_helper(A, mid, end) + merge(A, start, mid, end);
+	}
+	
+	public static<T extends Comparable<T>> int count_inversions(List<T> A) {
+		return count_inversions_helper(A, 0, A.size());
 	}
 }

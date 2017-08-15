@@ -85,4 +85,36 @@ vector<Skyline<CoordType, HeightType>> drawing_skylines(vector<Skyline<CoordType
     return drawing_skylines_helper(skylines, 0, skylines.size());
 }
 
+template <typename T>
+int merge(vector<T> &A, const int &start, const int &mid, const int &end) {
+    vector<T> sorted_A;
+    int left_start = start, right_start = mid, invert_count = 0;
+    while (left_start < mid && right_start < end) {
+        if (A[left_start] <= A[right_start]) {
+            sorted_A.emplace_back(A[left_start++]);
+        } else {
+            // A[left_start : mid -1] will be the inversions
+            invert_count += mid - left_start;
+            sorted_A.emplace_back(A[right_start++]);
+        }
+    }
+    copy(A.begin() + left_start, A.begin() + mid, back_inserter(sorted_A));
+    copy(sorted_A.begin(), sorted_A.end(), A.begin() + start);
+    return invert_count;    
+}
+
+template <typename T>
+int count_inversions_helper(vector<T> &A, const int &start, const int &end) {
+    if (end - start <= 1) {
+        return 0;
+    }
+    int mid = start + ((end - start) >> 1);
+    return count_inversions_helper(A, start, mid) + count_inversions_helper(A, mid, end) + merge(A, start, mid, end);
+}
+
+template <typename T>
+int count_inversions(vector<T> &A) {
+    return count_inversions_helper(A, 0, A.size());
+}
+
 #endif
