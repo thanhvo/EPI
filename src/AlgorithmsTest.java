@@ -16,4 +16,12 @@ public class AlgorithmsTest {
 		List<Integer> v = Arrays.asList(4,3,1,5,8,7,10,9);
 		assertEquals(Algorithms.count_inversions(v), 5);
 	}
+	
+	@Test
+	public void test_find_closest_pair_points() {
+		ArrayList<Point> P = new ArrayList<Point>(Arrays.asList(new Point(1,2), new Point(3,4), new Point(2,3), new Point(5,8), new Point(4,4)));
+		Pair<Point, Point> pair = Algorithms.find_closest_pair_points(P);
+		pair.first.print();
+		pair.second.print();
+	}
 }

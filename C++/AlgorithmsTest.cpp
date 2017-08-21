@@ -1,4 +1,5 @@
 #include <cassert>
+#include <vector>
 #include "Algorithms.h"
 #include "AlgorithmsTest.h"
 
@@ -14,7 +15,15 @@ void test_count_inversions() {
     assert(count_inversions(v) == 5);    
 }
 
+void test_find_closest_pair_points() {
+    vector<Point> v = {{1,2}, {3,4}, {2,3},{5,8}, {4,4}};
+    pair<Point, Point> pair = find_closest_pair_points(v);
+    pair.first.print();
+    pair.second.print();
+}
+
 void test_algorithms() {
     test_drawing_skylines();
     test_count_inversions();
+    test_find_closest_pair_points();
 }

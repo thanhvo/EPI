@@ -2,12 +2,12 @@ import java.util.*;
 
 public class Algorithms {
 	
-	private static class Tuple<CoordType extends Comparable<CoordType>, HeightType extends Comparable<HeightType> > {
+	private static class SkylineTuple<CoordType extends Comparable<CoordType>, HeightType extends Comparable<HeightType> > {
 		public Skyline<CoordType, HeightType> a;
 		public Iterator<Skyline<CoordType, HeightType>> a_it;
 		public Skyline<CoordType, HeightType> b;
 		public Iterator<Skyline<CoordType, HeightType>> b_it;
-		public Tuple(Skyline<CoordType, HeightType> a, Iterator<Skyline<CoordType, HeightType>> a_it, Skyline<CoordType, HeightType> b, Iterator<Skyline<CoordType, HeightType>> b_it) {
+		public SkylineTuple(Skyline<CoordType, HeightType> a, Iterator<Skyline<CoordType, HeightType>> a_it, Skyline<CoordType, HeightType> b, Iterator<Skyline<CoordType, HeightType>> b_it) {
 			this.a = a;
 			this.b = b;
 			this.a_it = a_it;
@@ -16,7 +16,7 @@ public class Algorithms {
 	}
 	
 	private static<CoordType extends Comparable<CoordType>, HeightType extends Comparable<HeightType>> 
-		void merge_intersect_skylines(List<Skyline<CoordType, HeightType>> merged, Tuple<CoordType, HeightType> t) {
+		void merge_intersect_skylines(List<Skyline<CoordType, HeightType>> merged, SkylineTuple<CoordType, HeightType> t) {
 		if (t.a.right.compareTo(t.b.right) <= 0) {
 			if (t.a.height.compareTo(t.b.height) > 0) {
 				if (t.b.right != t.a.right) {
@@ -57,7 +57,7 @@ public class Algorithms {
 	
 	private static<CoordType extends Comparable<CoordType>, HeightType extends Comparable<HeightType>> List<Skyline<CoordType, HeightType>> 
 		merge_skylines(List<Skyline<CoordType, HeightType>> L, List<Skyline<CoordType, HeightType>> R) {
-		Tuple<CoordType, HeightType> t = new Tuple<CoordType, HeightType>(null, L.iterator(), null, R.iterator());
+		SkylineTuple<CoordType, HeightType> t = new SkylineTuple<CoordType, HeightType>(null, L.iterator(), null, R.iterator());
 		List<Skyline<CoordType, HeightType>> merged = new ArrayList<Skyline<CoordType, HeightType>>();
 		t.a = t.a_it.next();
 		t.b = t.b_it.next();
@@ -138,5 +138,71 @@ public class Algorithms {
 	
 	public static<T extends Comparable<T>> int count_inversions(List<T> A) {
 		return count_inversions_helper(A, 0, A.size());
+	}
+	
+	public static double distance (Point a, Point b) {
+		return Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
+	}
+	
+	// Return the closest two points and its distance as a tuple
+	public static Tuple<Point, Point, Double> brute_force(ArrayList<Point> P, int s, int e) {
+		Tuple<Point, Point, Double> ret = new Tuple<Point, Point, Double>();
+		ret.third = Double.MAX_VALUE;
+		for (int i = s; i < e; ++i) {
+			for (int j = i + 1; j < e; ++j) {
+				double dis = distance(P.get(i), P.get(j));
+				if (dis < ret.third) {
+					ret.first = P.get(i);
+					ret.second = P.get(j);
+					ret.third = dis; 
+				}
+			}
+		}
+		return ret;		
+	}
+	
+	// Return the closest two points and its distance as a tuple
+	private static Tuple<Point, Point, Double> find_closest_pair_in_remain(ArrayList<Point> P, double d) {
+		Comparator<Point> comparator = (p1, p2)->(p1.y - p2.y);
+		Collections.sort(P, comparator);
+		// At most six points in P
+		Tuple <Point, Point, Double> ret = new Tuple<Point, Point, Double>(null, null, Double.MAX_VALUE);
+		for (int i = 0; i < P.size(); ++i) {
+			for (int j = i + 1; j < P.size() && P.get(j).y - P.get(i).y < d; ++j) {
+				double dis = distance(P.get(i), P.get(j));
+				if (dis < ret.third) {
+					ret.first = P.get(i);
+					ret.second = P.get(j);
+					ret.third = dis;
+				}
+			}
+		}
+		return ret;
+	}
+	
+	// Return the closest two points and its distance as a tuple 
+	private static Tuple<Point, Point, Double> find_closest_pair_points_helper(ArrayList<Point> P, int s, int e) {
+		if (e - s <= 3) { // brute-force to find answer if there are <= 3 points
+			return brute_force(P, s, e);
+		}
+		int mid = (s + e) >> 1;
+		Tuple<Point, Point, Double> l_ret = find_closest_pair_points_helper(P, s, mid);
+		Tuple<Point, Point, Double> r_ret = find_closest_pair_points_helper(P, mid, e);
+		Tuple<Point, Point, Double> min_l_r = (l_ret.third < r_ret.third) ? l_ret : r_ret;
+		ArrayList<Point> remain = new ArrayList<Point>(); // stores the points whose x - dis < min_d
+		for (Point p : P) {
+			if (Math.abs(p.x - P.get(mid).x) < min_l_r.third) {
+				remain.add(p);
+			}
+		}
+		Tuple<Point, Point, Double> mid_ret = find_closest_pair_in_remain(remain, min_l_r.third);
+		return mid_ret.third < min_l_r.third ? mid_ret : min_l_r;
+	}
+	
+	public static Pair<Point, Point> find_closest_pair_points(ArrayList<Point> P) {
+		Comparator<Point> compartor = (p1, p2) -> p1.x - p2.x;
+		Collections.sort(P, compartor);
+		Tuple<Point, Point, Double> ret = find_closest_pair_points_helper(P, 0, P.size());
+		return new Pair(ret.first, ret.second);
 	}
 }
