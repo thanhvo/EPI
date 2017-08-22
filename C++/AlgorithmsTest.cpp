@@ -22,8 +22,44 @@ void test_find_closest_pair_points() {
     pair.second.print();
 }
 
+void test_tree_diameter() {
+    shared_ptr<TreeNode> A = make_shared<TreeNode>();
+    shared_ptr<TreeNode> B = make_shared<TreeNode>();
+    shared_ptr<TreeNode> C = make_shared<TreeNode>();
+    shared_ptr<TreeNode> D = make_shared<TreeNode>();
+    shared_ptr<TreeNode> E = make_shared<TreeNode>();
+    shared_ptr<TreeNode> F = make_shared<TreeNode>();
+    shared_ptr<TreeNode> G = make_shared<TreeNode>();
+    shared_ptr<TreeNode> H = make_shared<TreeNode>();
+    shared_ptr<TreeNode> I = make_shared<TreeNode>();
+    shared_ptr<TreeNode> J = make_shared<TreeNode>();
+    shared_ptr<TreeNode> K = make_shared<TreeNode>();
+    shared_ptr<TreeNode> M = make_shared<TreeNode>();
+    shared_ptr<TreeNode> N = make_shared<TreeNode>();
+    shared_ptr<TreeNode> P = make_shared<TreeNode>();
+    shared_ptr<TreeNode> Q = make_shared<TreeNode>();
+    shared_ptr<TreeNode> O = make_shared<TreeNode>();    
+	B->addChild(C, 7);
+	B->addChild(A, 14);
+	B->addChild(G, 3);
+	C->addChild(D, 4);
+	D->addChild(E, 6);
+	C->addChild(F, 3);
+	G->addChild(H, 2);
+	G->addChild(I, 1);
+	I->addChild(J, 6);
+	I->addChild(K, 4);
+	K->addChild(M, 4);
+	K->addChild(N, 2);
+	N->addChild(O, 1);
+	N->addChild(P, 2);
+	N->addChild(Q, 3);
+	assert(compute_diameter(B) == 31);
+}
+
 void test_algorithms() {
     test_drawing_skylines();
     test_count_inversions();
     test_find_closest_pair_points();
+    test_tree_diameter();
 }

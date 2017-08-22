@@ -24,4 +24,40 @@ public class AlgorithmsTest {
 		pair.first.print();
 		pair.second.print();
 	}
+	
+	@Test
+	public void test_tree_diameter() {
+		TreeNode A = new TreeNode();
+		TreeNode B = new TreeNode();
+		TreeNode C = new TreeNode();
+		TreeNode D = new TreeNode();
+		TreeNode E = new TreeNode();
+		TreeNode F = new TreeNode();
+		TreeNode G = new TreeNode();
+		TreeNode H = new TreeNode();
+		TreeNode I = new TreeNode();
+		TreeNode J = new TreeNode();
+		TreeNode K = new TreeNode();
+		TreeNode M = new TreeNode();
+		TreeNode N = new TreeNode();
+		TreeNode O = new TreeNode();
+		TreeNode P = new TreeNode();
+		TreeNode Q = new TreeNode();
+		B.addChild(C, 7);
+		B.addChild(A, 14);
+		B.addChild(G, 3);
+		C.addChild(D, 4);
+		D.addChild(E, 6);
+		C.addChild(F, 3);
+		G.addChild(H, 2);
+		G.addChild(I, 1);
+		I.addChild(J, 6);
+		I.addChild(K, 4);
+		K.addChild(M, 4);
+		K.addChild(N, 2);
+		N.addChild(O, 1);
+		N.addChild(P, 2);
+		N.addChild(Q, 3);
+		assert(Algorithms.compute_diameter(B) == 31);
+	}
 }

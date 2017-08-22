@@ -205,4 +205,27 @@ public class Algorithms {
 		Tuple<Point, Point, Double> ret = find_closest_pair_points_helper(P, 0, P.size());
 		return new Pair(ret.first, ret.second);
 	}
+	
+	private static Pair<Double, Double> compute_height_and_diameter(TreeNode r) {
+		if (r == null || r.edges == null) {
+			return new Pair(0.0, 0.0);
+		}
+		double diameter = Double.MIN_VALUE;
+		double[] heights = new double[2]; // Stores the max 2 heights
+		for (Pair<TreeNode, Double> e : r.edges) {
+			Pair<Double, Double> h_d = compute_height_and_diameter(e.first);
+			if (h_d.first + e.second > heights[0]) {
+				heights[1] = heights[0];
+				heights[0] = h_d.first + e.second;
+			} else if (h_d.first + e.second > heights[1]) {
+				heights[1] = h_d.first + e.second;
+			}
+			diameter = Double.max(diameter, h_d.second);
+		}
+		return new Pair(heights[0], Double.max(diameter, heights[0] + heights[1]));
+	}
+	
+	public static double compute_diameter(TreeNode T) {
+		return T != null ? compute_height_and_diameter(T).second : 0.0;
+	}
 }

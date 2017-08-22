@@ -8,6 +8,7 @@
 #include <tuple>
 #include <limits>
 #include <algorithm>
+#include <memory>
 
 using namespace std;
 
@@ -130,69 +131,17 @@ class Point {
         }
 };
 
-double distance(const Point &a, const Point &b) {
-    return sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
-}
+pair<Point, Point> find_closest_pair_points(vector<Point> P);
 
-// Return the closest two points and its distance as a tuple
-tuple <Point, Point, double> brute_force(const vector<Point> &P, const int &s, const int &e) {
-    tuple<Point, Point, double> ret;
-    get<2>(ret) = numeric_limits<double>::max();
-    for (int i = s; i < e; ++i) {
-        for (int j = i +1; j < e; ++j) {
-            double dis = distance(P[i], P[j]);
-            if (dis < get<2>(ret)) {
-                ret = {P[i], P[j], dis};
-            }
+class TreeNode {
+    public:
+        TreeNode(){}
+        vector<pair<shared_ptr<TreeNode>, double>> edges;
+        void addChild(shared_ptr<TreeNode> child, double edge) {
+            edges.emplace_back(child, edge);
         }
-    }
-    return ret;
-}
+};
 
-// Return the closest two points and its distance as a tuple
-tuple<Point, Point, double> find_closest_pair_in_remain(vector<Point> &P, const double &d) {
-    sort(P.begin(), P.end(), [](const Point &a, const Point &b) -> bool {
-        return a.y < b.y;
-    });
-    // At most six points in P
-    tuple<Point, Point, double> ret;
-    get<2>(ret) = numeric_limits<double>::max();
-    for (unsigned int i = 0; i < P.size(); ++i) {
-        for (unsigned int j = i +1; j < P.size() && P[j].y - P[i].y < d; ++j) {
-            double dis = distance(P[i], P[j]);
-            if (dis < get<2>(ret)) {
-                ret = {P[i], P[j], dis};
-            }
-        }
-    }
-    return ret;
-}
-
-// Return the closest two points and its distance as a tuple
-tuple <Point, Point, double> find_closest_pair_points_helper(const vector<Point> &P, const int &s, const int &e) {
-    if (e - s <= 3) {
-        return brute_force(P, s, e);
-    }
-    int mid = (e + s) >> 1;
-    auto l_ret = find_closest_pair_points_helper(P, s, mid);
-    auto r_ret = find_closest_pair_points_helper(P, mid, e);
-    auto min_l_r = get<2>(l_ret) < get<2>(r_ret) ? l_ret : r_ret;
-    vector<Point> remain; // stores the points whose x-dis < min_d;
-    for (const Point &p: P) {
-        if (abs(p.x - P[mid].x) < get<2>(min_l_r)) {
-            remain.emplace_back(p);
-        }
-    }
-    auto mid_ret = find_closest_pair_in_remain(remain, get<2>(min_l_r));
-    return get<2>(mid_ret) < get<2>(min_l_r) ? mid_ret : min_l_r;
-}
-
-pair<Point, Point> find_closest_pair_points(vector<Point> P) {
-    sort(P.begin(), P.end(), [](const Point &a, const Point &b) -> bool {
-        return a.x < b.x;
-    });
-    auto ret = find_closest_pair_points_helper(P, 0, P.size());
-    return {get<0>(ret), get<1>(ret)};
-}
+double compute_diameter(const shared_ptr<TreeNode> &T);
 
 #endif

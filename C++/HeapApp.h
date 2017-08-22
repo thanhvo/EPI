@@ -104,11 +104,11 @@ class Star{
     public: 
         int ID;
         double x,y,z;
-        const double distance() const {
+        const double star_distance() const {
             return sqrt(x*x + y*y + z*z);
         }
         const bool operator<(const Star &s) const {
-            return distance() < s.distance();
+            return star_distance() < s.star_distance();
         }
 };
 
