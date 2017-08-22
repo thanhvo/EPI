@@ -60,4 +60,12 @@ public class AlgorithmsTest {
 		N.addChild(Q, 3);
 		assert(Algorithms.compute_diameter(B) == 31);
 	}
+	
+	@Test
+	public void test_find_maximum_subarray() {
+		int[] A = {904, 40, 523, 12, -335, -385, -124, 481, -31};
+		Pair<Integer, Integer> range = Algorithms.find_maximum_subarray(A);
+		assertEquals(range.first.intValue(), 0);
+		assertEquals(range.second.intValue(), 3);
+	}
 }

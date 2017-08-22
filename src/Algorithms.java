@@ -228,4 +228,25 @@ public class Algorithms {
 	public static double compute_diameter(TreeNode T) {
 		return T != null ? compute_height_and_diameter(T).second : 0.0;
 	}
+	
+	public static Pair<Integer, Integer> find_maximum_subarray(int[] A) {
+		// A[range.first : range.second] will be the maximum subarray
+		Pair<Integer, Integer> range = new Pair(0, 0);
+		int min_idx = -1;
+		int min_sum = 0, sum = 0;
+		int max_sum = Integer.MIN_VALUE;
+		for (int i = 0; i < A.length; ++i) {
+			sum += A[i];
+			if (sum < min_sum) {
+				min_sum = sum; 
+				min_idx = i;
+			}
+			if (sum - min_sum > max_sum) {
+				max_sum = sum - min_sum;
+				range.first = min_idx +1;
+				range.second = i;
+			}
+		}
+		return range;
+	}
 }

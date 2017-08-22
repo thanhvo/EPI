@@ -144,4 +144,24 @@ class TreeNode {
 
 double compute_diameter(const shared_ptr<TreeNode> &T);
 
+template <typename T>
+pair<int, int> find_maximum_subarray(const vector<T> &A) {
+    // A[range.first : range.second -1] will be maximum subarray
+    pair<int, int> range(0, 0);
+    int min_idx = -1;
+    T min_sum = 0, sum = 0;
+    T max_sum = numeric_limits<T>::min();
+    for (unsigned int i= 0; i < A.size(); ++i) {
+        sum += A[i];
+        if (sum < min_sum) {
+            min_sum = sum, min_idx = i;
+        }
+        if (sum - min_sum > max_sum) {
+            max_sum = sum - min_sum;
+            range = {min_idx+1, i+1};
+        }
+    }
+    return range;
+}
+
 #endif

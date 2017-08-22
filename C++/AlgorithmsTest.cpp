@@ -57,9 +57,16 @@ void test_tree_diameter() {
 	assert(compute_diameter(B) == 31);
 }
 
+void test_find_maximum_subarray() {
+    vector<int> v = {904, 40, 523, 12, -335, -385, -124, 481, -31};
+    auto range = find_maximum_subarray(v);
+    cout << range.first << " " << range.second << endl;
+}
+
 void test_algorithms() {
     test_drawing_skylines();
     test_count_inversions();
     test_find_closest_pair_points();
     test_tree_diameter();
+    test_find_maximum_subarray();
 }
