@@ -54,13 +54,14 @@ void test_tree_diameter() {
 	N->addChild(O, 1);
 	N->addChild(P, 2);
 	N->addChild(Q, 3);
-	assert(compute_diameter(B) == 31);
+	assert(compute_diameter(B) == 31);    
 }
 
 void test_find_maximum_subarray() {
     vector<int> v = {904, 40, 523, 12, -335, -385, -124, 481, -31};
     auto range = find_maximum_subarray(v);
     cout << range.first << " " << range.second << endl;
+    cout << max_subarray_sum_in_circular(v) << endl;
 }
 
 void test_algorithms() {

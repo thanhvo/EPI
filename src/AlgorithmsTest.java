@@ -67,5 +67,6 @@ public class AlgorithmsTest {
 		Pair<Integer, Integer> range = Algorithms.find_maximum_subarray(A);
 		assertEquals(range.first.intValue(), 0);
 		assertEquals(range.second.intValue(), 3);
+		assertEquals(Algorithms.max_subarray_sum_in_circular(A), 1929);
 	}
 }

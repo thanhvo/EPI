@@ -249,4 +249,45 @@ public class Algorithms {
 		}
 		return range;
 	}
+	
+	// Calculate the non-circular solution
+	private static int find_max_subarray(int[] A) {
+		int maximum_till = 0, maximum = 0;
+		for (int a : A) {
+			maximum_till = Math.max(a, a + maximum_till);
+			maximum = Math.max(maximum, maximum_till);
+		}
+		return maximum;
+	}
+	
+	// Calculate the solution which is circular
+	private static int find_circular_max_subarray(int[] A) {
+		// Maximum subarray sum starts at index 0 and ends at or before index i
+		int[] maximum_begin = new int[A.length];
+		int sum = A[0];
+		maximum_begin[0] = sum;
+		for (int i = 1; i < A.length; ++i) {
+			sum += A[i];
+			maximum_begin[i] = Math.max(maximum_begin[i - 1], sum);
+			
+		}
+		// Maximum subarray sum starts index i + 1 and ends at the last element
+		int[] maximum_end = new int[A.length];
+		maximum_end[A.length -1] = 0;
+		sum = 0;
+		for (int i = A.length - 2; i >= 0; --i) {
+			sum += A[i + 1];
+			maximum_end[i] = Math.max(maximum_end[i + 1], sum);
+		}
+		// Calculate the maximum subarray which is circular 
+		int circular_max = 0;
+		for (int i = 0; i < A.length; ++i) {
+			circular_max = Math.max(circular_max, maximum_begin[i] + maximum_end[i]);
+		}
+		return circular_max;
+	}
+	
+	public static int max_subarray_sum_in_circular(int[] A) {
+		return Math.max(find_max_subarray(A), find_circular_max_subarray(A));
+	}
 }
