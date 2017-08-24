@@ -2,6 +2,8 @@ import org.junit.*;
 import static org.junit.Assert.*;
 import java.util.*;
 
+import javax.swing.event.ListSelectionEvent;
+
 public class AlgorithmsTest {
 	@Test
 	public void test_drawing_skylines() {
@@ -68,5 +70,13 @@ public class AlgorithmsTest {
 		assertEquals(range.first.intValue(), 0);
 		assertEquals(range.second.intValue(), 3);
 		assertEquals(Algorithms.max_subarray_sum_in_circular(A), 1929);
+		assertEquals(Algorithms.max_subarray_circular(A), 1929);
+	}
+	
+	@Test
+	public void test_longest_nondecreasing_subsequence() {
+		List<Integer> list = Arrays.asList(0, 8, 4, 12, 2, 10, 6, 14, 1, 9);
+		System.out.println(Algorithms.longest_nondecreasing_subsequence(list));
+		assertEquals(Algorithms.longest_nondecreasing_subsequence2(list), 4);		
 	}
 }

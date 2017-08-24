@@ -1,5 +1,6 @@
 #include <cassert>
 #include <vector>
+#include <numeric>
 #include "Algorithms.h"
 #include "AlgorithmsTest.h"
 
@@ -62,6 +63,16 @@ void test_find_maximum_subarray() {
     auto range = find_maximum_subarray(v);
     cout << range.first << " " << range.second << endl;
     cout << max_subarray_sum_in_circular(v) << endl;
+    cout << max_subarray_in_circular(v) << endl;
+}
+
+void test_longest_nondecreasing_subsequence() {
+    vector<int> v = {0, 8, 4, 12, 2, 10, 6, 14, 1, 9};
+    vector<int> seq = longest_nondecreasing_sub_sequence(v);
+    for (int i : seq) 
+        cout << i << " ";
+    cout << endl;
+    cout << longest_nondecreasing_sub_sequence2(v) << endl;
 }
 
 void test_algorithms() {
@@ -70,4 +81,5 @@ void test_algorithms() {
     test_find_closest_pair_points();
     test_tree_diameter();
     test_find_maximum_subarray();
+    test_longest_nondecreasing_subsequence();
 }

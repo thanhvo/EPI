@@ -207,4 +207,65 @@ T max_subarray_sum_in_circular(const vector<T> &A) {
     return max(find_max_subarray(A), find_circular_max_subarray(A));
 } 
 
+template <typename T>
+T find_optimum_subarray_using_comp(const vector<T> &A, const T& (*comp)(const T&, const T&)) {
+    T till = 0, overall = 0;
+    for (const T &a : A) {
+        till = comp(a, a + till);
+        overall = comp(overall, till);
+    }
+    return overall;
+}
+
+template <typename T>
+T max_subarray_in_circular(const vector<T> &A) {
+    // Find the max in non-circular case and circular case
+    return max(find_optimum_subarray_using_comp(A, max), // non-circular case
+               accumulate(A.cbegin(), A.cend(), 0) - find_optimum_subarray_using_comp(A, min)); // circular case
+}
+
+template <typename T>
+vector<T> longest_nondecreasing_sub_sequence(const vector<T> &A) {
+    // Empty array
+    if (A.empty() == true) {
+        return A;
+    }
+    vector<int> longest_length(A.size(), 1), previous_index(A.size(), -1);
+    int max_length_idx = 0;
+    for (unsigned int i = 1; i < A.size(); ++i) {
+        for (unsigned int j = 0; j < i; ++j) {
+            if (A[i] >= A[j] && longest_length[j] + 1 > longest_length[i]) {
+                longest_length[i] = longest_length[j] + 1;
+                previous_index[i] = j;
+            }
+        }
+        // Record the index where longest subsequence ends
+        if (longest_length[i] > longest_length[max_length_idx]) {
+            max_length_idx = i;            
+        }
+    }
+    // Build the longest nondecreasing subsequence 
+    int max_length = longest_length[max_length_idx];
+    vector<T> ret(max_length);
+    while (max_length > 0) {
+        ret[--max_length] = A[max_length_idx];
+        max_length_idx = previous_index[max_length_idx];
+    }
+    return ret;
+}
+
+template <typename T>
+int longest_nondecreasing_sub_sequence2(const vector<T> &A) {
+    vector<T> tail_values;
+    for (const T &a: A) {
+        auto it = upper_bound(tail_values.begin(), tail_values.end(), a);
+        if (it == tail_values.end()) {
+            tail_values.emplace_back(a);
+        } else {
+            *it = a;
+        }        
+    }
+    return tail_values.size();
+}
+
 #endif

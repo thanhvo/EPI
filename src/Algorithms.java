@@ -290,4 +290,90 @@ public class Algorithms {
 	public static int max_subarray_sum_in_circular(int[] A) {
 		return Math.max(find_max_subarray(A), find_circular_max_subarray(A));
 	}
+	
+	private static interface Comp{
+		int op(int a, int b);
+	}
+	
+	private static int find_optimum_subarray_using_comp(int[] A, Comp comp) {
+		int till = 0, overall = 0;
+		for (int a : A) {
+			till = comp.op(a, a + till);
+			overall = comp.op(overall, till);
+		}
+		return overall;
+	}
+	
+	private static int sum(int[] A) {
+		int sum = 0;
+		for (int a : A) sum += a;
+		return sum;
+	}
+	
+	public static int max_subarray_circular(int[] A) {
+		Comp min = (a, b) -> a <= b ? a : b;
+		Comp max = (a, b) -> a >= b ? a : b;
+		// Find the max in non-circular case and circular case
+		return max.op(find_optimum_subarray_using_comp(A, max),
+			sum(A) - find_optimum_subarray_using_comp(A, min)); // circular case
+	}
+	
+	public static<T extends Comparable<T>> List<T> longest_nondecreasing_subsequence(List<T> A) {
+		// Empty array
+		if (A.isEmpty()) return A;
+		int[] longest_length = new int[A.size()];
+		for (int i = 0; i < longest_length.length; i++) longest_length[i] = 1;
+		int[] previous_index = new int[A.size()];
+		for (int i = 0; i < previous_index.length; i++) previous_index[i] = -1;
+		int max_length_idx = 0;
+		for (int i = 0; i < A.size(); ++i) {
+			for (int j = 0; j < i; ++j) {
+				if (A.get(i).compareTo(A.get(j)) >= 0 && longest_length[j] + 1 > longest_length[i]) {
+					longest_length[i] = longest_length[j] + 1;
+					previous_index[i] = j;
+				}
+			}
+			// Record the index where longest subsequence ends
+			if (longest_length[i] > longest_length[max_length_idx]) {
+				max_length_idx = i;
+			}
+		}
+		// Build the longest nondecreasing subsequence 
+		int max_length = longest_length[max_length_idx];
+		List<T> ret = new ArrayList<T>(max_length);
+		for (int i = 0; i < max_length; i++) {
+			ret.add(0, A.get(max_length_idx));
+			max_length_idx = previous_index[max_length_idx];			
+		}
+		return ret;
+	}
+	
+	// Find the first element which is greater than a given value in a sorted list 
+	private static <T extends Comparable<T>> int upper_bound(List<T> A, T a) {
+		if (A == null || A.isEmpty()) return 0;
+		if (A.get(A.size() - 1).compareTo(a) < 0) return A.size();
+		int start = 0, end = A.size();
+		while (start < end) {
+			int mid = start + ((end -start) >> 1);
+			if (A.get(mid).compareTo(a) > 0) {
+				end = mid;				
+			} else {
+				start = mid +1;				
+			}
+		}
+		return end;
+	}
+	
+	public static<T extends Comparable<T>> int longest_nondecreasing_subsequence2(List<T> A) {
+		List<T> tail_values = new ArrayList<T>();
+		for ( T a : A) {
+			int idx = upper_bound(tail_values, a);
+			if (idx == tail_values.size()) {
+				tail_values.add(a);
+			} else {
+				tail_values.set(idx, a);
+			}
+		}
+		return tail_values.size();
+	}
 }
