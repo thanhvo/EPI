@@ -79,4 +79,12 @@ public class AlgorithmsTest {
 		System.out.println(Algorithms.longest_nondecreasing_subsequence(list));
 		assertEquals(Algorithms.longest_nondecreasing_subsequence2(list), 4);		
 	}
+	
+	@Test
+	public void test_find_longest_subarray_less_equal_k() {
+		System.out.println("Longest subarray less equal k");		
+		int[] v = {431, -15, 639, 342, -14, 565, -924, 635, 167, -70};
+	    Pair<Integer, Integer> p = Algorithms.find_longest_subarray_less_equal_k(v, 184);
+	    System.out.println( p.first + " " + p.second);
+	}
 }

@@ -364,6 +364,22 @@ public class Algorithms {
 		return end;
 	}
 	
+	private static int upper_bound(int[] A, int a) {
+		if (A == null || A.length == 0) return 0;
+		if (A[A.length - 1] < a) return A.length;
+		int start = 0, end = A.length;
+		while (start < end) {
+			int mid = start + ((end -start) >> 1);
+			if (A[mid] > a) {
+				end = mid;				
+			} else {
+				start = mid +1;				
+			}
+		}
+		return end;
+	}
+	
+	
 	public static<T extends Comparable<T>> int longest_nondecreasing_subsequence2(List<T> A) {
 		List<T> tail_values = new ArrayList<T>();
 		for ( T a : A) {
@@ -375,5 +391,28 @@ public class Algorithms {
 			}
 		}
 		return tail_values.size();
+	}
+	
+	public static Pair<Integer, Integer> find_longest_subarray_less_equal_k(int[] A, int k) {
+		// Build the prefix sum according to A
+		int[] prefix_sum = new int[A.length];
+		int[] min_prefix_sum = new int[A.length];
+		prefix_sum[0] = A[0];
+		for (int i = 1; i < A.length; i++) {
+			prefix_sum[i] = prefix_sum[i-1] + A[i];
+			min_prefix_sum[i] = prefix_sum[i];
+		}
+		for (int i = min_prefix_sum.length - 2; i >= 0; --i) {
+			min_prefix_sum[i] = Math.min(min_prefix_sum[i], min_prefix_sum[i+1]);
+		}
+		Pair<Integer, Integer> arr_idx = new Pair(0, upper_bound(min_prefix_sum, k) - 1);
+		for (int i = 0; i < prefix_sum.length; ++i) {
+			int idx = upper_bound(min_prefix_sum, k + prefix_sum[i]) - 1;
+			if (idx - i - 1 > arr_idx.second - arr_idx.first) {
+				arr_idx.first = i + 1;
+				arr_idx.second = idx;
+			}
+		}
+		return arr_idx;
 	}
 }

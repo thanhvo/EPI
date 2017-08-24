@@ -72,7 +72,13 @@ void test_longest_nondecreasing_subsequence() {
     for (int i : seq) 
         cout << i << " ";
     cout << endl;
-    cout << longest_nondecreasing_sub_sequence2(v) << endl;
+    assert(longest_nondecreasing_sub_sequence2(v) == 4);
+}
+
+void test_longest_subarray_less_equal() {
+    vector<int> v = {431, -15, 639, 342, -14, 565, -924, 635, 167, -70};
+    pair<int, int> p = find_longest_subarray_less_equal_k(v, 184);
+    cout << p.first << " " << p.second << endl;
 }
 
 void test_algorithms() {
@@ -82,4 +88,5 @@ void test_algorithms() {
     test_tree_diameter();
     test_find_maximum_subarray();
     test_longest_nondecreasing_subsequence();
+    test_longest_subarray_less_equal();
 }
