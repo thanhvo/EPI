@@ -87,4 +87,10 @@ public class AlgorithmsTest {
 	    Pair<Integer, Integer> p = Algorithms.find_longest_subarray_less_equal_k(v, 184);
 	    System.out.println( p.first + " " + p.second);
 	}
+	
+	@Test
+	public void test_largest_rectangle() {
+		int[] A = {1,2,3,1,2};
+		assertEquals(Algorithms.calculate_largest_rectangle(A), 5);
+	}
 }

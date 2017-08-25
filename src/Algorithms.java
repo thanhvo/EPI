@@ -415,4 +415,35 @@ public class Algorithms {
 		}
 		return arr_idx;
 	}
+	
+	public static int calculate_largest_rectangle(int[] A) {
+		// Calculate L
+		Stack<Integer> S = new Stack<Integer>();
+		int[] L = new int[A.length];
+		for (int i = 0; i < A.length; ++i) {
+			while (!S.isEmpty() && A[S.peek()] >= A[i]) {
+				S.pop();
+			}
+			L[i] = (S.isEmpty() ? -1 : S.peek());
+			S.add(i);
+		}
+		// Clear stack for calculating R
+		while (!S.isEmpty()) {
+			S.pop();
+		}
+		int[] R = new int[A.length];
+		for (int i = A.length -1; i >= 0; --i) {
+			while (!S.isEmpty() && A[S.peek()] >= A[i]) {
+				S.pop();
+			}
+			R[i]= S.isEmpty() ? A.length : S.peek();
+			S.add(i);
+		}
+		// For each A[i], find its maximum area include it
+		int max_area = 0;
+		for (int i = 0; i < A.length; ++i) {
+			max_area = Math.max(max_area, A[i]*(R[i] - L[i] -1));
+		}
+		return max_area;
+	}
 }

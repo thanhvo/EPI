@@ -9,6 +9,7 @@
 #include <limits>
 #include <algorithm>
 #include <memory>
+#include <stack>
 
 using namespace std;
 
@@ -287,6 +288,38 @@ pair<int, int> find_longest_subarray_less_equal_k(const vector<T> &A, const T &k
         }
     }
     return arr_idx;
+}
+
+template <typename T>
+T calculate_largest_rectangle(const vector<T> &A) {
+    // Calculate T
+    stack<int> S;
+    vector<int> L;
+    for (int i = 0; i < (int)A.size(); ++i) {
+        while (!S.empty() && A[S.top()] >= A[i]) {
+            S.pop();
+        }
+        L.emplace_back(S.empty() ? -1 : S.top());
+        S.emplace(i);
+    }
+    // Clear stack for calculating R
+    while (!S.empty()) {
+        S.pop();
+    }
+    vector<int> R(A.size());
+    for (int i = A.size() - 1; i >= 0; --i) {
+        while (!S.empty() && A[S.top()] >= A[i]) {
+            S.pop();
+        }
+        R[i] = S.empty() ? A.size() : S.top();
+        S.emplace(i);
+    }
+    // For each A[i], find its maximum area include it
+    T max_area = 0;
+    for (int i = 0; i < (int)A.size(); ++i) {
+        max_area = max(max_area, A[i] * (R[i] - L[i] -1));
+    }
+    return max_area;
 }
 
 #endif

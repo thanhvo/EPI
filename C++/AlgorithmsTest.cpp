@@ -81,6 +81,11 @@ void test_longest_subarray_less_equal() {
     cout << p.first << " " << p.second << endl;
 }
 
+void test_largest_rectangle() {
+    vector<int> v = {1,2,3,1,2};
+    cout << calculate_largest_rectangle(v) << endl;
+}
+
 void test_algorithms() {
     test_drawing_skylines();
     test_count_inversions();
@@ -89,4 +94,5 @@ void test_algorithms() {
     test_find_maximum_subarray();
     test_longest_nondecreasing_subsequence();
     test_longest_subarray_less_equal();
+    test_largest_rectangle();
 }
