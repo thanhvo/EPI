@@ -446,4 +446,94 @@ public class Algorithms {
 		}
 		return max_area;
 	}
+	
+	private static class MaxHW {
+		public int h,w ;
+		public MaxHW(int h, int w) {
+			this.h = h;
+			this.w = w;
+		}
+	}
+	
+	public static int max_rectangle_submatrix(boolean [][] A) {
+		// DP table stores (h, w) for each (i, j)
+		MaxHW[][] table = new MaxHW[A.length][];
+		for (int i = 0; i < table.length; i++)
+			table[i] = new MaxHW[A[0].length];
+		for (int i = A.length -1; i >= 0; --i) {
+			for (int j = A[i].length -1; j >= 0; --j) {
+				// Find the largest h such that (i, j) to (i+h-1, j) are feasible
+				// Find the largest w such that (i,j) to (i, j+w-1) are feasible
+				table[i][j] = A[i][j] ? new MaxHW(i + 1 < A.length ? table[i+1][j].h + 1 : 1, 
+						j +1 < A[i].length ? table[i][j+1].w +1 : 1) : new MaxHW(0,0);			
+			}
+		}
+		int max_rect_area = 0;
+		for (int i = 0; i< A.length; ++i) {
+			for (int j = 0; j < A.length; ++j) {
+				// Process (i, j) if it is feasible and is possible to update max_rect_area
+				if (A[i][j] && table[i][j].w * table[i][j].h > max_rect_area) {
+					int min_width = Integer.MAX_VALUE;
+					for (int a = 0; a < table[i][j].h; ++a) {
+						min_width = Math.min(min_width, table[i+a][j].w);
+						max_rect_area = Math.max(max_rect_area, min_width * (a +1));
+					}
+				}
+			}
+		}
+		return max_rect_area;
+	}
+	
+	public static int max_square_submatrix(boolean[][] A) {
+		// DP table stores (h, w) for each (i, j)
+		MaxHW[][] table = new MaxHW[A.length][];
+		for (int i = 0; i < table.length; i++) 
+			table[i] = new MaxHW[A[0].length];
+		for (int i = A.length -1; i >= 0; --i) {
+			for (int j = A[0].length - 1; j >= 0; --j) {
+				// Find the largest h such that (i, j) to (i +h -1, j) are feasible
+				// Find the largest w such that (i, j) to (i, j + w -1) are feasible
+				table[i][j] = A[i][j] ? new MaxHW(i +1 < A.length ? table[i +1][j].h + 1 : 1,
+						j + 1 < A.length ? table[i][j+1].w + 1: 1) : new MaxHW(0, 0);
+			}
+		}
+		// A table stores the length of largest square for each (i, j) 
+		int[][] s = new int[A.length][];
+		for (int i = 0; i < A.length; ++i) {
+			s[i] = new int[A[0].length];
+		}
+		int max_square_area = 0;
+		for (int i = A.length - 1; i >= 0; --i) {
+			for (int j = A[i].length -1; j >= 0; --j) {
+				int side = Math.min(table[i][j].h, table[i][j].w);
+				if (A[i][j]) {
+					// Get the length of largest square with bottom-left corner (i, j)
+					if ( i + 1 < A.length && j + 1 < A[i +1].length) {
+						side = Math.min(s[i +1][j+1] + 1, side);
+					}
+					s[i][j] = side;
+					max_square_area = Math.max(max_square_area, side * side);
+				}
+			}
+		}
+		return max_square_area;
+	}
+	
+	public static int max_rectangle_submatrix2(boolean [][] A) {
+		int[][] table = new int[A.length][];
+		for (int i = 0; i < table.length; i++) {
+			table[i] = new int[A[i].length];
+		}
+		for (int i = A.length -1; i >= 0; --i) {
+			for (int j = A[i].length -1; j >= 0; --j) {
+				table[i][j] = A[i][j] ? (i +1) < A.length ? table[i+1][j] + 1 : 1 : 0;
+			}
+		}
+		// Find the max among all instances of the largest rectangle
+		int max_rect_area = 0;
+		for (int[] t : table) {
+			max_rect_area = Math.max(max_rect_area, calculate_largest_rectangle(t));
+		}
+		return max_rect_area;
+	}
 }

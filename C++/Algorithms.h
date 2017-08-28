@@ -322,4 +322,15 @@ T calculate_largest_rectangle(const vector<T> &A) {
     return max_area;
 }
 
+class MaxHW {
+    public:
+        int h,w;        
+};
+
+int max_rectangle_submatrix(const vector<vector<bool>> &A);
+
+int max_rectangle_submatrix2(const vector<vector<bool>> &A);
+
+int max_square_submatrix(const vector<vector<bool>> &A);
+
 #endif

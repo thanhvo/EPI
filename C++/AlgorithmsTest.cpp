@@ -82,8 +82,21 @@ void test_longest_subarray_less_equal() {
 }
 
 void test_largest_rectangle() {
-    vector<int> v = {1,2,3,1,2};
-    cout << calculate_largest_rectangle(v) << endl;
+    vector<int> v = {1,2,3,4,2,1};
+    assert(calculate_largest_rectangle(v) == 8);
+}
+
+void test_max_area_submatrix() {
+    vector<vector<bool>> A = {
+        {true, true, true, true, false},
+        {true, true, true, false, false},
+        {true, true, true, true, true},
+        {true, true, false, true, true},
+        {true, true, true, true, true}
+    };
+    assert(max_rectangle_submatrix(A) == 10);
+    assert(max_square_submatrix(A) == 9);
+    assert(max_rectangle_submatrix2(A) == 10);
 }
 
 void test_algorithms() {
@@ -95,4 +108,5 @@ void test_algorithms() {
     test_longest_nondecreasing_subsequence();
     test_longest_subarray_less_equal();
     test_largest_rectangle();
+    test_max_area_submatrix();
 }

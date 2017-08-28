@@ -93,4 +93,18 @@ public class AlgorithmsTest {
 		int[] A = {1,2,3,1,2};
 		assertEquals(Algorithms.calculate_largest_rectangle(A), 5);
 	}
+	
+	@Test
+	public void test_max_rectangle_submatrix() {
+		boolean[][] A = {
+			{true, true, true, true, false},
+	        {true, true, true, false, false},
+	        {true, true, true, true, true},
+	        {true, true, false, true, true},
+	        {true, true, true, true, true}
+		};
+		assertEquals(Algorithms.max_rectangle_submatrix(A), 10);
+		assertEquals(Algorithms.max_square_submatrix(A), 9);
+		assertEquals(Algorithms.max_rectangle_submatrix2(A), 10);
+	}
 }
