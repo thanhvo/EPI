@@ -121,4 +121,10 @@ public class AlgorithmsTest {
 		System.out.println(seq1);
 		assertEquals(Algorithms.sequence(A, S2), null);
 	}
+	
+	@Test
+	public void test_leveshtein_distance() {
+		System.out.println(Algorithms.leveshtein_distance("hello", "hell"));
+		System.out.println(Algorithms.leveshtein_distance("yes", "no"));
+	}
 }

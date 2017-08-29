@@ -343,4 +343,6 @@ class HashTuple {
 
 bool match(const vector<vector<int>> &A, const vector<int> &S);
 
+int leveshtein_distance(string A, string B);
+
 #endif

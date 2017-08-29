@@ -563,4 +563,30 @@ public class Algorithms {
 		}
 		return null;
 	}
+	
+	public static int leveshtein_distance(String A, String B) {
+		// Try to reduce the space usage
+		if (A.length() < B.length()) {
+			String temp = A;
+			A = B;
+			B = temp;
+		}
+		int[] D = new int[B.length() + 1];
+		// Initialization
+		for (int i =0; i < D.length; i++)
+			D[i] = i;
+		for (int i = 1; i <= A.length(); ++i) {
+			int pre_i_1_j_1 = D[0];
+			// Stores the value of D[i-1][j-1]
+			D[0] = i;
+			for (int j = 1; j <= B.length(); ++j) {
+				int pre_i_1_j = D[j];
+				// Stores the value of D[i-1][j]
+				D[j] = A.charAt(i-1) == B.charAt(j-1) ? pre_i_1_j_1 : 1 + Math.min(pre_i_1_j_1, Math.min(D[j-1], D[j]));
+				// Previous D[j-1][j] will become next D[i-1][j-1]
+				pre_i_1_j_1 = pre_i_1_j;
+			}
+		}
+		return D[D.length -1];
+	}
 }

@@ -111,6 +111,13 @@ void test_match() {
     assert(!match(A, S2));
 }
 
+void test_leveshtein_distance() {
+    cout << leveshtein_distance("Vietnam", "Korea") << endl;
+    cout << leveshtein_distance("Vietnam", "America") << endl;
+    cout << leveshtein_distance("Vietnam", "Japan") << endl;
+    cout << leveshtein_distance("hello", "hell") << endl;
+}
+
 void test_algorithms() {
     test_drawing_skylines();
     test_count_inversions();
@@ -122,4 +129,5 @@ void test_algorithms() {
     test_largest_rectangle();
     test_max_area_submatrix();
     test_match();
+    test_leveshtein_distance();
 }
