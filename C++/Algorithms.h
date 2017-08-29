@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <memory>
 #include <stack>
+#include <unordered_set>
 
 using namespace std;
 
@@ -332,5 +333,14 @@ int max_rectangle_submatrix(const vector<vector<bool>> &A);
 int max_rectangle_submatrix2(const vector<vector<bool>> &A);
 
 int max_square_submatrix(const vector<vector<bool>> &A);
+
+class HashTuple {
+    public:
+        size_t operator() (const tuple <int, int, int> &t) const {
+            return hash<int>()(get<0>(t)) ^ hash<int>()(get<1>(t)) ^ hash<int>()(get<2>(t));
+        }    
+};
+
+bool match(const vector<vector<int>> &A, const vector<int> &S);
 
 #endif

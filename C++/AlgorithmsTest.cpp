@@ -99,6 +99,18 @@ void test_max_area_submatrix() {
     assert(max_rectangle_submatrix2(A) == 10);
 }
 
+void test_match() {
+    vector<vector<int>> A = {
+        {1,2,3},
+        {3,4,5},
+        {5,6,7}
+    };
+    vector<int> S1 = {1,3,4,6};
+    vector<int> S2 = {1,2,3,4};
+    assert(match(A, S1));
+    assert(!match(A, S2));
+}
+
 void test_algorithms() {
     test_drawing_skylines();
     test_count_inversions();
@@ -109,4 +121,5 @@ void test_algorithms() {
     test_longest_subarray_less_equal();
     test_largest_rectangle();
     test_max_area_submatrix();
+    test_match();
 }

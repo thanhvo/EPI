@@ -151,7 +151,7 @@ int max_rectangle_submatrix2(const vector<vector<bool>> &A) {
     vector<vector<int>> table (A.size(), vector<int>(A.front().size()));
     for (int i = A.size() -1; i >= 0; --i) {
         for (int j = A[i].size() -1; j >= 0; --j) {
-            table[i][j] = A[i][j] ? (i +1) < A.size() ? table[i+1][j] + 1 : 1 : 0;
+            table[i][j] = A[i][j] ? (i +1) < (int)A.size() ? table[i+1][j] + 1 : 1 : 0;
         }
     }
     // Find the max among all instances of the largest rectangle
@@ -160,4 +160,34 @@ int max_rectangle_submatrix2(const vector<vector<bool>> &A) {
         max_rect_area = max(max_rect_area, calculate_largest_rectangle(t));
     }
     return max_rect_area;
+}
+
+bool match_helper(const vector<vector<int>> &A, const vector<int> &S, 
+    unordered_set<tuple<int, int, int>, HashTuple> cache, int i, int j, int len) {
+    if ((int)S.size() == len) {
+        return true;
+    }
+    if ( i < 0 || i >= (int)A.size() || j < 0 || j >= (int)A[i].size() || cache.find({i,j,len}) != cache.cend()) {
+        return false;
+    }
+    if (A[i][j] == S[len] && (match_helper(A, S, cache, i-1, j, len+1) ||
+                            match_helper(A, S, cache, i+1, j, len+1) ||
+                            match_helper(A, S, cache, i, j-1, len+1) ||
+                            match_helper(A, S, cache, i, j+1, len+1))){
+        return true;
+    }
+    cache.insert({i,j,len});
+    return false;
+}
+
+bool match(const vector<vector<int>> &A, const vector<int> &S) {
+    unordered_set<tuple<int, int, int>, HashTuple> cache;
+    for (int i = 0; i < (int)A.size(); ++i) {
+        for (int j = 0; j < (int)A[i].size(); ++j) {
+            if (match_helper(A, S, cache, i, j, 0)) {
+                return true;
+            }
+        }
+    }
+    return false;
 }

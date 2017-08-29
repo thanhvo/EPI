@@ -7,4 +7,8 @@ public class Pair<F, S> {
 		first = f;
 		second = s;
 	}
+	
+	public String toString() {
+		return "(" + first.toString() + "," + second.toString() + ")";
+	}
 }

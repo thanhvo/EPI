@@ -107,4 +107,18 @@ public class AlgorithmsTest {
 		assertEquals(Algorithms.max_square_submatrix(A), 9);
 		assertEquals(Algorithms.max_rectangle_submatrix2(A), 10);
 	}
+	
+	@Test
+	public void test_sequence() {
+		int[][] A = {
+				{1, 2, 3},
+				{3, 4, 5},
+				{5, 6, 7}
+		};
+		int[] S1 = {1,3,4,6};
+		int[] S2 = {1,2,3,4};
+		List<Pair<Integer, Integer>> seq1 = Algorithms.sequence(A, S1);
+		System.out.println(seq1);
+		assertEquals(Algorithms.sequence(A, S2), null);
+	}
 }

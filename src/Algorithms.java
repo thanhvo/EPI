@@ -536,4 +536,31 @@ public class Algorithms {
 		}
 		return max_rect_area;
 	}
+	
+	private static List<Pair<Integer, Integer>> sequence_with_starting_point(int[][] A, int i, int j, int[] S, int start) {
+		if (start == S.length) {
+			return new ArrayList<Pair<Integer, Integer>>();			
+		}
+		if (i < 0 || i >= A.length || j < 0 || j >= A[i].length || A[i][j] != S[start]) {
+			return null;
+		}
+		List<Pair<Integer, Integer>> list = null;
+		list = sequence_with_starting_point(A, i -1, j, S, start +1);
+		if (list == null) list = sequence_with_starting_point(A, i +1, j, S, start +1);
+		if (list == null) list = sequence_with_starting_point(A, i, j -1, S, start +1);
+		if (list == null) list = sequence_with_starting_point(A, i, j+ 1, S, start +1);
+		if (list == null) return null;
+		list.add(0, new Pair(i, j));
+		return list;
+	}
+	
+	public static List<Pair<Integer, Integer>> sequence(int[][] A, int[] S) {
+		for (int i = 0; i < A.length; i++) {
+			for (int j = 0; j < A.length; j++) {
+				List<Pair<Integer, Integer>> list = sequence_with_starting_point(A, i, j, S, 0);
+				if (list != null) return list;
+			}
+		}
+		return null;
+	}
 }
