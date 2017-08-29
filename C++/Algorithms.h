@@ -345,4 +345,6 @@ bool match(const vector<vector<int>> &A, const vector<int> &S);
 
 int leveshtein_distance(string A, string B);
 
+vector<string> word_breaking(const string &s, const unordered_set<string> &dict);
+
 #endif

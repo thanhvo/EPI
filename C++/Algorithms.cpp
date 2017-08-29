@@ -215,3 +215,31 @@ int leveshtein_distance(string A, string B) {
     }
     return D.back();
 }
+
+vector<string> word_breaking(const string &s, const unordered_set<string> &dict) {
+    // T[i] stores the length of the last string which composed of S(0,i)
+    vector<int> T(s.size(), 0);
+    for (int i = 0; i < (int)s.size(); ++i) {
+        // Set T[i] if S(0,i) is a valid word
+        if (dict.find(s.substr(0, i+1)) != dict.cend()) {
+            T[i] = i + 1;
+        }
+        // Set T[i] if T[j != 0 and s(j+1, i) is a valid word
+        for (int j = 0; j < i && T[i] == 0; ++j) {
+            if (T[j] != 0 && dict.find(s.substr(j +1, i -j)) != dict.cend()) {
+                T[i] = i - j;
+            }
+        }
+    }
+    vector<string> ret;
+    // S can be assembled by valid words
+    if (T.back()) {
+        int idx = s.size() - 1;
+        while (idx >= 0) {
+            ret.emplace_back(s.substr(idx- T[idx] + 1, T[idx]));
+            idx -= T[idx];
+        }
+        reverse(ret.begin(), ret.end());
+    }
+    return ret;
+}

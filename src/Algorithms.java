@@ -589,4 +589,21 @@ public class Algorithms {
 		}
 		return D[D.length -1];
 	}
+	
+	public static List<String> break_words(String word, List<String> dict) {
+		int MAX_LENGTH = 20;
+		for (int i = 0; i < Math.min(MAX_LENGTH, word.length()); i++) {
+			String prefix = word.substring(0, i +1);
+			List<String> words;
+			if (dict.contains(prefix)) {
+				if (i == word.length() -1) words = new ArrayList<String>(); 
+				else words = break_words(word.substring(i+1), dict);
+				if (words != null) {
+					words.add(0, prefix);
+					return words;
+				}
+			}
+		}
+		return null;
+	}
 }

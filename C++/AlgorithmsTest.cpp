@@ -118,6 +118,15 @@ void test_leveshtein_distance() {
     cout << leveshtein_distance("hello", "hell") << endl;
 }
 
+void test_word_breaking() {
+    unordered_set<string> dict({"hello", "goodbye", "there", "you", "go", "beautiful", "day"});
+    vector<string> words = word_breaking("therebeautifulday", dict);
+    for (auto word : words) cout << word << " ";
+    cout << endl;
+    words = word_breaking("hereyougo", dict);
+    assert(words.empty());
+}
+
 void test_algorithms() {
     test_drawing_skylines();
     test_count_inversions();
@@ -130,4 +139,5 @@ void test_algorithms() {
     test_max_area_submatrix();
     test_match();
     test_leveshtein_distance();
+    test_word_breaking();
 }

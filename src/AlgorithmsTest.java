@@ -127,4 +127,13 @@ public class AlgorithmsTest {
 		System.out.println(Algorithms.leveshtein_distance("hello", "hell"));
 		System.out.println(Algorithms.leveshtein_distance("yes", "no"));
 	}
+	
+	@Test
+	public void test_break_words() {
+		List<String> dict = Arrays.asList("hello", "goodbye", "there", "you", "go", "beautiful", "day");
+		List<String> words = Algorithms.break_words("therebeautifulday", dict);
+		for (String word : words) System.out.print(word + " ");
+		System.out.println();
+		assertEquals(Algorithms.break_words("hereyougo", dict), null);
+	}
 }
