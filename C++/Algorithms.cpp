@@ -243,3 +243,28 @@ vector<string> word_breaking(const string &s, const unordered_set<string> &dict)
     }
     return ret;
 }
+
+int find_pretty_printing(const vector<string> &W, const int &L) {
+    // Calculate M(i)
+    vector<long> M(W.size(), numeric_limits<long>::max());
+    for (int i = 0; i < M.size(); ++i) {
+        int b_len = L - W[i].size();
+        M[i] = min((i -1 < 0 ? 0 : M[i-1]) + (1 << b_len), M[i]);
+        for (int j = i -1; j >= 0; --j) {
+            b_len -= (W[j].size() + 1);
+            if (b_len < 0) break;
+            M[i] = min((j -1 < 0 ? 0 : M[j-1]) + ( 1 << b_len), M[i]);
+        }
+    }
+    // Find the minimum cost without considering the last line
+    long min_mess = (W.size() >= 2 ? M[W.size() -2] : 0);
+    int b_len = L - W.back().size();
+    for (int i = W.size() - 2; i >= 0; --i) {
+        b_len -= (W[i].size() + 1);
+        if (b_len < 0) {
+            return min_mess;
+        }
+        min_mess = min(min_mess, (i -1 < 0 ? 0 : M[i-1]));
+    }
+    return min_mess;
+}

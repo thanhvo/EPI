@@ -347,4 +347,6 @@ int leveshtein_distance(string A, string B);
 
 vector<string> word_breaking(const string &s, const unordered_set<string> &dict);
 
+int find_pretty_printing(const vector<string> &W, const int &L);
+
 #endif

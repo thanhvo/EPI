@@ -127,6 +127,11 @@ void test_word_breaking() {
     assert(words.empty());
 }
 
+void test_find_pretty_printing() {
+    vector<string> W = {"this", "is", "a", "beautiful", "day", ".", "I", "enjoy", "working", "from", "home"};
+    cout << find_pretty_printing(W, 10) << endl;
+}
+
 void test_algorithms() {
     test_drawing_skylines();
     test_count_inversions();
@@ -140,4 +145,5 @@ void test_algorithms() {
     test_match();
     test_leveshtein_distance();
     test_word_breaking();
+    test_find_pretty_printing();
 }

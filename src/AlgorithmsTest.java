@@ -136,4 +136,10 @@ public class AlgorithmsTest {
 		System.out.println();
 		assertEquals(Algorithms.break_words("hereyougo", dict), null);
 	}
+	
+	@Test
+	public void test_find_pretty_printing() {
+		List<String> W = Arrays.asList("this", "is", "a", "beautiful", "day", ".", "I", "enjoy", "working", "from", "home");
+		System.out.println(Algorithms.find_pretty_printing(W, 10));
+	}
 }

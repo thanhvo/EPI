@@ -606,4 +606,28 @@ public class Algorithms {
 		}
 		return null;
 	}
+	
+	public static long find_pretty_printing(List<String> W, int L) {
+		// Calculate M(i)
+		long[] M = new long[W.size()];
+		for (int i = 0; i < M.length; i++) M[i] = Long.MAX_VALUE;
+		for (int i = 0; i < W.size(); ++i) {
+			int b_len = L - W.get(i).length();
+			M[i] = Math.min((i-1 < 0 ? 0 : M[i-1]) + (1 << b_len), M[i]);
+			for (int j = i -1; j >= 0; --j) {
+				b_len -= (W.get(j).length() + 1);
+				if (b_len < 0) break;
+				M[i] = Math.min((j -1 < 0 ? 0 : M[j-1]) + (1 << b_len), M[i]);
+			}
+		}
+		// Find the minimum cost without considering the last line
+		long min_mess = (W.size() >= 2 ? M[W.size() - 2]: 0);
+		int b_len = L - W.get(W.size() -1).length();
+		for ( int i = W.size() -2; i >= 0; --i) {
+			b_len -= (W.get(i).length() + 1);
+			if (b_len < 0) return min_mess;
+			min_mess = Math.min(min_mess, (i -1 < 0 ? 0 : M[i-1]));
+		}
+		return min_mess;
+	}
 }
