@@ -349,4 +349,6 @@ vector<string> word_breaking(const string &s, const unordered_set<string> &dict)
 
 int find_pretty_printing(const vector<string> &W, const int &L);
 
+int compute_binomial_coefficients(const int &n, const int &k);
+
 #endif

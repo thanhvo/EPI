@@ -630,4 +630,23 @@ public class Algorithms {
 		}
 		return min_mess;
 	}
+	
+	public static int compute_binomial_coefficients(int n, int k) {
+		int[][] table = new int[n+1][k+1];
+		// Basic case: C(i,0) = 1
+		for (int i = 0; i <= n; ++i) {
+			table[i][0] = 1;
+		}
+		// Basic case: C(i,i) = 1
+		for (int i = 1; i <= k; ++i) {
+			table[i][i] = 1;
+		}
+		// C(i,j) = C(i-1, j) + C(i-1, j-1)
+		for (int i = 2; i <= n; ++i) {
+			for (int j = 1; j <i && j <= k; ++j){
+				table[i][j] = table[i-1][j] + table[i-1][j-1];
+			}
+		}
+		return table[n][k];
+	}
 }

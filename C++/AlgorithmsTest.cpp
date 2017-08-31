@@ -132,6 +132,15 @@ void test_find_pretty_printing() {
     cout << find_pretty_printing(W, 10) << endl;
 }
 
+void test_compute_binomial_coefficients() {
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j <= i; j++) {
+            cout << compute_binomial_coefficients(i, j) << " ";        
+        }
+        cout << endl;
+    }
+}
+
 void test_algorithms() {
     test_drawing_skylines();
     test_count_inversions();
@@ -146,4 +155,5 @@ void test_algorithms() {
     test_leveshtein_distance();
     test_word_breaking();
     test_find_pretty_printing();
+    test_compute_binomial_coefficients();
 }

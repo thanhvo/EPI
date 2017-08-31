@@ -142,4 +142,14 @@ public class AlgorithmsTest {
 		List<String> W = Arrays.asList("this", "is", "a", "beautiful", "day", ".", "I", "enjoy", "working", "from", "home");
 		System.out.println(Algorithms.find_pretty_printing(W, 10));
 	}
+	
+	@Test
+	public void test_compute_binomial_coefficients() {
+		for (int i = 0; i< 10; i++) {
+			for (int j = 0; j < i; j++) {
+				System.out.print(Algorithms.compute_binomial_coefficients(i, j) + " ");				
+			}
+			System.out.println();
+		}
+	}
 }
