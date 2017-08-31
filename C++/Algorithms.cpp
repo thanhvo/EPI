@@ -287,3 +287,28 @@ int compute_binomial_coefficients(const int &n, const int &k) {
     }
     return table[n][k];
 }
+
+int count_combinations(const int &k, const vector<int> &score_ways) {
+    vector<int> combinations(k +1, 0);
+    combinations[0] = 1; // 1 way to reach 0
+    for (const int &score: score_ways) {
+        for (int j = score; j <= k; ++j) {
+            combinations[j] += combinations[j - score];
+        }
+    }
+    return combinations[k];
+}
+
+int count_permuations(const int &k, const vector<int> &score_ways) {
+    vector<int> permutations(k +1, 0);
+    permutations[0] = 1; // 1 way to reach 0
+    for (int i = 0; i <= k; ++i) {
+        for (const int & score: score_ways) {
+            if (i >= score) {
+                permutations[i] += permutations[i - score];
+            }
+        }
+    }
+    return permutations[k];
+}
+

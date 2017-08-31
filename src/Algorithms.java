@@ -649,4 +649,44 @@ public class Algorithms {
 		}
 		return table[n][k];
 	}
+	
+	private static int num_of_plays(int S, int[] W, int k) {
+		if (k == 0) {
+			if (S % W[0] == 0) return 1;
+			else return 0;
+		}
+		int num = 0;
+		for (int i = 0; i <= S/W[k]; i++) {
+			num+= num_of_plays(S - i*W[k], W, k -1);
+		}
+		return num;
+	}
+	
+	public static int num_of_plays(int S, int[] W) {
+		return num_of_plays(S, W, W.length -1);
+	}
+	
+	public static int count_combinations(int k, int[] score_ways) {
+		int[] combinations = new int[k + 1];
+		combinations[0] = 1; // 1 way to reach 0
+		for (int score: score_ways) {
+			for (int j = score; j <= k; ++j) {
+				combinations[j] += combinations[j - score];
+			}
+		}
+		return combinations[k];
+	}
+	
+	public static int count_permutations(int k, int[] score_ways) {
+		int[] permutations = new int[k+1];
+		permutations[0] = 1; // 1 way to reach 0
+		for (int i = 0; i <= k; i++) {
+			for (int score : score_ways) {
+				if (i >= score) {
+					permutations[i] += permutations[i - score];
+				}
+			}
+		}
+		return permutations[k];
+	}
 }

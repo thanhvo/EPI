@@ -351,4 +351,8 @@ int find_pretty_printing(const vector<string> &W, const int &L);
 
 int compute_binomial_coefficients(const int &n, const int &k);
 
+int count_combinations(const int &k, const vector<int> &score_ways);
+
+int count_permuations(const int &k, const vector<int> &score_ways);
+
 #endif

@@ -141,6 +141,14 @@ void test_compute_binomial_coefficients() {
     }
 }
 
+void test_count_combinations() {
+    vector<int> v = {2,3,7};
+    assert(count_combinations(12, v) == 4);
+    assert(count_combinations(7, v) == 2);
+    cout << count_permuations(7, v) << endl;
+    cout << count_permuations(12, v) << endl;
+}
+
 void test_algorithms() {
     test_drawing_skylines();
     test_count_inversions();
@@ -156,4 +164,5 @@ void test_algorithms() {
     test_word_breaking();
     test_find_pretty_printing();
     test_compute_binomial_coefficients();
+    test_count_combinations();
 }

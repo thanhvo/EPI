@@ -152,4 +152,15 @@ public class AlgorithmsTest {
 			System.out.println();
 		}
 	}
+	
+	@Test
+	public void test_num_of_plays() {
+		int[] W = {2,3,7};
+		assertEquals(Algorithms.num_of_plays(12, W), 4);
+		assertEquals(Algorithms.num_of_plays(7, W), 2);
+		assertEquals(Algorithms.count_combinations(12, W), 4);
+		assertEquals(Algorithms.count_combinations(7, W), 2);
+		System.out.println(Algorithms.count_permutations(12, W));
+		System.out.println(Algorithms.count_permutations(7, W));
+	}
 }
