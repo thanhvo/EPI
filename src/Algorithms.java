@@ -689,4 +689,31 @@ public class Algorithms {
 		}
 		return permutations[k];
 	}
+	
+	public static int number_of_ways(int n, int m) {
+		int[][] A = new int[n][m];
+		A[0][0] = 1; // 1 way to start from (0,0)
+		for (int i = 0; i < n; ++i) {
+			for (int j = 0; j < m; ++j) {
+				A[i][j] += ( i < 1 ? 0 : A[i-1][j]) + (j < 1 ? 0 : A[i][j-1]);
+			}
+		}
+		return A[n-1][m-1];
+	}
+	
+	// Given the dimensions of A, n, and m, and B, return the number of ways from (0,0) to (n-1, m-1)
+	// considering obstacles
+	public static int number_of_ways_with_obstacles(int m, int n, boolean[][] B) {
+		int[][] A = new int[n][m];
+		// No way to start from (0,0) if B[0][0] == true
+		A[0][0] = B[0][0] ? 0 : 1;
+		for (int i = 0; i < n; ++i) {
+			for (int j = 0; j < m; ++j) {
+				if (!B[i][j]) {
+					A[i][j] += (i < 1 ? 0 : A[i-1][j]) + ( j < 1 ? 0 : A[i][j-1]);
+				}
+			}
+		}
+		return A[m-1][n-1];
+	}
 }

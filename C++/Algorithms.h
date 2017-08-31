@@ -355,4 +355,8 @@ int count_combinations(const int &k, const vector<int> &score_ways);
 
 int count_permuations(const int &k, const vector<int> &score_ways);
 
+int number_of_ways(const int &n, const int &m);
+
+int number_of_ways_with_obstacles(const int &n, const int &m, const vector<vector<bool>> &B);
+
 #endif

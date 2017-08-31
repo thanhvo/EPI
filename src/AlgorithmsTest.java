@@ -163,4 +163,22 @@ public class AlgorithmsTest {
 		System.out.println(Algorithms.count_permutations(12, W));
 		System.out.println(Algorithms.count_permutations(7, W));
 	}
+	
+	@Test
+	public void test_number_of_ways() {
+		for (int i = 1; i <= 10; i ++) {
+			for (int j = 1 ; j <= 10; j++) {
+				System.out.print(Algorithms.number_of_ways(i, j) + " ");
+			}
+			System.out.println();
+		}
+		boolean[][] B = {
+				{false, false, false, false, true},
+		        {true, false, false, false, false},
+		        {false, false, true, false, false},
+		        {false, false, true, false, true},
+		        {false, false, true, false, false}
+		};
+		assertEquals(Algorithms.number_of_ways_with_obstacles(5, 5, B), 3);
+	}
 }

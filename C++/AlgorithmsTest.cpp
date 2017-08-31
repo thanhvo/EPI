@@ -149,6 +149,23 @@ void test_count_combinations() {
     cout << count_permuations(12, v) << endl;
 }
 
+void test_find_ways() {
+    for (int i = 1; i <= 10; i++) {
+        for (int j = 1; j <= 10; j++) {
+            cout << number_of_ways(i, j) << " ";
+        }
+        cout << endl;
+    }
+    vector<vector<bool>> B = {
+        {false, false, false, false, true},
+        {true, false, false, false, false},
+        {false, false, true, false, false},
+        {false, false, true, false, true},
+        {false, false, true, false, false}
+    };
+    cout << number_of_ways_with_obstacles(5, 5, B) << endl;
+}
+
 void test_algorithms() {
     test_drawing_skylines();
     test_count_inversions();
@@ -165,4 +182,5 @@ void test_algorithms() {
     test_find_pretty_printing();
     test_compute_binomial_coefficients();
     test_count_combinations();
+    test_find_ways();
 }
