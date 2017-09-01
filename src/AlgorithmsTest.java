@@ -181,4 +181,15 @@ public class AlgorithmsTest {
 		};
 		assertEquals(Algorithms.number_of_ways_with_obstacles(5, 5, B), 3);
 	}
+	
+	@Test
+	public void test_fisherman_path() {
+		System.out.println("Fisherman path");
+		int[][] sea = {{1,2,4,5,7},
+				   {3,4,5,8,2},
+				   {2,2,2,2,2},
+				   {1,3,5,7,9},
+				   {2,4,6,8,10}};
+		System.out.println(Algorithms.optimum_fisherman_path(sea, 5, 5));
+	}
 }

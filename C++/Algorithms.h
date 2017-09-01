@@ -359,4 +359,15 @@ int number_of_ways(const int &n, const int &m);
 
 int number_of_ways_with_obstacles(const int &n, const int &m, const vector<vector<bool>> &B);
 
+template <typename T>
+T maximize_fishing(vector<vector<T>> A) {
+    for (int i = 0; i < (int)A.size(); ++i) {
+        for (int j = 0; j < (int)A[i].size(); ++j) {
+            A[i][j] += max(i < 1 ? 0 : A[i-1][j], j < 1 ? 0 : A[i][j-1]);
+        }
+    }
+    return A.back().back();
+}
+
+
 #endif

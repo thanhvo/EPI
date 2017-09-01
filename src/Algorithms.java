@@ -716,4 +716,15 @@ public class Algorithms {
 		}
 		return A[m-1][n-1];
 	}
+	
+	// Find the optimum path for a fisherman 
+	public static int optimum_fisherman_path(int[][] A, int m, int n) {
+		int[][] max_values = new int[m][n];
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				max_values[i][j] = Math.max(i > 0 ? max_values[i-1][j]: 0, j > 0 ? max_values[i][j-1] : 0) + A[i][j];
+			}
+		}
+		return max_values[m-1][n-1];
+	}
 }

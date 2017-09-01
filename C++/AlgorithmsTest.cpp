@@ -166,6 +166,15 @@ void test_find_ways() {
     cout << number_of_ways_with_obstacles(5, 5, B) << endl;
 }
 
+void test_maximize_fishing() {
+    vector<vector<int>> sea = {{1,2,4,5,7},
+                                {3,4,5,8,2},
+                                {2,2,2,2,2},
+                                {1,3,5,7,9},
+                                {2,4,6,8,10}};
+    cout << maximize_fishing<int>(sea) << endl;
+}
+
 void test_algorithms() {
     test_drawing_skylines();
     test_count_inversions();
@@ -183,4 +192,5 @@ void test_algorithms() {
     test_compute_binomial_coefficients();
     test_count_combinations();
     test_find_ways();
+    test_maximize_fishing();
 }
