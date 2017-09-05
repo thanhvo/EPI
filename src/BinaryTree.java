@@ -277,4 +277,55 @@ public class BinaryTree {
 			return L;
 		return R;
 	}
+	
+	// Get pre-order traversal
+	public static String serialize(BTNode<Integer> root) {
+		if (root == null) return null;
+		Stack<BTNode<Integer>> stack = new Stack<BTNode<Integer>>();
+		stack.push(root);
+		StringBuilder sb = new StringBuilder();
+		while (!stack.isEmpty()) {
+			BTNode<Integer> h = stack.pop();
+			if (h != null) {
+				sb.append(h.data + ",");
+				stack.push(h.right);
+				stack.push(h.left);
+			} else {
+				sb.append("#,");
+			}
+		}
+		return sb.toString().substring(0, sb.length() - 1);
+	}
+	
+	// Recursively serialize a binary tree using pre-order traversal 
+	public static String serialize2(BTNode<Integer> root){
+		if (root == null) return null;
+		StringBuilder sb = new StringBuilder();
+		sb.append(root.data + ",");
+		sb.append(serialize2(root.left));
+		sb.append(serialize2(root.right));
+		return sb.toString();
+	}
+	
+	// Decodes your encoded data to tree
+	public static BTNode<Integer> deserialize(String data) {
+		if (data == null) {
+			return null;			
+		}
+		int[] t = {0};
+		String[] arr = data.split(",");
+		return helper(arr, t);
+	}
+	
+	private static BTNode<Integer> helper(String[] arr, int[] t) {
+		if (arr[t[0]].equals("#")) {
+			return null;
+		}
+		BTNode<Integer> root = new BTNode<Integer>(Integer.parseInt(arr[t[0]]));
+		t[0]++;
+		root.left = helper(arr, t);
+		t[0]++;
+		root.right = helper(arr, t);
+		return root;
+	}
 }

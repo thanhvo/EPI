@@ -3,6 +3,42 @@ import static org.junit.Assert.*;
 import java.util.*;
 
 public class BinaryTreeTest {
+	BTNode<Integer> A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P;
+	
+	private void create_binary_tree() {
+		A = new BTNode<Integer>(314);
+		B = new BTNode<Integer>(6);
+		C = new BTNode<Integer>(6);
+		D = new BTNode<Integer>(28);
+		E = new BTNode<Integer>(0);
+		F = new BTNode<Integer>(561);
+		G = new BTNode<Integer>(3);
+		H = new BTNode<Integer>(17);
+		I = new BTNode<Integer>(6);
+		J = new BTNode<Integer>(2);
+		K = new BTNode<Integer>(1);
+		L = new BTNode<Integer>(461);
+		M = new BTNode<Integer>(641);
+		N = new BTNode<Integer>(257);
+		O = new BTNode<Integer>(271);
+		P = new BTNode<Integer>(28);
+		A.left = B;
+		A.right = I;
+		B.left = C;
+		B.right = F;
+		C.left = D;
+		C.right = E;
+		F.right = G;
+		G.left = H;
+		I.left = J;
+		I.right = O;
+		J.right = K;
+		K.left = L;
+		K.right = N;
+		L.right = M;
+		O.right = P;
+	}
+	
 	@Test
 	public void test_balanced_binary_tree() {
 		BTNode<Integer> zero = new BTNode<Integer>(0);
@@ -440,39 +476,18 @@ public class BinaryTreeTest {
 	
 	@Test
 	public void test_LCA() {
-		BTNode<Integer> A = new BTNode<Integer>(314);
-		BTNode<Integer> B = new BTNode<Integer>(6);
-		BTNode<Integer> C = new BTNode<Integer>(6);
-		BTNode<Integer> D = new BTNode<Integer>(28);
-		BTNode<Integer> E = new BTNode<Integer>(0);
-		BTNode<Integer> F = new BTNode<Integer>(561);
-		BTNode<Integer> G = new BTNode<Integer>(3);
-		BTNode<Integer> H = new BTNode<Integer>(17);
-		BTNode<Integer> I = new BTNode<Integer>(6);
-		BTNode<Integer> J = new BTNode<Integer>(2);
-		BTNode<Integer> K = new BTNode<Integer>(1);
-		BTNode<Integer> L = new BTNode<Integer>(461);
-		BTNode<Integer> M = new BTNode<Integer>(641);
-		BTNode<Integer> N = new BTNode<Integer>(257);
-		BTNode<Integer> O = new BTNode<Integer>(271);
-		BTNode<Integer> P = new BTNode<Integer>(28);
-		A.left = B;
-		A.right = I;
-		B.left = C;
-		B.right = F;
-		C.left = D;
-		C.right = E;
-		F.right = G;
-		G.left = H;
-		I.left = J;
-		I.right = O;
-		J.right = K;
-		K.left = L;
-		K.right = N;
-		L.right = M;
-		O.right = P;
+		create_binary_tree();
 		assertEquals(BinaryTree.LCA(A, E, H), B);
 		assertEquals(BinaryTree.LCA(A, D, M), A);
 		assertEquals(BinaryTree.LCA(A, H, G), G);
+	}
+	
+	@Test
+	public void test_serialize_binary_tree() {
+		create_binary_tree();
+		A.printTree();
+		String s = BinaryTree.serialize(A);
+		System.out.println(s);
+		BinaryTree.deserialize(s).printTree();
 	}
 }
