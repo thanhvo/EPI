@@ -1,16 +1,13 @@
 import java.util.*;
 
 public class TreeNode {
-	List<Pair<TreeNode,Double>> edges;
+	public List<TreeNode> children;
 	
 	public TreeNode() {
-		edges = null;
+		children = new ArrayList<TreeNode>();
 	}
 	
-	public void addChild(TreeNode child, double edge) {
-		if (edges == null) {
-			edges = new ArrayList<Pair<TreeNode, Double>>();
-		}
-		edges.add(new Pair(child,edge));
+	public void addChild(TreeNode child) {
+		children.add(child);
 	}
 }

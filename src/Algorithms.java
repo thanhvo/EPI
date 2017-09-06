@@ -206,13 +206,13 @@ public class Algorithms {
 		return new Pair(ret.first, ret.second);
 	}
 	
-	private static Pair<Double, Double> compute_height_and_diameter(TreeNode r) {
+	private static Pair<Double, Double> compute_height_and_diameter(WeightedTreeNode r) {
 		if (r == null || r.edges == null) {
 			return new Pair(0.0, 0.0);
 		}
 		double diameter = Double.MIN_VALUE;
 		double[] heights = new double[2]; // Stores the max 2 heights
-		for (Pair<TreeNode, Double> e : r.edges) {
+		for (Pair<WeightedTreeNode, Double> e : r.edges) {
 			Pair<Double, Double> h_d = compute_height_and_diameter(e.first);
 			if (h_d.first + e.second > heights[0]) {
 				heights[1] = heights[0];
@@ -225,7 +225,7 @@ public class Algorithms {
 		return new Pair(heights[0], Double.max(diameter, heights[0] + heights[1]));
 	}
 	
-	public static double compute_diameter(TreeNode T) {
+	public static double compute_diameter(WeightedTreeNode T) {
 		return T != null ? compute_height_and_diameter(T).second : 0.0;
 	}
 	
@@ -745,5 +745,28 @@ public class Algorithms {
 			for (int j = 0; j < C.length; j++)
 				T[i][j] = -1;
 		return pick_up_coins_helper(C, 0, C.length-1, T);
+	}
+	
+	private static int minimize_power_helper(TreeNode root, HashMap<TreeNode, Integer> power_table) {
+		if (power_table.containsKey(root)) return power_table.get(root);
+		int val1 = 2*(root.children.size() + 1);
+		for (TreeNode child: root.children) {
+			val1 += minimize_power(child);
+		}
+		int val2 = root.children.size() + 1;
+		for (TreeNode child: root.children) {
+			val2 += 2 * (child.children.size() + 1);
+			for (TreeNode grandChild : child.children) {
+				val2 += minimize_power(grandChild);
+			}
+		}
+		int ret = Math.min(val1, val2);
+		power_table.put(root, ret);
+		return ret;
+	}
+	
+	public static int minimize_power(TreeNode root) {
+		HashMap<TreeNode, Integer> power_table = new HashMap<TreeNode, Integer>();
+		return minimize_power_helper(root, power_table);
 	}
 }

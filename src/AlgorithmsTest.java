@@ -29,22 +29,22 @@ public class AlgorithmsTest {
 	
 	@Test
 	public void test_tree_diameter() {
-		TreeNode A = new TreeNode();
-		TreeNode B = new TreeNode();
-		TreeNode C = new TreeNode();
-		TreeNode D = new TreeNode();
-		TreeNode E = new TreeNode();
-		TreeNode F = new TreeNode();
-		TreeNode G = new TreeNode();
-		TreeNode H = new TreeNode();
-		TreeNode I = new TreeNode();
-		TreeNode J = new TreeNode();
-		TreeNode K = new TreeNode();
-		TreeNode M = new TreeNode();
-		TreeNode N = new TreeNode();
-		TreeNode O = new TreeNode();
-		TreeNode P = new TreeNode();
-		TreeNode Q = new TreeNode();
+		WeightedTreeNode A = new WeightedTreeNode();
+		WeightedTreeNode B = new WeightedTreeNode();
+		WeightedTreeNode C = new WeightedTreeNode();
+		WeightedTreeNode D = new WeightedTreeNode();
+		WeightedTreeNode E = new WeightedTreeNode();
+		WeightedTreeNode F = new WeightedTreeNode();
+		WeightedTreeNode G = new WeightedTreeNode();
+		WeightedTreeNode H = new WeightedTreeNode();
+		WeightedTreeNode I = new WeightedTreeNode();
+		WeightedTreeNode J = new WeightedTreeNode();
+		WeightedTreeNode K = new WeightedTreeNode();
+		WeightedTreeNode M = new WeightedTreeNode();
+		WeightedTreeNode N = new WeightedTreeNode();
+		WeightedTreeNode O = new WeightedTreeNode();
+		WeightedTreeNode P = new WeightedTreeNode();
+		WeightedTreeNode Q = new WeightedTreeNode();
 		B.addChild(C, 7);
 		B.addChild(A, 14);
 		B.addChild(G, 3);
@@ -198,5 +198,19 @@ public class AlgorithmsTest {
 		int[] V = {1,2,3,4,5,3,2,1};
 		System.out.println("Pick up coins");
 		System.out.println(Algorithms.pick_up_coins(V));
+	}
+	
+	@Test
+	public void test_minimize_power() {
+		TreeNode A = new TreeNode();
+		TreeNode B = new TreeNode();
+		TreeNode C = new TreeNode();
+		TreeNode D = new TreeNode();
+		TreeNode E = new TreeNode();
+		A.addChild(B);
+		A.addChild(C);
+		B.addChild(D);
+		B.addChild(E);
+		assertEquals(Algorithms.minimize_power(A), 13);
 	}
 }
