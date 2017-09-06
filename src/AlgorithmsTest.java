@@ -192,4 +192,11 @@ public class AlgorithmsTest {
 				   {2,4,6,8,10}};
 		System.out.println(Algorithms.optimum_fisherman_path(sea, 5, 5));
 	}
+	
+	@Test
+	public void test_pick_up_coins() {
+		int[] V = {1,2,3,4,5,3,2,1};
+		System.out.println("Pick up coins");
+		System.out.println(Algorithms.pick_up_coins(V));
+	}
 }

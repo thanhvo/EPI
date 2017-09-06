@@ -175,6 +175,12 @@ void test_maximize_fishing() {
     cout << maximize_fishing<int>(sea) << endl;
 }
 
+void test_pick_up_coins() {
+    cout << "Pick up coins" << endl;
+    vector<int> v = {1,2,3,4,5,3,2,1};
+    cout << pick_up_coins(v) << endl;
+}
+
 void test_algorithms() {
     test_drawing_skylines();
     test_count_inversions();
@@ -193,4 +199,5 @@ void test_algorithms() {
     test_count_combinations();
     test_find_ways();
     test_maximize_fishing();
+    test_pick_up_coins();
 }

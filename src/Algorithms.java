@@ -727,4 +727,23 @@ public class Algorithms {
 		}
 		return max_values[m-1][n-1];
 	}
+	
+	public static int pick_up_coins_helper(int[] C, int a, int b, int[][] T) {
+		if (a > b) {
+			return 0; // base condition			
+		}
+		if (T[a][b] == -1) {
+			T[a][b] = Math.max(C[a] + Math.min(pick_up_coins_helper(C, a +2, b, T), pick_up_coins_helper(C, a+1, b-1, T)), 
+					C[b] + Math.min(pick_up_coins_helper(C, a+1, b-1, T), pick_up_coins_helper(C, a, b-2, T)));
+		}
+		return T[a][b];
+	}
+	
+	public static int pick_up_coins(int[] C) {
+		int[][] T = new int[C.length][C.length];
+		for (int i = 0; i < C.length; i++)
+			for (int j = 0; j < C.length; j++)
+				T[i][j] = -1;
+		return pick_up_coins_helper(C, 0, C.length-1, T);
+	}
 }
