@@ -338,4 +338,82 @@ int number_of_ways_with_obstacles(const int &n, const int &m, const vector<vecto
     return A.back().back();
 }
 
+bool is_monochromatic(const vector<vector<int>> &image_sum, const ImagePoint &lower_left, const ImagePoint &upper_right) {
+    //lower_left.print();
+    //upper_right.print();
+    int pixel_sum = image_sum[upper_right.i][upper_right.j];
+    if (lower_left.i >= 1)  {
+        pixel_sum -= image_sum[lower_left.i -1][upper_right.j];
+    }
+    if (lower_left.j >= 1) {
+        pixel_sum -= image_sum[upper_right.i][lower_left.j-1];
+    }
+    if (lower_left.i >= 1 && lower_left.j >= 1) {
+        pixel_sum += image_sum[lower_left.i-1][lower_left.j-1];
+    }
+    //cout << pixel_sum << endl;
+    return pixel_sum == 0 || // totally white
+           pixel_sum == (upper_right.i - lower_left.i + 1) * // totally black
+                        (upper_right.j - lower_left.j + 1);
+}
+
+shared_ptr<ImageTreeNode> calculate_optimal_2D_tree_helper(const vector<vector<int>> &image, const vector<vector<int>> &image_sum,
+        const ImagePoint &lower_left, const ImagePoint &upper_right, 
+        unordered_map<ImagePoint, unordered_map<ImagePoint, shared_ptr<ImageTreeNode>, HashPoint>, HashPoint> &table) {
+    // Illegal rectangle region, return empty node
+    if (lower_left > upper_right) {
+        return shared_ptr<ImageTreeNode>(new ImageTreeNode{0, lower_left, upper_right});
+    }    
+    if (table.find(lower_left) == table.cend() || table[lower_left].find(upper_right) == table[lower_left].cend()) {
+        if (is_monochromatic(image_sum, lower_left, upper_right)) {
+            shared_ptr<ImageTreeNode> p(new ImageTreeNode{1,lower_left, upper_right});
+            table[lower_left][upper_right] = p;
+        } else {
+            shared_ptr<ImageTreeNode> p(new ImageTreeNode{numeric_limits<int>::max(), lower_left, upper_right});
+            for (int s = lower_left.i; s <= upper_right.i ; ++s) {
+                for (int t = lower_left.j; t <= upper_right.j; ++t) {
+                    if (lower_left.i == s && lower_left.j == t) continue;
+                    vector<shared_ptr<ImageTreeNode>> children = {
+                        // SW rectangle
+                        calculate_optimal_2D_tree_helper(image, image_sum, lower_left, ImagePoint{s-1, t-1}, table),
+                        // NW tectangle
+                        calculate_optimal_2D_tree_helper(image, image_sum, ImagePoint{lower_left.i, t}, ImagePoint{s-1, upper_right.j}, table),
+                        // NE rectangle
+                        calculate_optimal_2D_tree_helper(image, image_sum, ImagePoint{s,t}, upper_right, table),
+                        // SE rectangle
+                        calculate_optimal_2D_tree_helper(image, image_sum, ImagePoint{s, lower_left.j}, ImagePoint{upper_right.i, t-1}, table)
+                    };
+                    int node_num = 1; // itself
+                    for (shared_ptr<ImageTreeNode> &child: children) {
+                        node_num += child->node_num;
+                        // Remove the child contains no node
+                        if (child->node_num == 0) {
+                            child = nullptr;
+                        }
+                    }
+                    if (node_num < p->node_num) {
+                        p->node_num = node_num;
+                        p->children = children;
+                    }
+                    
+                }
+            }
+            table[lower_left][upper_right] = p;
+        }        
+    }
+    return table[lower_left][upper_right];    
+}
+
+shared_ptr<ImageTreeNode> calculate_optimal_2D_tree(const vector<vector<int>> &image) {
+    vector<vector<int>> image_sum(image);
+    for (int i = 0; i < (int)image.size(); ++i) {
+        partial_sum(image_sum[i].cbegin(), image_sum[i].cend(), image_sum[i].begin());
+        for (int j = 0; i > 0 && j < (int)image[i].size(); ++j) {
+            image_sum[i][j] += image_sum[i-1][j];
+        }
+    }
+    unordered_map<ImagePoint, unordered_map<ImagePoint, shared_ptr<ImageTreeNode>, HashPoint>, HashPoint> table;
+    return calculate_optimal_2D_tree_helper(image, image_sum, 
+        ImagePoint{0,0}, ImagePoint{static_cast<int>(image.size() -1), static_cast<int>(image[0].size() -1)}, table);
+}
 

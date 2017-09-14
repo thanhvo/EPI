@@ -213,4 +213,34 @@ public class AlgorithmsTest {
 		B.addChild(E);
 		assertEquals(Algorithms.minimize_power(A), 13);
 	}
+	
+	@Test
+	public void test_calculate_optimal_2D_tree() {
+		System.out.println("Calculate 2D tree");
+		int[][] image1 = {{0,0}, 
+                		  {0,0}};
+		int[][] image2 = {{1,1}, 
+                		  {1,1}};                                 
+		int[][] image3 = {{1,1,1},
+						  {1,1,1},
+						  {1,1,1}
+						 };
+		int[][] image4 = {{1,0}};                                
+		int[][] image5 = {{1, 1, 1, 0, 1},
+						  {0, 0, 1, 1, 1},
+						  {0, 1, 1, 1, 1},
+						  {1, 1, 1, 1, 0},
+						  {0, 1, 1, 0, 1}
+						  };
+		ImageTreeNode root1 = Algorithms.calculate_optimal_2D_tree(image1);
+		root1.print();
+		ImageTreeNode root2 = Algorithms.calculate_optimal_2D_tree(image2);
+		root2.print();
+		ImageTreeNode root3 = Algorithms.calculate_optimal_2D_tree(image3);
+		root3.print();
+		ImageTreeNode root4 = Algorithms.calculate_optimal_2D_tree(image4);
+		root4.print();
+		ImageTreeNode root5 = Algorithms.calculate_optimal_2D_tree(image5);
+		root5.print();
+	}
 }

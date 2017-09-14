@@ -769,4 +769,82 @@ public class Algorithms {
 		HashMap<TreeNode, Integer> power_table = new HashMap<TreeNode, Integer>();
 		return minimize_power_helper(root, power_table);
 	}
+	
+	private static boolean is_monochromatic(int[][] image_sum, ImagePoint lower_left, ImagePoint upper_right) {
+		int pixel_sum = image_sum[upper_right.i][upper_right.j];
+		if (lower_left.i >= 1) {
+			pixel_sum -= image_sum[lower_left.i -1][upper_right.j];
+		}
+		if (lower_left.j >= 1) {
+			pixel_sum -= image_sum[upper_right.i][lower_left.j -1];
+		}
+		if (lower_left.i >= 1 && lower_left.j >= 1) {
+			pixel_sum += image_sum[lower_left.i -1][lower_left.j - 1];
+		}
+		return pixel_sum == 0 || // totally white
+			   pixel_sum == (upper_right.i - lower_left.i + 1) * (upper_right.j - lower_left.j + 1); // totally black
+	}
+	
+	private static ImageTreeNode calculate_optimal_2D_tree_helper(int[][] image, int[][] image_sum, 
+			ImagePoint lower_left, ImagePoint upper_right,
+			HashMap<ImagePoint, HashMap<ImagePoint, ImageTreeNode>> table) {
+		// Illegal rectangle region, returns empty node 
+		if (lower_left.compareTo(upper_right) > 0) {
+			return new ImageTreeNode(0, lower_left, upper_right);
+		}
+		if (!table.containsKey(lower_left) || !table.get(lower_left).containsKey(upper_right)) {
+			if (is_monochromatic(image_sum, lower_left, upper_right)) {
+				ImageTreeNode p = new ImageTreeNode(1, lower_left, upper_right);
+				if (!table.containsKey(lower_left)) {
+					table.put(lower_left, new HashMap<ImagePoint, ImageTreeNode>());
+				}
+				table.get(lower_left).put(upper_right, p);
+			} else {
+				ImageTreeNode p = new ImageTreeNode(Integer.MAX_VALUE, lower_left, upper_right);
+				for (int s = lower_left.i;  s <= upper_right.i; ++s) {
+					for (int t = lower_left.j; t <= upper_right.j; ++t) {
+						if (s == lower_left.i && t == lower_left.j) continue;
+						List<ImageTreeNode> children = new ArrayList<ImageTreeNode>();
+						// SW rectangle
+						children.add(calculate_optimal_2D_tree_helper(image, image_sum, lower_left, new ImagePoint(s-1, t-1),table));
+						// NW rectangle
+						children.add(calculate_optimal_2D_tree_helper(image, image_sum, new ImagePoint(lower_left.i, t), new ImagePoint(s-1, upper_right.j), table));
+						// NE rectangle
+						children.add(calculate_optimal_2D_tree_helper(image, image_sum, new ImagePoint(s,t), upper_right, table));
+						// SE rectangle
+						children.add(calculate_optimal_2D_tree_helper(image, image_sum, new ImagePoint(s, lower_left.j), new ImagePoint(upper_right.i, t-1),table));
+						int node_num = 1; //itself
+						for (ImageTreeNode child : children) {
+							//child.print();
+							node_num += child.node_num;
+							// Remove the child contains no node
+							if (child.node_num == 0) child = null;
+						}
+						if (node_num < p.node_num) {
+							p.node_num = node_num;
+							p.children = children;
+						}						
+					}					
+				}
+				if (!table.containsKey(lower_left)) table.put(lower_left, new HashMap<ImagePoint, ImageTreeNode>());
+				table.get(lower_left).put(upper_right, p);				
+			}
+		}
+		ImageTreeNode p = table.get(lower_left).get(upper_right);
+		return p;
+	}
+	
+	public static ImageTreeNode calculate_optimal_2D_tree(int[][] image) {
+		int[][] image_sum = image.clone();
+		for (int i = 0; i < image.length; ++i) {
+			for (int j = 1; j < image[i].length; j++) {
+				image_sum[i][j] += image_sum[i][j-1];
+			}
+			for (int j = 0; i > 0 && j <image[i].length; ++j) {
+				image_sum[i][j] += image_sum[i-1][j];
+			}
+		}
+		HashMap<ImagePoint, HashMap<ImagePoint, ImageTreeNode>> table = new HashMap<ImagePoint, HashMap<ImagePoint, ImageTreeNode>>();
+		return calculate_optimal_2D_tree_helper(image, image_sum, new ImagePoint(0,0), new ImagePoint(image.length - 1, image[0].length -1), table);
+	}
 }

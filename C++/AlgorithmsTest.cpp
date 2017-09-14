@@ -181,6 +181,36 @@ void test_pick_up_coins() {
     cout << pick_up_coins(v) << endl;
 }
 
+void test_calculate_optimal_2D_tree() {
+    vector<vector<int>> image1 = {{0,0}, 
+                                 {0,0}};
+    vector<vector<int>> image2 = {{1,1}, 
+                                 {1,1}};                                 
+    vector<vector<int>> image3 = {
+        {1,1,1},
+        {1,1,1},
+        {1,1,1}
+    };
+    vector<vector<int>> image4 = {{1,0}};                                
+    vector<vector<int>> image5 = {
+        {1, 1, 1, 0, 1},
+        {0, 0, 1, 1, 1},
+        {0, 1, 1, 1, 1},
+        {1, 1, 1, 1, 0},
+        {0, 1, 1, 0, 1}
+    };
+    shared_ptr<ImageTreeNode> root1 = calculate_optimal_2D_tree(image1);
+    root1->print();
+    shared_ptr<ImageTreeNode> root2 = calculate_optimal_2D_tree(image2);
+    root2->print();
+    shared_ptr<ImageTreeNode> root3 = calculate_optimal_2D_tree(image3);
+    root3->print();
+    shared_ptr<ImageTreeNode> root4 = calculate_optimal_2D_tree(image4);
+    root4->print();
+    shared_ptr<ImageTreeNode> root5 = calculate_optimal_2D_tree(image5);
+    root5->print();
+}
+
 void test_algorithms() {
     test_drawing_skylines();
     test_count_inversions();
@@ -200,4 +230,5 @@ void test_algorithms() {
     test_find_ways();
     test_maximize_fishing();
     test_pick_up_coins();
+    test_calculate_optimal_2D_tree();
 }

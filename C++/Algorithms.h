@@ -11,6 +11,7 @@
 #include <memory>
 #include <stack>
 #include <unordered_set>
+#include <unordered_map>
 
 using namespace std;
 
@@ -384,5 +385,50 @@ CoinType pick_up_coins(vector<CoinType> &C) {
     vector<vector<CoinType>> T(C.size(), vector<int>(C.size(), -1));
     return pick_up_coins_helper(C, 0, C.size()-1, T);
 }
+
+class ImagePoint {
+    public:
+        int i, j;
+        const bool operator>(const ImagePoint &that) const {
+            return i > that.i || j > that.j;
+        }
+        // Equal function for hash
+        const bool operator==(const ImagePoint& that) const {
+            return i == that.i && j == that.j;
+        }
+        void print() const {
+            cout << i << " " << j << endl;
+        }
+};
+
+// Hash function for Point
+class HashPoint {
+    public:
+        const size_t operator()(const ImagePoint &p) const {
+            return hash<int>()(p.i) ^ hash<int>()(p.j);
+        }
+};
+
+class ImageTreeNode {
+    public:
+        int node_num; // stores the number of nodes in its subtree
+        ImagePoint lower_left, upper_right;
+        ImageTreeNode(int __node_num, ImagePoint __lower_left, ImagePoint __upper_right): 
+            node_num(__node_num), lower_left(__lower_left), upper_right(__upper_right){} 
+        // Store the SW, NW, NE, and SE rectangles if color is mixed
+        vector<shared_ptr<ImageTreeNode>> children;
+        void print_with_prefix(string prefix) {
+            cout << prefix << " (" << lower_left.i << "," << lower_left.j << ")\t(" << upper_right.i << "," << upper_right.j << ")" << endl;
+            for (shared_ptr<ImageTreeNode> child: children) {
+                if (child != nullptr)
+                    child->print_with_prefix(prefix + "\t");
+            }
+        }
+        void print() {
+            print_with_prefix("");
+        }
+};
+
+shared_ptr<ImageTreeNode> calculate_optimal_2D_tree(const vector<vector<int>> &image);
 
 #endif
