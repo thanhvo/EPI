@@ -431,4 +431,15 @@ class ImageTreeNode {
 
 shared_ptr<ImageTreeNode> calculate_optimal_2D_tree(const vector<vector<int>> &image);
 
+template <typename T>
+T minimum_waiting_time(vector<T> service_time) {
+    // Sort the query time in increasing order
+    sort(service_time.begin(), service_time.end());
+    T waiting = 0;
+    for (unsigned int i = 0; i < service_time.size(); ++i) {
+        waiting += service_time[i] * (service_time.size() - (i+1));
+    }
+    return waiting;
+}
+
 #endif

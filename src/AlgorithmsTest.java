@@ -243,4 +243,11 @@ public class AlgorithmsTest {
 		ImageTreeNode root5 = Algorithms.calculate_optimal_2D_tree(image5);
 		root5.print();
 	}
+	
+	@Test
+	public void test_minimum_waiting_time() {
+		System.out.println("Minimize waiting time");
+		int[] service_time = {1,4,2,3,5};
+		System.out.println(Algorithms.minimum_waiting_time(service_time));
+	}
 }

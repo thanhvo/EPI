@@ -211,6 +211,11 @@ void test_calculate_optimal_2D_tree() {
     root5->print();
 }
 
+void test_minimum_waiting_time() {
+    vector<int> service_time = {1,4,2,3,6};
+    cout << minimum_waiting_time(service_time) << endl;
+}
+
 void test_algorithms() {
     test_drawing_skylines();
     test_count_inversions();
@@ -231,4 +236,5 @@ void test_algorithms() {
     test_maximize_fishing();
     test_pick_up_coins();
     test_calculate_optimal_2D_tree();
+    test_minimum_waiting_time();
 }

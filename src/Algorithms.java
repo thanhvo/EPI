@@ -847,4 +847,15 @@ public class Algorithms {
 		HashMap<ImagePoint, HashMap<ImagePoint, ImageTreeNode>> table = new HashMap<ImagePoint, HashMap<ImagePoint, ImageTreeNode>>();
 		return calculate_optimal_2D_tree_helper(image, image_sum, new ImagePoint(0,0), new ImagePoint(image.length - 1, image[0].length -1), table);
 	}
+	
+	// Find the order which minimizes the waiting for SQL query times
+	public static int minimum_waiting_time(int[] service_time) {
+		// Sort the query time in increasing order
+		Arrays.sort(service_time);
+		int waiting = 0;
+		for (int i = 0; i < service_time.length; i++) {
+			waiting += service_time[i] * (service_time.length - (i+1));
+		}
+		return waiting;
+	}
 }
