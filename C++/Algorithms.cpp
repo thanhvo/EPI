@@ -417,3 +417,44 @@ shared_ptr<ImageTreeNode> calculate_optimal_2D_tree(const vector<vector<int>> &i
         ImagePoint{0,0}, ImagePoint{static_cast<int>(image.size() -1), static_cast<int>(image[0].size() -1)}, table);
 }
 
+const bool comp(const pair<int, int>& a, const pair<int, int> &b) {
+    return a.second > b.second;
+}
+
+vector<vector<bool>> find_feasible_job_assignment(const vector<int> &T, const vector<int> &S) {
+    int T_total = accumulate(T.cbegin(), T.cend(), 0); // aggregated work units
+    int S_total = accumulate(S.cbegin(), S.cend(), 0, [&T](const int&x, const int &y) -> int {
+        return x + min(y, static_cast<int>(T.size()));
+    }); // tigher bound of server capacity
+    if (T_total > S_total || *max_element(T.cbegin(), T.cend()) > (int)S.size()) {
+        return {}; // too many jobs or one task needs to many servers
+    }
+    vector<pair<int,int>> T_idx_data, S_idx_data;
+    for (unsigned int i = 0; i < T.size(); ++i) {
+        T_idx_data.emplace_back(i, T[i]);
+    }
+    for (unsigned int j = 0; j < S.size(); ++j) {
+        S_idx_data.emplace_back(j, S[j]);
+    }
+    sort(S_idx_data.begin(), S_idx_data.end(), comp);
+    vector<vector<bool>> X(T.size(), vector<bool>(S.size(), false));
+    for (unsigned int j = 0; j < S_idx_data.size(); ++j) {
+        if (S_idx_data[j].second < (int)T_idx_data.size()) {
+            nth_element(T_idx_data.begin(), T_idx_data.begin() + S_idx_data[j].second, T_idx_data.end(), comp);
+        }
+        // Greedily assign jobs
+        int size = min(static_cast<int>(T_idx_data.size()), S_idx_data[j].second);
+        for (int i = 0; i < size; ++i) {
+            if (T_idx_data[i].second) {
+                X[T_idx_data[i].first][S_idx_data[j].first] = true;
+                --T_idx_data[i].second;
+                --T_total;
+            }
+        }
+    }
+    
+    if (T_total) {
+        return {}; // still some jobs remain, no feasible asssignment
+    }
+    return X;
+}

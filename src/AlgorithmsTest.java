@@ -250,4 +250,38 @@ public class AlgorithmsTest {
 		int[] service_time = {1,4,2,3,5};
 		System.out.println(Algorithms.minimum_waiting_time(service_time));
 	}
+	
+	private void print_assignment(boolean[][] assignment) {
+		for (int i = 0; i < assignment.length; i++) {
+			for (int j = 0; j < assignment[i].length; j++) {
+				System.out.print(assignment[i][j] + " ");
+			}
+			System.out.println();
+		}
+	}
+	
+	@Test
+	public void test_find_feasible_job_assignment() {
+		System.out.println("Job assignment");    
+	    // Test case 1: infeasible
+	    System.out.println("Test case 1");
+	    int[] tasks1 = {4,2,3};
+	    int[] servers1 = {6,2,1};
+	    boolean[][] assignment1 = Algorithms.find_feasible_job_assignment(tasks1, servers1);
+	    print_assignment(assignment1);
+	    
+	    // Test case 2: feasible
+	    System.out.println("Test case 2");
+	    int[] tasks2 = {1,1,1};
+	    int[] servers2 = {1,1,1};
+	    boolean[][] assignment2 = Algorithms.find_feasible_job_assignment(tasks2, servers2);
+	    print_assignment(assignment2);
+	    
+	    // Test case 3: feasible
+	    System.out.println("Test case 3");
+	    int[] tasks3 = {1,2,3};
+	    int[] servers3 = {2,3,4};
+	    boolean[][] assignment3 = Algorithms.find_feasible_job_assignment(tasks3, servers3);
+	    print_assignment(assignment3);
+	}
 }

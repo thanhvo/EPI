@@ -216,6 +216,39 @@ void test_minimum_waiting_time() {
     cout << minimum_waiting_time(service_time) << endl;
 }
 
+void print_assignment(vector<vector<bool>> assignments) {
+    for (unsigned int i = 0; i < assignments.size(); i++) {
+        for (unsigned int j = 0; j < assignments[i].size(); j++) {
+            cout << assignments[i][j] << "\t";
+        }
+        cout << endl;
+    }
+}
+
+void test_job_assignment() {
+    cout << "Job assignment" << endl;    
+    // Test case 1: infeasible
+    cout << "Test case 1" << endl;
+    vector<int> tasks1 = {4,2,3};
+    vector<int> servers1 = {6,2,1};
+    vector<vector<bool>> assignment1 = find_feasible_job_assignment(tasks1, servers1);
+    print_assignment(assignment1);
+    
+    // Test case 2: feasible
+    cout << "Test case 2" << endl;
+    vector<int> tasks2 = {1,1,1};
+    vector<int> servers2 = {1,1,1};
+    vector<vector<bool>> assignment2 = find_feasible_job_assignment(tasks2, servers2);
+    print_assignment(assignment2);
+    
+    // Test case 3: feasible
+    cout << "Test case 3" << endl;
+    vector<int> tasks3 = {1,2,3};
+    vector<int> servers3 = {2,3,4};
+    vector<vector<bool>> assignment3 = find_feasible_job_assignment(tasks3, servers3);
+    print_assignment(assignment3);
+}
+
 void test_algorithms() {
     test_drawing_skylines();
     test_count_inversions();
@@ -237,4 +270,5 @@ void test_algorithms() {
     test_pick_up_coins();
     test_calculate_optimal_2D_tree();
     test_minimum_waiting_time();
+    test_job_assignment();
 }

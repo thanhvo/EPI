@@ -442,4 +442,6 @@ T minimum_waiting_time(vector<T> service_time) {
     return waiting;
 }
 
+vector<vector<bool>> find_feasible_job_assignment(const vector<int> &T, const vector<int> &S);
+
 #endif

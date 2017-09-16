@@ -858,4 +858,48 @@ public class Algorithms {
 		}
 		return waiting;
 	}
+	
+	public static boolean[][] find_feasible_job_assignment(int[] T, int[] S) {
+		final boolean[][] EMPTY = {};
+		int T_total = 0; // aggregated work units
+		int T_max = 0; // the maximum jobs in a task
+		for (int t: T)  {
+			T_total += t;
+			if (t > T_max) T_max = t;
+		}		
+		int S_total = 0;
+		for (int s: S) S_total += Math.min(s, T.length);
+		if (T_total > S_total || T_max > S.length) {
+			return EMPTY; // too many jobs or one task needs too many servers
+		}
+		List<Pair<Integer, Integer>> T_idx_data = new ArrayList<Pair<Integer, Integer>>();
+		List<Pair<Integer, Integer>> S_idx_data = new ArrayList<Pair<Integer, Integer>>();
+		for (int i = 0; i < T.length; ++i) {
+			T_idx_data.add(new Pair(i,T[i]));
+		}
+		for (int j = 0; j < S.length; ++j) {
+			S_idx_data.add(new Pair(j, S[j]));
+		}
+		boolean[][] X = new boolean[T.length][S.length];
+		Comparator<Pair<Integer,Integer>> comparator = (p1, p2) -> p2.second - p1.second;
+		// Sort servers in decreasing order
+		Collections.sort(S_idx_data,comparator);		
+		for (int j = 0; j < S_idx_data.size(); ++j) {
+			if (S_idx_data.get(j).second < T_idx_data.size())
+				Collections.sort(T_idx_data, comparator);
+			// Greedily assign jobs
+			int size = Math.min(T_idx_data.size(), S_idx_data.get(j).second);
+			for (int i = 0; i < size; ++i) {
+				if (T_idx_data.get(i).second != 0) {
+					X[T_idx_data.get(i).first][S_idx_data.get(j).first] = true;
+					--T_idx_data.get(i).second;
+					--T_total;					
+				}
+			}
+		}		
+		if (T_total > 0) {
+			return EMPTY; // still some jobs remain, no feasible assignment 
+		}
+		return X;
+	}
 }
