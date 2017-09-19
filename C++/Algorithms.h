@@ -446,4 +446,42 @@ vector<vector<bool>> find_feasible_job_assignment(const vector<int> &T, const ve
 
 vector<int> decide_load_balancing(vector<int> user_file_size, const int &server_num);
 
+template <typename ItemType, typename CapacityType>
+class TournamentTree {
+    private:
+        class TreeNode {
+            public:
+                    CapacityType cap; // leaf: remaining capacity in the box
+                    // non-leaf: max remaining capacity in the subtree
+                    vector<ItemType> items; // stores the items in the leaf node
+        };
+        // Store the complete binary tree. For tree[i], left subtree is tree[2i+1] 
+        // and the right subtree is tree[2i+2].
+        vector<TreeNode> tree;
+        // Recursively inserts item in the tournment tree 
+        bool insertHelper(const int &idx, const ItemType &item, const CapacityType &cap) {
+            if (cap > tree[idx].cap) return false;
+            int left = (idx << 1) + 1;
+            int right = (idx << 1) + 2;
+            if (left < (int)tree.size()) { // internal node
+                insertHelper(tree[left].cap >= cap ? left : right, item, cap);
+                tree[idx].cap = max(tree[left].cap, tree[right].cap);
+            } else { // leaf node
+                tree[idx].cap -= cap;
+                tree[idx].items.emplace_back(item);
+            }
+            return true;
+        }
+    public:
+        // n items and each box has unit_cap
+        TournamentTree(int n, const CapacityType &unit_cap): // Complete tree with n leafs has 2n-1 nodes
+            tree(vector<TreeNode>((n<<1)-1, {unit_cap})) {}
+        bool insert(const ItemType &item, const CapacityType &item_cap) {
+            return insertHelper(0, item, item_cap);
+        }
+        int getCapacity() {
+            return tree[0].cap;
+        }
+};
+
 #endif

@@ -302,4 +302,25 @@ public class AlgorithmsTest {
 	    int[] assign2 = Algorithms.decide_load_balancing(b2, 5);
 	    print_load_assignment(assign2);
 	}
+	
+	@Test 
+	public void test_first_fit() {
+		System.out.println("Find first fit");
+		TournamentTree tree = new TournamentTree(4, 10);
+	    tree.insert(0, 2);
+	    System.out.println(tree.getCapacity());
+	    tree.insert(1, 5);
+	    System.out.println(tree.getCapacity());
+	    tree.insert(2, 3);
+	    System.out.println(tree.getCapacity());
+	    tree.insert(1, 5);
+	    System.out.println(tree.getCapacity()); 
+	    tree.insert(3, 10);
+	    System.out.println(tree.getCapacity()); 
+	    assertEquals(tree.insert(4,11),false);
+	    tree.insert(4, 8);
+	    System.out.println(tree.getCapacity()); 
+	    assertEquals(tree.insert(3, 10), false);
+	    assertEquals(tree.insert(5, 6), false);
+	}
 }

@@ -266,6 +266,24 @@ void test_load_balancing() {
     print_load_assignment(assign2);
 }
 
+void test_first_fit() {
+    TournamentTree<int, int> tree(4, 10);
+    tree.insert(0, 2);
+    cout << tree.getCapacity() << endl;
+    tree.insert(1, 5);
+    cout << tree.getCapacity() << endl;
+    tree.insert(2, 3);
+    cout << tree.getCapacity() << endl;
+    tree.insert(1, 5);
+    cout << tree.getCapacity() << endl; 
+    tree.insert(3, 10);
+    cout << tree.getCapacity() << endl; 
+    assert(tree.insert(4,11) == false);
+    tree.insert(4, 8);
+    cout << tree.getCapacity() << endl; 
+    assert(tree.insert(5, 6) == false);
+}
+
 void test_algorithms() {
     test_drawing_skylines();
     test_count_inversions();
@@ -289,4 +307,5 @@ void test_algorithms() {
     test_minimum_waiting_time();
     test_job_assignment();
     test_load_balancing();
+    test_first_fit();
 }
