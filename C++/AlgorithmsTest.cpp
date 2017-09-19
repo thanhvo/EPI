@@ -249,6 +249,23 @@ void test_job_assignment() {
     print_assignment(assignment3);
 }
 
+void print_load_assignment(vector<int> assign) {
+    for (int a: assign) {
+        cout << a << " ";
+    }
+    cout << endl;
+}
+
+void test_load_balancing() {
+    cout << "Load balancing" << endl;
+    vector<int> b1 = {2,3,5,7,11,13};
+    vector<int> assign1 = decide_load_balancing(b1, 5);
+    print_load_assignment(assign1);
+    vector<int> b2 = {1,2,3,3,4,2,3,4};
+    vector<int> assign2 = decide_load_balancing(b2, 5);
+    print_load_assignment(assign2);
+}
+
 void test_algorithms() {
     test_drawing_skylines();
     test_count_inversions();
@@ -271,4 +288,5 @@ void test_algorithms() {
     test_calculate_optimal_2D_tree();
     test_minimum_waiting_time();
     test_job_assignment();
+    test_load_balancing();
 }

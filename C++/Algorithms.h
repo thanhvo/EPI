@@ -444,4 +444,6 @@ T minimum_waiting_time(vector<T> service_time) {
 
 vector<vector<bool>> find_feasible_job_assignment(const vector<int> &T, const vector<int> &S);
 
+vector<int> decide_load_balancing(vector<int> user_file_size, const int &server_num);
+
 #endif

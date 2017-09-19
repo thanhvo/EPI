@@ -902,4 +902,40 @@ public class Algorithms {
 		}
 		return X;
 	}
+	
+	private static boolean greedy_assignment(int[] user_file_size, int server_num, int limit, int[] assign_res) {
+		int server_idx = 0;
+		for (int file: user_file_size) {
+			while(server_idx < server_num && file + assign_res[server_idx] > limit) {
+				++server_idx;
+			}
+			if (server_idx >= server_num) {
+				return false;
+			} else {
+				assign_res[server_idx] += file;
+			}
+		}
+		return true;
+	}
+	
+	public static int[] decide_load_balancing(int[] user_file_size, int server_num) {
+		// Uses binary search to find the assignment with minimized maximum load
+		int l = 0;
+		int r = 0;
+		for (int file: user_file_size) 
+			r += file;
+		int[] feasible_assignment = new int[server_num];
+		while (l <= r) {
+			int m = l + ((r-l) >> 1);
+			int[] assign_res = new int[server_num];
+			boolean is_feasible = greedy_assignment(user_file_size, server_num, m, assign_res);
+			if (is_feasible) {
+				feasible_assignment = assign_res;
+				r = m -1;
+			} else {
+				l = m +1;
+			}
+		}
+		return feasible_assignment;
+	}	
 }

@@ -284,4 +284,22 @@ public class AlgorithmsTest {
 	    boolean[][] assignment3 = Algorithms.find_feasible_job_assignment(tasks3, servers3);
 	    print_assignment(assignment3);
 	}
+	
+	private void print_load_assignment(int[] assign) {
+		for (int a: assign) {
+			System.out.print(a + " ");
+		}
+		System.out.println();
+	}
+	
+	@Test
+	public void test_load_balancing() {
+		System.out.println("Load balancing");
+	    int[] b1 = {2,3,5,7,11,13};
+	    int[] assign1 = Algorithms.decide_load_balancing(b1, 5);
+	    print_load_assignment(assign1);
+	    int[] b2 = {1,2,3,3,4,2,3,4};
+	    int[] assign2 = Algorithms.decide_load_balancing(b2, 5);
+	    print_load_assignment(assign2);
+	}
 }
