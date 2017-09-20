@@ -937,5 +937,34 @@ public class Algorithms {
 			}
 		}
 		return feasible_assignment;
-	}	
+	}
+	
+	// Traverse Huffman tree and assign code
+	private static void assign_huffman_code(EncodingBinaryTree r, String s) {
+		if (r != null) {
+			// This node (i.e., leaf) contains symbol
+			if (r.s != null) {
+				r.s.code = s;
+			} else { // non-leaf node
+				assign_huffman_code(r.left, s +'0');
+				assign_huffman_code(r.right, s +'1');
+			}
+		}
+	}
+	public static void Huffman_encoding(Symbol[] symbols) {
+		// Initially assign each symbol into min heap
+		Comparator<EncodingBinaryTree> comparator = (p1, p2) -> p1.prob > p2.prob ? 1 : p1.prob == p2.prob ? 0 : -1;
+		PriorityQueue<EncodingBinaryTree> min_heap = new PriorityQueue<EncodingBinaryTree>(10, comparator);
+		for (Symbol s: symbols) {
+			min_heap.add(new EncodingBinaryTree(s.prob, s));
+		}
+		// Keep combining two nodes until there is one node left
+		while (min_heap.size() > 1) {
+			EncodingBinaryTree l = min_heap.poll();
+			EncodingBinaryTree r = min_heap.poll();
+			min_heap.add(new EncodingBinaryTree(l.prob + r.prob, null, l, r));
+		}
+		// Traverse the binary tree and assign code
+		assign_huffman_code(min_heap.peek(), "");
+	}
 }

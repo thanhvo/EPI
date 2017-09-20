@@ -12,6 +12,7 @@
 #include <stack>
 #include <unordered_set>
 #include <unordered_map>
+#include <queue>
 
 using namespace std;
 
@@ -483,5 +484,31 @@ class TournamentTree {
             return tree[0].cap;
         }
 };
+
+class Symbol {
+    public:
+        char c;
+        double prob;
+        string code;
+        void print() {
+            cout << c << "->" + code << endl;
+        }
+};
+
+class BinaryTree {
+    public:
+        double prob;
+        shared_ptr<Symbol> s;
+        BinaryTree *left, *right;
+};
+
+class Compare {
+    public:
+        const bool operator() (const BinaryTree* lhs, const BinaryTree* rhs) const {
+            return lhs->prob > rhs->prob;
+        }
+};
+
+void Huffman_encoding(vector<Symbol> &symbols);
 
 #endif

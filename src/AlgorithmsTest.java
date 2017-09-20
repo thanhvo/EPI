@@ -323,4 +323,14 @@ public class AlgorithmsTest {
 	    assertEquals(tree.insert(3, 10), false);
 	    assertEquals(tree.insert(5, 6), false);
 	}
+	
+	@Test
+	public void test_huffman_encoding() {
+		System.out.println("Huffman encoding");
+		Symbol[] symbols = {new Symbol('a',0.1), new Symbol('b',0.05),new Symbol('c',0.1), new Symbol('d',0.2), new Symbol('e',0.05), new Symbol('f',0.5)};
+	    Algorithms.Huffman_encoding(symbols);
+	    for (Symbol s: symbols) {
+	        s.print();
+	    }
+	}
 }

@@ -284,6 +284,14 @@ void test_first_fit() {
     assert(tree.insert(5, 6) == false);
 }
 
+void test_huffman_encoding() {
+    vector<Symbol> symbols = {{'a',0.1,""}, {'b',0.05,""},{'c',0.1, ""}, {'d',0.2,""}, {'e',0.05,""}, {'f',0.5,""}};
+    Huffman_encoding(symbols);
+    for (Symbol s: symbols) {
+        s.print();
+    }
+}
+
 void test_algorithms() {
     test_drawing_skylines();
     test_count_inversions();
@@ -308,4 +316,5 @@ void test_algorithms() {
     test_job_assignment();
     test_load_balancing();
     test_first_fit();
+    test_huffman_encoding();
 }
