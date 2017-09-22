@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <unordered_set>
 
 using namespace std; 
 
@@ -19,5 +20,7 @@ class Coordinate {
 };
 
 vector<Coordinate> search_maze(vector<vector<int>> maze, const Coordinate &s, const Coordinate &e);
+
+int transform_string(unordered_set<string> D, const string &s, const string &t);
 
 #endif

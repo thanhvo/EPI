@@ -1,5 +1,7 @@
 import org.junit.*;
 import static org.junit.Assert.*;
+
+import java.io.File;
 import java.util.*;
 
 public class GraphsTest {
@@ -20,5 +22,27 @@ public class GraphsTest {
 			        System.out.print(c + " ");			        
 			}
 			System.out.println();
+	}
+	
+	private Set<String> getDictionary(String filename) throws Exception {
+		Scanner scanner = new Scanner(new File(filename));
+		Set<String> set= new HashSet<String>();
+		while (scanner.hasNext()) {
+			String s = scanner.next();
+			if (s.matches("[a-z]*"))
+				set.add(s);
+		}
+		scanner.close();
+		return set;
+	}
+	
+	@Test
+	public void test_production_sequence() throws Exception {
+		System.out.println("Production sequence");
+		Set<String> dictionary = getDictionary("/usr/share/dict/words");
+		//assertEquals(Graphs.production_sequence("cat", "car", dictionary), 1);
+		assertEquals(Graphs.production_sequence("cat", "far", dictionary), 2);
+		//assertEquals(Graphs.production_sequence("cat", "fat", dictionary), 1);
+		//assertEquals(Graphs.production_sequence("cat", "fap", dictionary), -1);
 	}
 }

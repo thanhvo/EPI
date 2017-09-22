@@ -34,4 +34,31 @@ public class Graphs {
 		}
 		return path; // empty path means no path from s to e
 	}
+	
+	public static int production_sequence(String s, String t, Set<String> dict) {
+		if (s == null || t == null || s.length() != t.length() || !dict.contains(t)) 
+			return -1;
+		if (s == t) return 0;
+		Queue<Pair<String, Integer>> queue = new LinkedList();
+		Set<String> visited = new HashSet<String>();
+		queue.add(new Pair(s, 0));
+		while (!queue.isEmpty()) {
+			Pair<String, Integer> p = queue.poll();
+			String cur = p.first;
+			int len = p.second;
+			for (int i = 0; i < cur.length(); i++) {
+				for (char c = 'a'; c <= 'z'; c++) {
+					if (c != cur.charAt(i)) {
+						String next = cur.substring(0, i) + c + cur.substring(i+1);						
+						if (!visited.contains(next) && dict.contains(next)) {
+							if (next.equals(t)) return (len +1);
+							visited.add(next);
+							queue.add(new Pair(next, len +1));
+						}
+					}
+				}
+			}
+		}
+		return -1;
+	}
 }

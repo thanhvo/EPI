@@ -1,4 +1,5 @@
 #include <array>
+#include <queue>
 #include "Graphs.h"
 
 // Check cur is within maze and is a white pixel 
@@ -36,5 +37,34 @@ vector<Coordinate> search_maze(vector<vector<int>> maze, const Coordinate &s, co
         path.pop_back();
     }
     return path; // empty path means no paht form s to e
+}
+
+// Use BFS to find the least steps of transformation
+int transform_string(unordered_set<string> D, const string &s, const string &t) {
+    queue<pair<string, int>> q;
+    D.erase(s); // mark s as visited by erasing it in D
+    q.emplace(s, 0);
+    while (!q.empty()) {
+        pair<string, int> f(q.front());
+        // Return if we find a match
+        if (f.first == t) {
+            return f.second; // number of steps to reach t
+        }
+        // Try all possible transformations of f.first
+        string str = f.first;
+        for (unsigned int i = 0; i < str.size(); ++i) {
+            for (int j = 0; j < 26; j++) { // iterates through 'a' ~ 'z'
+                str[i] = 'a' + j; // change the (i+1)-th char of str 
+                auto it(D.find(str));
+                if (it != D.end()) {
+                    D.erase(it); // mark str as visited by erasing it
+                    q.emplace(str, f.second + 1);
+                }
+            }
+            str[i] = f.first[i]; // revert the change of str
+        }
+        q.pop();
+    }
+    return -1;
 }
      
