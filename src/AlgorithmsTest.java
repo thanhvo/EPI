@@ -327,6 +327,10 @@ public class AlgorithmsTest {
 	@Test
 	public void test_huffman_encoding() {
 		System.out.println("Huffman encoding");
+		/*  Due to incorrect conversion from string to floating point type, double, this algorithm does not work as expected.
+		 ** The example below illustrates how arithmetic operations on floating point numbers can go easily go wrong. 	
+		 */
+		System.out.println(0.1 + 0.1 + 0.1);
 		Symbol[] symbols = {new Symbol('a',0.1), new Symbol('b',0.05),new Symbol('c',0.1), new Symbol('d',0.2), new Symbol('e',0.05), new Symbol('f',0.5)};
 	    Algorithms.Huffman_encoding(symbols);
 	    for (Symbol s: symbols) {

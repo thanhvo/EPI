@@ -954,7 +954,7 @@ public class Algorithms {
 	public static void Huffman_encoding(Symbol[] symbols) {
 		// Initially assign each symbol into min heap
 		Comparator<EncodingBinaryTree> comparator = (p1, p2) -> p1.prob > p2.prob ? 1 : p1.prob == p2.prob ? 0 : -1;
-		PriorityQueue<EncodingBinaryTree> min_heap = new PriorityQueue<EncodingBinaryTree>(10, comparator);
+		PriorityQueue<EncodingBinaryTree> min_heap = new PriorityQueue<EncodingBinaryTree>(20, comparator);
 		for (Symbol s: symbols) {
 			min_heap.add(new EncodingBinaryTree(s.prob, s));
 		}

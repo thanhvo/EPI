@@ -285,6 +285,8 @@ void test_first_fit() {
 }
 
 void test_huffman_encoding() {
+    cout << "Huffman encoding" << endl;
+    cout << 0.1 + 0.1 + 0.1 << endl;
     vector<Symbol> symbols = {{'a',0.1,""}, {'b',0.05,""},{'c',0.1, ""}, {'d',0.2,""}, {'e',0.05,""}, {'f',0.5,""}};
     Huffman_encoding(symbols);
     for (Symbol s: symbols) {

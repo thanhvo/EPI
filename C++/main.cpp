@@ -8,6 +8,7 @@
 #include "SortTest.h"
 #include "BinarySearchTreeTest.h"
 #include "AlgorithmsTest.h"
+#include "GraphsTest.h"
 
 int main(int argc, char **argv)
 {
@@ -20,6 +21,7 @@ int main(int argc, char **argv)
     //test_hash();
     //test_sort();
     //test_binary_search_tree();
-    test_algorithms();
+    //test_algorithms();
+    test_graphs();
 	return 0;
 }
