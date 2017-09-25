@@ -808,11 +808,13 @@ public class Algorithms {
 						// SW rectangle
 						children.add(calculate_optimal_2D_tree_helper(image, image_sum, lower_left, new ImagePoint(s-1, t-1),table));
 						// NW rectangle
-						children.add(calculate_optimal_2D_tree_helper(image, image_sum, new ImagePoint(lower_left.i, t), new ImagePoint(s-1, upper_right.j), table));
+						children.add(calculate_optimal_2D_tree_helper(image, image_sum, new ImagePoint(lower_left.i, t), 
+								new ImagePoint(s-1, upper_right.j), table));
 						// NE rectangle
 						children.add(calculate_optimal_2D_tree_helper(image, image_sum, new ImagePoint(s,t), upper_right, table));
 						// SE rectangle
-						children.add(calculate_optimal_2D_tree_helper(image, image_sum, new ImagePoint(s, lower_left.j), new ImagePoint(upper_right.i, t-1),table));
+						children.add(calculate_optimal_2D_tree_helper(image, image_sum, new ImagePoint(s, lower_left.j), 
+								new ImagePoint(upper_right.i, t-1),table));
 						int node_num = 1; //itself
 						for (ImageTreeNode child : children) {
 							//child.print();
@@ -966,5 +968,5 @@ public class Algorithms {
 		}
 		// Traverse the binary tree and assign code
 		assign_huffman_code(min_heap.peek(), "");
-	}
+	}	
 }

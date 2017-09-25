@@ -61,4 +61,33 @@ public class Graphs {
 		}
 		return -1;
 	}
+	
+	private static boolean BFS(GraphVertex s) {
+		Queue<GraphVertex> q = new LinkedList();
+		q.add(s);
+		while (!q.isEmpty()) {
+			for (GraphVertex t : q.peek().edges) {
+				if (t.d == -1) { // unvisited vertex
+					t.d = q.peek().d + 1;
+					q.add(t);
+				} else if (t.d == q.peek().d) {
+					return false;
+				}
+			}
+			q.poll();
+		}
+		return true;
+	}
+	
+	public static boolean is_any_placement_feasible(List<GraphVertex> G) {
+		for (GraphVertex v : G) {
+			if (v.d == -1) { // unvisited vertex
+				v.d = 0;
+				if (BFS(v) == false) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
 }

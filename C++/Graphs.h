@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <unordered_set>
+#include <queue>
 
 using namespace std; 
 
@@ -22,5 +23,16 @@ class Coordinate {
 vector<Coordinate> search_maze(vector<vector<int>> maze, const Coordinate &s, const Coordinate &e);
 
 int transform_string(unordered_set<string> D, const string &s, const string &t);
+
+class GraphVertex {
+    public:
+        int d;
+        vector<GraphVertex*> edges;
+        GraphVertex(void): d(-1) {}
+};
+
+bool BFS(GraphVertex* s);
+
+bool is_any_placement_feasible(vector<GraphVertex> &G);
 
 #endif

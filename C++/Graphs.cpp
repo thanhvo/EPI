@@ -67,4 +67,33 @@ int transform_string(unordered_set<string> D, const string &s, const string &t) 
     }
     return -1;
 }
+
+bool BFS(GraphVertex* s) {
+    queue<GraphVertex*> q;
+    q.emplace(s);
+    while(q.empty() == false) {
+        for (GraphVertex* &t: q.front()->edges) {
+            if (t->d == -1) { // Unvisited vertex
+                t->d = q.front()->d + 1;
+                q.emplace(t);
+            } else if (t->d == q.front()->d) {
+                return false;
+            }
+        }
+        q.pop();
+    }
+    return true;
+}
+
+bool is_any_placement_feasible(vector<GraphVertex> &G) {
+    for (GraphVertex &v: G) {
+        if (v.d == -1) { // unvisited vertex
+            v.d = 0;
+            if (BFS(&v) == false) {
+                return false;
+            }
+        }        
+    }
+    return true;
+}
      
