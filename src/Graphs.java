@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.util.*;
 
 public class Graphs {
@@ -87,6 +88,56 @@ public class Graphs {
 					return false;
 				}
 			}
+		}
+		return true;
+	}
+	
+	private static boolean DFS(GraphVertex cur, GraphVertex pre) {
+		// Visiting a grey vertex means a cycle
+		if (cur.color == GraphVertex.Color.gray) {
+			return true;
+		}
+		cur.color = GraphVertex.Color.gray; // marks current vertex as a grey one
+		// Traverse the neighbor vertices 
+		for (GraphVertex next: cur.edges) {
+			if (next != pre && next.color != GraphVertex.Color.black) {
+				if (DFS(next, cur)) {
+					return true;
+				}
+			}
+		}
+		cur.color = GraphVertex.Color.black; // marks current vertex as black
+		return false;
+	}
+	
+	public static boolean is_graph_2_exists(List<GraphVertex> G) {
+		if (G.isEmpty() == false) {
+			return DFS(G.get(0), null);
+		}
+		return false;
+	}
+	
+	private static boolean DFS(GraphVertex cur, GraphVertex pre, int time) {
+		cur.discovery = ++time;
+		cur.leaving = Integer.MAX_VALUE;
+		for (GraphVertex next : cur.edges) {
+			if (next != pre) {
+				if (next.discovery != 0) { // back edge
+					cur.leaving = Math.min(cur.leaving, next.discovery);
+				} else { // forward edge
+					if (DFS(next, cur, time) == false) {
+						return false;
+					}
+					cur.leaving = Math.min(cur.leaving, next.leaving);
+				}
+			}
+		}
+		return (pre == null || cur.leaving < cur.discovery);
+	}
+	
+	public static boolean is_graph_2_for_all(List<GraphVertex> G) {
+		if (!G.isEmpty()) {
+			return DFS(G.get(0), null, 0);
 		}
 		return true;
 	}

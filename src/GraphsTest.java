@@ -125,4 +125,61 @@ public class GraphsTest {
 	    Graph.add(A);
 	    assert(Graphs.is_any_placement_feasible(Graph));    
 	}
+	
+	@Test
+	public void test_cyclic_graph() {
+		GraphVertex A = new GraphVertex();
+		GraphVertex B = new GraphVertex();
+		GraphVertex C = new GraphVertex();
+		GraphVertex D = new GraphVertex();
+		GraphVertex E = new GraphVertex();
+		GraphVertex F = new GraphVertex();
+		GraphVertex G = new GraphVertex();
+	    A.edges.add(B);
+	    A.edges.add(C);
+	    B.edges.add(A);
+	    B.edges.add(D);
+	    B.edges.add(E);
+	    C.edges.add(A);
+	    C.edges.add(F);
+	    C.edges.add(G);
+	    D.edges.add(B);
+	    E.edges.add(B);
+	    F.edges.add(C);
+	    G.edges.add(C);
+	    List<GraphVertex> Graph = new ArrayList<GraphVertex>();
+	    Graph.add(A);
+	    // Test case 1: non-cyclic graph
+	    //assertEquals(Graphs.is_graph_2_exists(Graph), false);
+	    // Test case 2: add a new edge to make the graph cyclic
+	    F.edges.add(G);
+	    G.edges.add(F);
+	    //assert(Graphs.is_graph_2_exists(Graph));
+	    // Test case 3: not connected for all 
+	    //assert(Graphs.is_graph_2_for_all(Graph) == false);
+	    // Test case 4: add edges to make the graph connected for all
+	    B.edges.add(C);
+	    C.edges.add(B);
+	    D.edges.add(E);
+	    E.edges.add(D);
+	    F.edges.add(G);
+	    G.edges.add(F);
+	    assert(Graphs.is_graph_2_for_all(Graph));
+	}
+	
+	@Test
+	public void test_small_graph() {
+		GraphVertex A = new GraphVertex();
+		GraphVertex B = new GraphVertex();
+		GraphVertex C = new GraphVertex();
+		A.edges.add(B);
+		A.edges.add(C);
+		B.edges.add(A);
+		//B.edges.add(C);
+		C.edges.add(A);
+		//C.edges.add(B);
+		List<GraphVertex> Graph = new ArrayList<GraphVertex>();
+		Graph.add(A);
+		assert(Graphs.is_graph_2_for_all(Graph) == false);
+	}
 }

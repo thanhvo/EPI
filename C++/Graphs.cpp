@@ -1,5 +1,6 @@
 #include <array>
 #include <queue>
+#include <limits>
 #include "Graphs.h"
 
 // Check cur is within maze and is a white pixel 
@@ -96,4 +97,53 @@ bool is_any_placement_feasible(vector<GraphVertex> &G) {
     }
     return true;
 }
+
+bool DFS(GraphVertex* cur, const GraphVertex* pre) {
+    // Visiting a gray vertex means a cycle 
+    if (cur->color == GraphVertex::gray) {
+        return true;
+    }
+    cur->color = GraphVertex::gray; // marks current vertex as a gray one
+    // Traverse the neighbor vertices
+    for (GraphVertex* &next: cur->edges) {
+        if (next != pre && next->color != GraphVertex::black) {
+            if (DFS(next, cur)) {
+                return true;
+            }
+        }
+    }
+    cur->color = GraphVertex::black; //marks current vertex as black
+    return false;
+}
+
+bool is_graph_2_exists(vector<GraphVertex*> &G) {
+    if (G.empty() == false) {
+        return DFS(G.front(), nullptr);
+    }
+}
+
+bool DFS(GraphVertex* cur, const GraphVertex* pre, int time) {
+    cur->discovery = ++time, cur->leaving = numeric_limits<int>::max();
+    for (GraphVertex* next: cur->edges) {   
+        if (next != pre) {
+            if (next->discovery != 0) { // back edge
+                cur->leaving = min(cur->leaving, next->discovery);
+            } else { // forward edge
+                if (DFS(next, cur, time) == false) {
+                    return false;
+                }
+                cur->leaving = min(cur->leaving, next->leaving);
+            }
+        }
+    }    
+    return (pre == nullptr || cur->leaving < cur->discovery);    
+}
+
+bool is_graph_2_for_all(vector<GraphVertex*> &G) {
+    if (G.empty() == false) {
+        return DFS(G.front(), nullptr, 0);
+    }
+    return true;
+}
+
      

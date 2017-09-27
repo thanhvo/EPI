@@ -5,6 +5,7 @@
 #include <vector>
 #include <unordered_set>
 #include <queue>
+#include <limits>
 
 using namespace std; 
 
@@ -26,13 +27,21 @@ int transform_string(unordered_set<string> D, const string &s, const string &t);
 
 class GraphVertex {
     public:
-        int d;
+        enum Color {white, gray, black} color; 
+        int d; // degree 
+        int discovery, leaving; // discovery and leaving time
         vector<GraphVertex*> edges;
-        GraphVertex(void): d(-1) {}
+        GraphVertex(void): d(-1), discovery(0), leaving(numeric_limits<int>::max()) {}
 };
 
 bool BFS(GraphVertex* s);
 
 bool is_any_placement_feasible(vector<GraphVertex> &G);
+
+bool DFS(GraphVertex* cur, const GraphVertex* pre);
+
+bool is_graph_2_exists(vector<GraphVertex> &G);
+
+bool is_graph_2_for_all(vector<GraphVertex*> &G);
 
 #endif

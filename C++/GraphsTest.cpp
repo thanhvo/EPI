@@ -57,8 +57,46 @@ void test_board_placement() {
     assert(is_any_placement_feasible(Graph));    
 }
 
+void test_cyclic_graph() {
+    GraphVertex A,B,C,D,E,F,G;
+    A.edges = {&B, &C};
+    B.edges = {&A, &D, &E};
+    C.edges = {&A, &F, &G};
+    D.edges = {&B};
+    E.edges = {&B};
+    F.edges = {&C};
+    G.edges = {&C};
+    vector<GraphVertex*> Graph = {&A};
+    // Test case 1: non-cyclic graph
+    //assert(is_graph_2_exists(Graph) == false);
+    // Test case 2: add a new edge to make the graph cyclic
+    F.edges.push_back(&G);
+    G.edges.push_back(&F);
+    //assert(is_graph_2_exists(Graph));
+    //assert(is_graph_2_for_all(Graph) == false);
+    B.edges.push_back(&C);
+    C.edges.push_back(&B);
+    D.edges.push_back(&E);
+    E.edges.push_back(&D);
+    //assert(is_graph_2_for_all(Graph) == false);
+    F.edges.push_back(&G);
+    G.edges.push_back(&F);
+    assert(is_graph_2_for_all(Graph));
+}
+
+void test_cyclic_graph_small() {
+    GraphVertex A, B, C;
+    A.edges = {&B, &C};
+    C.edges = {&A, &B};
+    B.edges = {&A, &C};
+    vector<GraphVertex*> Graph = {&A};
+    assert(is_graph_2_for_all(Graph));
+}
+
 void test_graphs() {
     test_search_maze();
     test_transform_string();
     test_board_placement();
+    test_cyclic_graph();
+    test_cyclic_graph_small();
 }
