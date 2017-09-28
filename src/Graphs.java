@@ -112,7 +112,7 @@ public class Graphs {
 	
 	public static boolean is_graph_2_exists(List<GraphVertex> G) {
 		if (G.isEmpty() == false) {
-			return DFS(G.get(0), null);
+			return DFS(G.get(0), (GraphVertex)null);
 		}
 		return false;
 	}
@@ -196,5 +196,42 @@ public class Graphs {
 			}
 		}
 		return true;
+	}
+	
+	private static void DFS(GraphVertex cur, Stack<GraphVertex> vertex_order) {
+		cur.visited = true;
+		for (GraphVertex next: cur.edges) {
+			if (next.visited == false) {
+				DFS(next, vertex_order);
+			}
+		}
+		vertex_order.push(cur);
+	}
+	
+	private static Stack<GraphVertex> build_topological_ordering(List<GraphVertex> G) {
+		Stack<GraphVertex> vertex_order = new Stack<GraphVertex>();
+		for (GraphVertex g: G) {
+			if (g.visited == false) {
+				DFS(g, vertex_order);
+			}
+		}
+		return vertex_order;
+	}
+	
+	private static int find_longest_path(Stack<GraphVertex> vertex_order) {
+		int max_distance = 0;
+		while (vertex_order.empty() == false) {
+			GraphVertex u = vertex_order.pop();
+			max_distance = Math.max(max_distance, u.maxDistance);
+			for (GraphVertex v : u.edges) {
+				v.maxDistance = Math.max(v.maxDistance, u.maxDistance + 1);
+			}
+		}
+		return max_distance;
+	}
+	
+	public static int find_longest_path(List<GraphVertex> G) {
+		Stack<GraphVertex> vertex_order = build_topological_ordering(G);
+		return find_longest_path(vertex_order);
 	}
 }

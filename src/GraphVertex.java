@@ -5,6 +5,8 @@ public class GraphVertex {
 	public int discovery, leaving;
 	public int visitTime;
 	public int group; // represents the connected component it belongs
+	public int maxDistance;
+	public boolean visited;
 	List<GraphVertex> edges;
 	List<GraphVertex> extendedContacts;
 	
@@ -22,6 +24,8 @@ public class GraphVertex {
 		leaving = Integer.MAX_VALUE;
 		visitTime = -1;
 		group = -1;
+		maxDistance = 1;
+		visited = false;
 	}
 	
 	public void addEdge(GraphVertex v) {

@@ -32,9 +32,12 @@ class GraphVertex {
         int discovery, leaving; // discovery and leaving time
         int visitTime;
         int group; // represents the connected component it belongs
+        int maxDistance;
+        bool visited;
         vector<GraphVertex*> edges;
         vector<GraphVertex*> extendedContacts;
-        GraphVertex(void): d(-1), discovery(0), leaving(numeric_limits<int>::max()), visitTime(-1), group(-1) {}
+        GraphVertex(void): d(-1), discovery(0), leaving(numeric_limits<int>::max()), 
+            visitTime(-1), group(-1), maxDistance(1), visited(false) {}
 };
 
 bool BFS(GraphVertex* s);
@@ -58,5 +61,7 @@ class Constraint {
 
 bool are_constraints_satisfied (const vector<Constraint> &E, // Equality constraints
     const vector<Constraint> &I);
+    
+int find_largest_number_teams(vector<GraphVertex> &G);
 
 #endif

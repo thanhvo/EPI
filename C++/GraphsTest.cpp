@@ -118,6 +118,18 @@ void test_graph_constraints() {
     assert(!are_constraints_satisfied(E, I));
 }
 
+void test_largest_number_teams() {
+    GraphVertex A,B,C,D,E,F,G;
+    A.edges = {&B, &C, &D};
+    B.edges = {&C,&D};
+    C.edges = {&E};
+    D.edges = {&E};
+    E.edges = {&G};
+    F.edges = {&G};
+    vector<GraphVertex> Graph = {A, B, C, D, E, F, G};
+    assert(find_largest_number_teams(Graph) == 5);    
+}
+
 void test_graphs() {
     test_search_maze();
     test_transform_string();
@@ -126,4 +138,5 @@ void test_graphs() {
     test_cyclic_graph_small();
     test_transitive_closure();
     test_graph_constraints();
+    test_largest_number_teams();
 }

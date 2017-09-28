@@ -220,4 +220,23 @@ public class GraphsTest {
 	    E.add(new Constraint(2,3));
 	    assert(!Graphs.are_constraints_satisfied(E, I));
 	}
+	
+	@Test
+	public void test_longest_path() {
+		GraphVertex A = new GraphVertex();
+		GraphVertex B = new GraphVertex();
+		GraphVertex C = new GraphVertex();
+		GraphVertex D = new GraphVertex();
+		GraphVertex E = new GraphVertex();
+		GraphVertex F = new GraphVertex();
+		GraphVertex G = new GraphVertex();
+	    A.edges = Arrays.asList(B, C, D);
+	    B.edges = Arrays.asList(C, D);
+	    C.edges.add(E);
+	    D.edges.add(E);
+	    E.edges.add(G);
+	    F.edges.add(G);
+	    List<GraphVertex> Graph = Arrays.asList(A, B, C, D, E, F, G);
+	    assert(Graphs.find_longest_path(Graph) == 5);    
+	}
 }

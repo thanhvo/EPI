@@ -2,6 +2,7 @@
 #include <queue>
 #include <limits>
 #include <unordered_map>
+#include <stack>
 #include "Graphs.h"
 
 // Check cur is within maze and is a white pixel 
@@ -160,7 +161,7 @@ void DFS(GraphVertex* cur, const int &time, vector<GraphVertex*> &contacts) {
 
 void transitive_closure(vector<GraphVertex*> &G) {
     // Build extended contacts for each vertex
-    for (int i = 0; i < G.size(); ++i) {
+    for (int i = 0; i < (int)G.size(); ++i) {
         if (G[i]->visitTime != i) {
             G[i]->visitTime = i;
             DFS(G[i], i, G[i]->extendedContacts);
@@ -201,5 +202,43 @@ bool are_constraints_satisfied (const vector<Constraint> &E, // Equality constra
         }
     }
     return true;
+}
+
+void DFS(GraphVertex* cur, stack<GraphVertex*> &vertex_order) {
+    cur->visited = true;
+    for (GraphVertex* &next: cur->edges) {
+        if (next->visited == false) {
+            DFS(next, vertex_order);
+        }
+    }
+    vertex_order.emplace(cur);
+}
+
+stack<GraphVertex*> build_topological_ordering(vector<GraphVertex> &G) {
+    stack<GraphVertex*> vertex_order;
+    for (GraphVertex &g: G) {
+        if (g.visited == false) {
+            DFS(&g, vertex_order);
+        }
+    }
+    return vertex_order;
+}
+
+int find_longest_path(stack<GraphVertex*> &vertex_order) {
+    int max_distance = 0;
+    while (vertex_order.empty() == false) {
+        GraphVertex* u = vertex_order.top();
+        max_distance = max(max_distance, u->maxDistance);
+        for (GraphVertex* &v : u->edges) {
+            v->maxDistance = max(v->maxDistance, u->maxDistance + 1);
+        }
+        vertex_order.pop();
+    }
+    return max_distance;
+}
+
+int find_largest_number_teams(vector<GraphVertex> &G) {
+    stack<GraphVertex*> vertex_order(build_topological_ordering(G));
+    return find_longest_path(vertex_order);
 }
      
