@@ -93,10 +93,28 @@ void test_cyclic_graph_small() {
     assert(is_graph_2_for_all(Graph));
 }
 
+void test_transitive_closure() {
+    GraphVertex A, B, C;
+    A.edges = {&B, &C};
+    C.edges = {&A};
+    B.edges = {&A};
+    vector<GraphVertex*> Graph = {&A, &B, &C};
+    transitive_closure(Graph);
+    for (GraphVertex* v: A.extendedContacts) {
+        cout << v << " ";
+    }
+    cout << endl;
+    for (GraphVertex* v: B.extendedContacts) {
+        cout << v << " ";
+    }
+    cout << endl;
+}
+
 void test_graphs() {
     test_search_maze();
     test_transform_string();
     test_board_placement();
     test_cyclic_graph();
     test_cyclic_graph_small();
+    test_transitive_closure();
 }

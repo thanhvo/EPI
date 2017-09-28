@@ -141,4 +141,24 @@ public class Graphs {
 		}
 		return true;
 	}
+	
+	private static void DFS(GraphVertex cur, int time, List<GraphVertex> contacts) {
+		for (GraphVertex next : cur.edges) {
+			if (next.visitTime != time) {
+				next.visitTime = time;
+				contacts.add(next);
+				DFS(next, time, contacts);
+			}
+		}
+	}
+	
+	public static void transitive_closure(List<GraphVertex> G) {
+		// Build extended contacts for each vertex
+		for (int i = 0; i < G.size(); ++i) {
+			if (G.get(i).visitTime != i) {
+				G.get(i).visitTime = i;
+				DFS(G.get(i), i, G.get(i).extendedContacts);
+			}
+		}
+	}
 }

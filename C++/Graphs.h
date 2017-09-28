@@ -30,8 +30,10 @@ class GraphVertex {
         enum Color {white, gray, black} color; 
         int d; // degree 
         int discovery, leaving; // discovery and leaving time
+        int visitTime;
         vector<GraphVertex*> edges;
-        GraphVertex(void): d(-1), discovery(0), leaving(numeric_limits<int>::max()) {}
+        vector<GraphVertex*> extendedContacts;
+        GraphVertex(void): d(-1), discovery(0), leaving(numeric_limits<int>::max()), visitTime(-1) {}
 };
 
 bool BFS(GraphVertex* s);
@@ -43,5 +45,9 @@ bool DFS(GraphVertex* cur, const GraphVertex* pre);
 bool is_graph_2_exists(vector<GraphVertex> &G);
 
 bool is_graph_2_for_all(vector<GraphVertex*> &G);
+
+void DFS(GraphVertex* cur, const int &time, vector<GraphVertex*> &contacts);
+
+void transitive_closure(vector<GraphVertex*> &G) ;
 
 #endif

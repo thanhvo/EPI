@@ -146,4 +146,24 @@ bool is_graph_2_for_all(vector<GraphVertex*> &G) {
     return true;
 }
 
+void DFS(GraphVertex* cur, const int &time, vector<GraphVertex*> &contacts) {
+    for (GraphVertex* &next: cur->edges) {
+        if (next->visitTime != time) {
+            next->visitTime = time;
+            contacts.emplace_back(next);
+            DFS(next, time, contacts);
+        }
+    }
+}
+
+void transitive_closure(vector<GraphVertex*> &G) {
+    // Build extended contacts for each vertex
+    for (int i = 0; i < G.size(); ++i) {
+        if (G[i]->visitTime != i) {
+            G[i]->visitTime = i;
+            DFS(G[i], i, G[i]->extendedContacts);
+        }
+    }
+}
+
      

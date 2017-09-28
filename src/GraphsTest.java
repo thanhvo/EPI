@@ -182,4 +182,31 @@ public class GraphsTest {
 		Graph.add(A);
 		assert(Graphs.is_graph_2_for_all(Graph) == false);
 	}
+	
+	@Test 
+	public void test_transitive_closure() {
+		GraphVertex A = new GraphVertex();
+		GraphVertex B = new GraphVertex();
+		GraphVertex C = new GraphVertex();
+		A.edges.add(B);
+		A.edges.add(C);
+		B.edges.add(C);
+		List<GraphVertex> Graph = Arrays.asList(A, B, C);
+		Graphs.transitive_closure(Graph);
+		System.out.println("Extended contacts of A");
+		for (GraphVertex vertex : A.extendedContacts) {
+			System.out.print(vertex + " ");
+		}
+		System.out.println();
+		System.out.println("Extended contacts of B");
+		for (GraphVertex vertex : B.extendedContacts) {
+			System.out.print(vertex + " ");
+		}
+		System.out.println();
+		System.out.println("Extended contacts of C");
+		for (GraphVertex vertex : C.extendedContacts) {
+			System.out.print(vertex + " ");
+		}
+		System.out.println();
+	}
 }
