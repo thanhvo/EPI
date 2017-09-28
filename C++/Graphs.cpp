@@ -1,6 +1,7 @@
 #include <array>
 #include <queue>
 #include <limits>
+#include <unordered_map>
 #include "Graphs.h"
 
 // Check cur is within maze and is a white pixel 
@@ -120,6 +121,7 @@ bool is_graph_2_exists(vector<GraphVertex*> &G) {
     if (G.empty() == false) {
         return DFS(G.front(), nullptr);
     }
+    return true;
 }
 
 bool DFS(GraphVertex* cur, const GraphVertex* pre, int time) {
@@ -166,4 +168,38 @@ void transitive_closure(vector<GraphVertex*> &G) {
     }
 }
 
+void DFS(GraphVertex &u) {
+    for (GraphVertex* &v : u.edges) {
+        if (v->group == -1) {
+            v->group = u.group;
+            DFS(*v);
+        }
+    }
+}
+
+bool are_constraints_satisfied (const vector<Constraint> &E, // Equality constraints
+    const vector<Constraint> &I) { // Inequality constraints
+    unordered_map<int, GraphVertex> G;
+    // Build graph G according to E
+    for (const Constraint &e : E) {
+        G[e.a].edges.emplace_back(&G[e.b]);
+        G[e.b].edges.emplace_back(&G[e.a]);
+    }
+    // Assign group index for each connected component 
+    int group_count = 0;
+    for (pair<int, GraphVertex> vertex : G) {
+        if(vertex.second.group == -1) { // is a unvisited vertex
+            vertex.second.group = group_count++;
+            // assign a group index
+            DFS(vertex.second);
+        }
+    }
+    // Examine each inequality constraint to see if there is a violation
+    for (const Constraint &i : I) {
+        if (G[i.a].group == G[i.b].group) {
+            return false;
+        }
+    }
+    return true;
+}
      

@@ -110,6 +110,14 @@ void test_transitive_closure() {
     cout << endl;
 }
 
+void test_graph_constraints() {
+    vector<Constraint> E = {{0,1}, {1,2}, {3,4}, {3,5}};
+    vector<Constraint> I = {{0,3}, {1,5}, {2,4}};
+    assert(are_constraints_satisfied(E, I));
+    E.emplace_back(Constraint{2,3});
+    assert(!are_constraints_satisfied(E, I));
+}
+
 void test_graphs() {
     test_search_maze();
     test_transform_string();
@@ -117,4 +125,5 @@ void test_graphs() {
     test_cyclic_graph();
     test_cyclic_graph_small();
     test_transitive_closure();
+    test_graph_constraints();
 }

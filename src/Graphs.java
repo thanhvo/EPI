@@ -161,4 +161,40 @@ public class Graphs {
 			}
 		}
 	}
+	
+	private static void DFS(GraphVertex u) {
+		for (GraphVertex v : u.edges) {
+			if (v.group == -1) {
+				v.group = u.group;
+				DFS(v);
+			}
+		}
+	}
+	
+	public static boolean are_constraints_satisfied(List<Constraint> E, List<Constraint> I) {
+		HashMap<Integer, GraphVertex> G = new HashMap<Integer, GraphVertex>();
+		// Build graph G according ot E
+		for (Constraint e : E) {
+			if (!G.containsKey(e.a)) G.put(e.a, new GraphVertex());
+			if (!G.containsKey(e.b)) G.put(e.b, new GraphVertex());
+			G.get(e.a).edges.add(G.get(e.b));
+			G.get(e.b).edges.add(G.get(e.a));
+		}
+		// Assign group index for each connected component 
+		int group_count = 0;
+		for (GraphVertex vertex : G.values()) {
+			if (vertex.group == -1) { // is a unvisited vertex
+				vertex.group = group_count++;
+				// assign a group index
+				DFS(vertex);
+			}
+		}
+		// Examine each inequality constraint to see if there is a violation
+		for (Constraint i : I) {
+			if (G.get(i.a).group == G.get(i.b).group) {
+				return false;
+			}
+		}
+		return true;
+	}
 }

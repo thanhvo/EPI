@@ -209,4 +209,15 @@ public class GraphsTest {
 		}
 		System.out.println();
 	}
+	
+	@Test
+	public void test_graph_constraints() {
+		ArrayList<Constraint> E = new ArrayList<Constraint>
+			(Arrays.asList(new Constraint(0,1), new Constraint(1,2), new Constraint(3,4), new Constraint(3,5)));
+	    ArrayList<Constraint> I = new ArrayList<Constraint>
+			(Arrays.asList(new Constraint(0,3), new Constraint(1,5), new Constraint(2,4)));
+	    assert(Graphs.are_constraints_satisfied(E, I));
+	    E.add(new Constraint(2,3));
+	    assert(!Graphs.are_constraints_satisfied(E, I));
+	}
 }
