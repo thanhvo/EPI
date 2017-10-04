@@ -130,6 +130,32 @@ void test_largest_number_teams() {
     assert(find_largest_number_teams(Graph) == 5);    
 }
 
+void test_dijkstra() {
+    cout << "Dijkstra algorithm to find the shortest path" << endl;
+    DistanceGraphVertex<int> A(0),B(1),C(2),D(3),E(4),F(5),G(6),H(7),I(8),J(9),K(10),L(11),M(12),N(13);    
+    A.addEdge(&C, 2);
+    A.addEdge(&B, 3);
+    B.addEdge(&A, 4);
+    B.addEdge(&K, 1);
+    C.addEdge(&E, 8);
+    D.addEdge(&C, 5);
+    D.addEdge(&H, 5);
+    E.addEdge(&D, 7);
+    F.addEdge(&G, 6);
+    G.addEdge(&F, 7);
+    G.addEdge(&H, 4);
+    I.addEdge(&J, 6);
+    J.addEdge(&F, 1);
+    J.addEdge(&L, 7);
+    K.addEdge(&I, 1);
+    L.addEdge(&I, 9);
+    M.addEdge(&N, 5);
+    N.addEdge(&M, 12);
+    vector<DistanceGraphVertex<int>> Graph = {A,B,C,D,E,F,G,H,I,J,K,L,M,N};
+    //Dijkstra_shortest_path(Graph, &A, &H);
+    Dijkstra_shortest_path(Graph, &B, &H);
+}
+
 void test_graphs() {
     test_search_maze();
     test_transform_string();
@@ -139,4 +165,5 @@ void test_graphs() {
     test_transitive_closure();
     test_graph_constraints();
     test_largest_number_teams();
+    test_dijkstra();
 }

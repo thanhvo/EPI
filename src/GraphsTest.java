@@ -239,4 +239,34 @@ public class GraphsTest {
 	    List<GraphVertex> Graph = Arrays.asList(A, B, C, D, E, F, G);
 	    assert(Graphs.find_longest_path(Graph) == 5);    
 	}
+	
+	@Test
+	public void test_dijstra() {
+		System.out.println("Dijkstra algorithm to find the shortest path");
+	    GraphVertex A = new GraphVertex(0),B = new GraphVertex(1), C = new GraphVertex(2), D = new GraphVertex(3),
+	    		E = new GraphVertex(4), F = new GraphVertex(5), G = new GraphVertex(6), H = new GraphVertex(7),
+	    		I = new GraphVertex(8), J = new GraphVertex(9), K = new GraphVertex(10), L = new GraphVertex(11),
+	    		M = new GraphVertex(12), N = new GraphVertex(13);    
+	    A.addEdge(C, 2);
+	    A.addEdge(B, 3);
+	    B.addEdge(A, 4);
+	    B.addEdge(K, 1);
+	    C.addEdge(E, 8);
+	    D.addEdge(C, 5);
+	    D.addEdge(H, 5);
+	    E.addEdge(D, 7);
+	    F.addEdge(G, 6);
+	    G.addEdge(F, 7);
+	    G.addEdge(H, 4);
+	    I.addEdge(J, 6);
+	    J.addEdge(F, 1);
+	    J.addEdge(L, 7);
+	    K.addEdge(I, 1);
+	    L.addEdge(I, 9);
+	    M.addEdge(N, 5);
+	    N.addEdge(M, 12);
+	    List<GraphVertex> Graph = Arrays.asList(A,B,C,D,E,F,G,H,I,J,K,L,M,N);
+	    Graphs.Dijkstra_shortest_path(Graph, A, H);
+	    //Graphs.Dijkstra_shortest_path(Graph, B, H);
+	}
 }

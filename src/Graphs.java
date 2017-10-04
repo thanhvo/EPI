@@ -234,4 +234,51 @@ public class Graphs {
 		Stack<GraphVertex> vertex_order = build_topological_ordering(G);
 		return find_longest_path(vertex_order);
 	}
+	
+	private static void output_shortest_path(GraphVertex v) {
+		if (v != null) {
+			output_shortest_path(v.pred);
+			System.out.print(v.id + " ");
+		}
+	}
+	
+	public static void Dijkstra_shortest_path(List<GraphVertex> G, GraphVertex s, GraphVertex t) {
+		// Initialization the distance of starting point
+		s.distance = 0;
+		s.edgeNum = 0;
+		Comparator<GraphVertex> comparator = (v1, v2)-> (v1.distance < v2.distance ? -1 : v1.distance > v2.distance ? 1 : 
+			v1.edgeNum < v2.edgeNum ? -1: v1.edgeNum > v2.edgeNum ? 1 : 0);
+		PriorityQueue<GraphVertex> node_set = new PriorityQueue<GraphVertex>(comparator);
+		node_set.add(s);
+		do {
+			GraphVertex u = null;
+			// Extract the minimum distance vertex from heap
+			while (!node_set.isEmpty()) {
+				u = node_set.poll();
+				if (!u.visited) { // found an unvisited node
+					break;
+				}
+			}
+			if (u != null) { // u is a valid vertex
+				u.visited = true; // mark u as a visited node
+				// Relax neighboring vertices of u
+				for (Pair<GraphVertex, Integer> p : u.distanceEdges) {
+					int v_distance = u.distance + p.second;
+					int v_num_edges = u.edgeNum + 1;
+					if (p.first.distance > v_distance || p.first.distance == v_distance && p.first.edgeNum > v_num_edges) {
+						node_set.remove(p.first);
+						p.first.pred = u;
+						p.first.distance = v_distance;
+						p.first.edgeNum = v_num_edges;
+						node_set.add(p.first);
+					}
+				} 				
+			} else { // u is not a valid vertex
+				break;
+			}
+		} while (t.visited == false); // until t is visited
+		// Output the shortest path with fewest edges
+		output_shortest_path(t);
+		System.out.println();
+	}
 }
