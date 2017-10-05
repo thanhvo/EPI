@@ -281,4 +281,49 @@ public class Graphs {
 		output_shortest_path(t);
 		System.out.println();
 	}
+	
+	private static void Floyd_Warshall(int[][] G) {
+		for (int k = 0; k < G.length; ++k) {
+			for (int i = 0; i < G.length; ++i) {
+				for (int j = 0; j < G.length; ++j) {
+					if (G[i][k] != Integer.MAX_VALUE && G[k][j] != Integer.MAX_VALUE &&
+						G[i][j] > G[i][k] + G[k][j]) {
+						G[i][j] = G[i][k] + G[k][j];
+					}
+				}
+			}
+		}
+	}
+	
+	public static HighwaySection find_best_proposal(HighwaySection[] H, HighwaySection[] P, int a, int b, int n) {
+		// G stores the shortest path distance between all pairs
+		int[][] G = new int[n][n];
+		for (int i = 0; i < n; i++) {
+			G[i][i] = 0;
+			for (int j = 0; j < n; j++) {
+				if (i != j) G[i][j] = Integer.MAX_VALUE;				
+			}
+		}
+		// Build graph G based on existing highway sections H
+		for (HighwaySection h : H) {
+			G[h.x][h.y] = G[h.y][h.x] = h.distance;
+		}
+		// Perform Floyd Warshall to build the shortest path between vertices
+		Floyd_Warshall(G);
+		int min_dis_a_b = G[a][b];
+		HighwaySection best_proposal = null;
+		for (HighwaySection p : P) {
+			if (G[a][p.x] != Integer.MAX_VALUE && G[p.y][b] != Integer.MAX_VALUE) {
+				if (min_dis_a_b > G[a][p.x] + p.distance + G[p.y][b]) {
+					min_dis_a_b = G[a][p.x] + p.distance + G[p.y][b];
+					best_proposal = p;
+				}
+				if (min_dis_a_b > G[a][p.y] + p.distance + G[p.x][b]) {
+					min_dis_a_b = G[a][p.y] + p.distance + G[p.x][b];
+					best_proposal = p;
+				}
+			}
+		}
+		return best_proposal;
+	}
 }

@@ -156,6 +156,15 @@ void test_dijkstra() {
     Dijkstra_shortest_path(Graph, &B, &H);
 }
 
+void test_Floyd_Warshall() {
+    cout << "Testing Floyd Warshall" << endl;
+    vector<HighwaySection<int>> H = {{1, 2, 1}, {1, 4, 2}, {2, 3, 2}, {4, 3, 3}, {3, 5, 1}, 
+                            {5, 6, 2}, {5, 8, 1}, {8, 7, 3}, {6, 7, 1}};
+    vector<HighwaySection<int>> P = {{4, 6, 3}, {3, 7, 1}, {2, 5, 2}};
+    HighwaySection<int> p = find_best_proposals(H, P, 1, 7, 9);
+    p.print();
+}
+
 void test_graphs() {
     test_search_maze();
     test_transform_string();
@@ -166,4 +175,5 @@ void test_graphs() {
     test_graph_constraints();
     test_largest_number_teams();
     test_dijkstra();
+    test_Floyd_Warshall();
 }

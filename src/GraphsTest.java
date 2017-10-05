@@ -269,4 +269,15 @@ public class GraphsTest {
 	    Graphs.Dijkstra_shortest_path(Graph, A, H);
 	    //Graphs.Dijkstra_shortest_path(Graph, B, H);
 	}
+	
+	@Test
+	public void test_find_best_proposal() {
+		System.out.println("Testing Floyd Warshall");
+	    HighwaySection[] H = {new HighwaySection(1, 2, 1), new HighwaySection(1, 4, 2), new HighwaySection(2, 3, 2), 
+	    					  new HighwaySection(4, 3, 3), new HighwaySection(3, 5, 1), new HighwaySection(5, 6, 2), 
+	                          new HighwaySection(5, 8, 1), new HighwaySection(8, 7, 3), new HighwaySection(6, 7, 1)};
+	    HighwaySection[] P = {new HighwaySection(4, 6, 3), new HighwaySection(3, 7, 1), new HighwaySection(2, 5, 2)};
+	    HighwaySection p = Graphs.find_best_proposal(H, P, 1, 7, 9);
+	    p.print();
+	}
 }

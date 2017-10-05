@@ -146,4 +146,72 @@ void Dijkstra_shortest_path(vector<DistanceGraphVertex<DistanceType>> &G,
     cout << endl;
 }
 
+template <typename DistanceType>
+class HighwaySection {
+    public:
+        int x, y;
+        DistanceType distance;
+        HighwaySection<DistanceType> operator=(const HighwaySection<DistanceType> h) {
+            x = h.x;
+            y = h.y;
+            distance = h.distance;
+            return *this;
+        }
+        
+        void print() const {
+            cout << x << " " << y << " " << distance << endl;
+        }
+};
+
+template <typename DistanceType>
+void Floyd_Warshall(vector<vector<DistanceType>> &G) {
+    for (int k = 0; k < (int)G.size(); ++k) {
+        for (int i = 0; i < (int)G.size(); ++i) {
+            for (int j = 0; j < (int)G.size(); ++j) {
+                if (G[i][k] != numeric_limits<DistanceType>::max() &&
+                    G[k][j] != numeric_limits<DistanceType>::max() &&
+                    G[i][j] > G[i][k] + G[k][j]) {
+                        G[i][j] = G[i][k] + G[k][j];
+                    }
+            }
+        }
+    }
+}
+
+template <typename DistanceType>
+HighwaySection<DistanceType> find_best_proposals(
+    const vector<HighwaySection<DistanceType>> &H,
+    const vector<HighwaySection<DistanceType>> &P,
+    const int &a, const int &b, const int &n) {
+    // G stores the shortest path distance between all pairs
+    vector<vector<DistanceType>> G(n, vector<DistanceType>(n, numeric_limits<DistanceType>::max()));
+    for (unsigned int i = 0; i < G.size(); i++) {
+        G[i][i] = 0;
+    }
+    // Build graph G based on existing highway sections H
+    for (const HighwaySection<DistanceType> &h: H) {
+        //h.print();
+        G[h.x][h.y] = G[h.y][h.x] = h.distance;
+    }
+    // Perform Floyd Warshall to build the shortest path between vertices
+    Floyd_Warshall(G);
+    // Examine each proposal for shorter distance between a and b    
+    DistanceType min_dis_a_b = G[a][b];
+    HighwaySection<DistanceType> best_proposal;
+    for (const HighwaySection<DistanceType> &p: P) {        
+        if (G[a][p.x] != numeric_limits<DistanceType>::max() && 
+            G[p.y][b] != numeric_limits<DistanceType>::max()) {
+            if(min_dis_a_b > G[a][p.x] + p.distance + G[p.y][b]) {
+                min_dis_a_b = G[a][p.x] + p.distance + G[p.y][b];
+                best_proposal = p;
+            }
+            if (min_dis_a_b > G[a][p.y] + p.distance + G[p.x][b]) {
+                min_dis_a_b = G[a][p.y] + p.distance + G[p.x][b];
+                best_proposal = p;                
+            }            
+        }
+    }
+    return best_proposal;
+}
+
 #endif
