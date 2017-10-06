@@ -165,6 +165,16 @@ void test_Floyd_Warshall() {
     p.print();
 }
 
+void test_arbitrage() {
+    vector<vector<double>> G = {
+        {1.0, 1.0/2.0, 1.0/3.0, 1.0/4.0},
+        {2.0, 1.0, 2.0/3.0, 1.0/2.0},
+        {3.0, 3.0/2.0, 1.0, 1.0/4.0},
+        {4.0, 2.0, 4.0, 1.0}
+    };
+    assert(is_arbitrage_exists(G));
+}
+
 void test_graphs() {
     test_search_maze();
     test_transform_string();
@@ -176,4 +186,5 @@ void test_graphs() {
     test_largest_number_teams();
     test_dijkstra();
     test_Floyd_Warshall();
+    test_arbitrage();
 }

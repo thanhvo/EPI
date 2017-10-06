@@ -280,4 +280,15 @@ public class GraphsTest {
 	    HighwaySection p = Graphs.find_best_proposal(H, P, 1, 7, 9);
 	    p.print();
 	}
+	
+	@Test
+	public void test_arbitrage() {
+		double[][] G = {
+		        {1.0, 1.0/2.0, 1.0/3.0, 1.0/4.0},
+		        {2.0, 1.0, 2.0/3.0, 1.0/2.0},
+		        {3.0, 3.0/2.0, 1.0, 1.0/4.0},
+		        {4.0, 2.0, 4.0, 1.0}
+		};
+		assert(Graphs.is_arbitrage_exists(G));
+	}
 }

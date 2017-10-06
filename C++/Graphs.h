@@ -214,4 +214,6 @@ HighwaySection<DistanceType> find_best_proposals(
     return best_proposal;
 }
 
+bool is_arbitrage_exists(vector<vector<double>> G);
+
 #endif

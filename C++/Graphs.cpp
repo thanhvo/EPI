@@ -3,6 +3,7 @@
 #include <limits>
 #include <unordered_map>
 #include <stack>
+#include <cmath>
 #include "Graphs.h"
 
 // Check cur is within maze and is a white pixel 
@@ -240,5 +241,48 @@ int find_longest_path(stack<GraphVertex*> &vertex_order) {
 int find_largest_number_teams(vector<GraphVertex> &G) {
     stack<GraphVertex*> vertex_order(build_topological_ordering(G));
     return find_longest_path(vertex_order);
+}
+
+bool Bellman_Ford(const vector<vector<double>> &G, const int &source) {
+    vector<double> dis_to_source(G.size(), numeric_limits<double>::max());
+    dis_to_source[source] = 0;
+    for (unsigned int times = 1; times < G.size(); ++times) {
+        bool have_update = false;
+        for (unsigned int i = 0; i < G.size(); ++i) {
+            for (unsigned int j = 0; j < G[i].size(); ++j) {
+                if (dis_to_source[i] != numeric_limits<double>::max() && 
+                dis_to_source[j] > dis_to_source[i] + G[i][j]) {
+                    have_update = true;
+                    dis_to_source[j] = dis_to_source[i] + G[i][j];
+                }
+            }
+        }
+        // No update in this iteration means no negative cycle
+        if (have_update == false) {
+            return false;
+        }
+    }
+    
+    // Detect cycle if ther is any further update
+    for (unsigned int i = 0; i < G.size(); ++i) {
+        for (unsigned int j = 0; j < G[i].size(); ++j) {
+            if (dis_to_source[i] != numeric_limits<double>::max() &&
+                dis_to_source[j] > dis_to_source[i] + G[i][j]) {
+                    return true;
+                }
+        }
+    }
+    return false;
+}
+
+bool is_arbitrage_exists(vector<vector<double>> G) {
+    // Transform each edge in G
+    for (vector<double> &edge_list : G) {
+        for (double &edge : edge_list) {
+            edge = -log10(edge);
+        }
+    }
+    // User Bellman Ford to find nagative weight cycle
+    return Bellman_Ford(G, 0);
 }
      

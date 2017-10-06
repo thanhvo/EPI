@@ -326,4 +326,50 @@ public class Graphs {
 		}
 		return best_proposal;
 	}
+	
+	private static boolean Bellman_Ford(double[][] G, int source) {
+		double[] dis_to_source = new double[G.length];
+		for (int i = 0; i < G.length; i++) {
+			dis_to_source[i] = Double.MAX_VALUE;
+		}
+		dis_to_source[source] = 0;
+		for (int times = 1; times < G.length; ++times) {
+			boolean have_update = false;
+			for (int i = 0; i < G.length; ++i) {
+				for (int j = 0; j < G[i].length; ++j) {
+					//System.out.println(dis_to_source[j]);
+					if (dis_to_source[i] != Double.MAX_VALUE &&
+					dis_to_source[j] > dis_to_source[i] + G[i][j]) {
+						have_update = true;
+						dis_to_source[j] = dis_to_source[i] + G[i][j];						
+					}
+				}
+			}
+			// No update in this iteration mean no negative cycle
+			if (have_update == false) {
+				return false;
+			}
+		}
+		// Detect cycle if there is any further update 
+		for (int i = 0; i < G.length; ++i) {
+			for(int j = 0; j < G[i].length; ++j) {
+				if (dis_to_source[i] != Double.MAX_VALUE && 
+				dis_to_source[j] > dis_to_source[i] + G[i][j]) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public static boolean is_arbitrage_exists(double[][] G) {
+		// Transform each edge in G
+		for (int i = 0; i < G.length; i++) {
+			for (int j = 0; j < G[i].length; j++) {
+				G[i][j] = -Math.log10(G[i][j]);				
+			}
+		}
+		// Use Bellman Ford to find negative weight cycle
+		return Bellman_Ford(G, 0);
+	}
 }
