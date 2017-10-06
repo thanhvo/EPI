@@ -9,6 +9,7 @@
 #include "BinarySearchTreeTest.h"
 #include "AlgorithmsTest.h"
 #include "GraphsTest.h"
+#include "IntractabilityTest.h"
 
 int main(int argc, char **argv)
 {
@@ -22,6 +23,7 @@ int main(int argc, char **argv)
     //test_sort();
     //test_binary_search_tree();
     //test_algorithms();
-    test_graphs();
+    //test_graphs();
+    test_intractability();
 	return 0;
 }
