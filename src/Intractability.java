@@ -15,4 +15,16 @@ public class Intractability {
 		}
 		return table[V.length][total_votes >> 1];
 	}
+	
+	// Knapsack problem: find a set of items which total weight is less than or equal the capacity of the knapsack and 
+	// maximize the total value of all items.
+	public static int knapsack(int w, int[][] items) {
+		int[] V = new int[w+1];
+		for (int i = 0; i < items.length; ++i) {
+			for (int j = w; j >= items[i][0]; --j) {
+				V[j] = Math.max(V[j], V[j - items[i][0]] + items[i][1]);
+			}
+		}
+		return V[w];
+	}
 }
