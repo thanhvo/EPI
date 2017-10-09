@@ -19,4 +19,10 @@ public class IntractabilityTest {
 		};
 		assertEquals(Intractability.knapsack(W, items), 695);
 	}
+	
+	@Test
+	public void test_minimize_difference() {
+		int[] items = {65, 35, 245, 195, 65, 150, 275, 155, 120, 320, 75, 40, 200, 100, 220, 99};
+	    assertEquals(Intractability.minimize_difference(items), 65 + 275 + 320 + 200 + 220 + 99);
+	}
 }

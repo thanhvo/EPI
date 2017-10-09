@@ -18,4 +18,6 @@ ValueType knapsack(const int &w, const vector<pair<int, ValueType>> &items) {
     return V[w];
 }
 
+int minimize_difference(const vector<int> &A);
+
 #endif

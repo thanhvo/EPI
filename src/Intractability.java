@@ -1,3 +1,4 @@
+import java.util.*;
 
 public class Intractability {
 	// V contains the number of votes for each state
@@ -26,5 +27,27 @@ public class Intractability {
 			}
 		}
 		return V[w];
+	}
+	
+	// Divide a set into two sets and minimize the difference between two sums of elements in two sets.
+	public static int minimize_difference(int[] A) {
+		int sum = 0;
+		for (int i = 0; i < A.length; i++) {
+			sum += A[i];
+		}
+		Set<Integer> is_Ok = new HashSet<Integer>();
+		is_Ok.add(0);
+		for (int item: A) {
+			for (int v = sum >> 1; v >= item; --v) {
+				is_Ok.add(v);
+			}
+		}
+		// Find the first i from middle where is_Ok[i] == true
+		for (int i = sum >> 1; i > 0; --i) {
+			if (is_Ok.contains(i)) {
+				return (sum -i ) -1;
+			}
+		}
+		return sum; // one thief takes all
 	}
 }

@@ -1,5 +1,6 @@
 #include <numeric>
 #include <iostream>
+#include <unordered_set>
 #include "Intractability.h"
 
 using namespace std;
@@ -19,4 +20,24 @@ long ties_election(const vector<int> &V) {
         }
     }
     return table[V.size()][total_votes >> 1];
+}
+
+int minimize_difference(const vector<int> &A) {
+    int sum = accumulate(A.cbegin(), A.cend(), 0);
+    unordered_set<int> is_Ok;
+    is_Ok.emplace(0);
+    for (const int & item: A) {
+        for (int v = sum >> 1; v >= item; --v) {
+            if (is_Ok.find(v-item) != is_Ok.cend()) {
+                is_Ok.emplace(v);
+            }
+        }
+    }
+    // Find the first i from middle where is_Ok[i] == true
+    for (int i = sum >> 1; i > 0; --i) {
+        if (is_Ok.find(i) != is_Ok.cend()) {
+            return (sum - i) - 1;
+        }
+    }
+    return sum; // one thief takes all
 }
