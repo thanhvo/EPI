@@ -41,3 +41,24 @@ int minimize_difference(const vector<int> &A) {
     }
     return sum; // one thief takes all
 }
+
+bool check_feasible_helper(const vector<Jug> &jugs, const int &L, const int &H, 
+    unordered_set<pair<int,int>, HashPair, PairEqual> &c) {
+    if (L > H || c.find({L, H}) != c.end() || (L < 0 && H < 0)) {
+        return false;
+    }
+    // Check the volume for each jug to see if it is possible
+    for (const Jug &j: jugs) {
+        if ((L <= j.low && j.high <= H) || // base case: j is contained in [L, H]
+            check_feasible_helper(jugs, L - j.low, H - j.high, c)) {
+                return true;
+        }
+    }
+    c.emplace(L, H); // marks this as impossible
+    return false;
+}
+
+bool check_feasible(const vector<Jug>& jugs, const int& L, const int& H) {
+    unordered_set<pair<int, int>, HashPair, PairEqual> cache;
+    return check_feasible_helper(jugs, L, H, cache);
+}

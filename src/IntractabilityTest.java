@@ -25,4 +25,12 @@ public class IntractabilityTest {
 		int[] items = {65, 35, 245, 195, 65, 150, 275, 155, 120, 320, 75, 40, 200, 100, 220, 99};
 	    assertEquals(Intractability.minimize_difference(items), 65 + 275 + 320 + 200 + 220 + 99);
 	}
+	
+	@Test
+	public void test_defective_jugs() {
+		List<Jug> jugs = Arrays.asList(new Jug(230, 240), new Jug(290, 310), new Jug(500, 520));
+		assertEquals(Intractability.check_feasible(jugs, 2100, 2200), true);
+		assertEquals(Intractability.check_feasible(jugs, 2100, 2150), false);
+		assertEquals(Intractability.check_feasible(jugs, 2200, 2300), false);
+	}
 }

@@ -2,6 +2,7 @@
 #define INTRACTIBILITY_H
 
 #include <vector>
+#include <unordered_set>
 
 using namespace std;
 
@@ -19,5 +20,26 @@ ValueType knapsack(const int &w, const vector<pair<int, ValueType>> &items) {
 }
 
 int minimize_difference(const vector<int> &A);
+
+class Jug {
+    public:
+        int low, high;
+};
+
+class PairEqual {
+    public:
+        const bool operator() (const pair<int, int> &a, const pair<int, int> &b) const {
+            return a.first == b.first && a.second == b.second;
+        }
+};
+
+class  HashPair {
+    public:
+        const size_t operator() (const pair<int, int> &p) const {
+            return hash<int>()(p.first) ^ hash<int>()(p.second);
+        }
+};
+
+bool check_feasible(const vector<Jug>& jugs, const int& L, const int& H);
 
 #endif

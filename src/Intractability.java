@@ -50,4 +50,24 @@ public class Intractability {
 		}
 		return sum; // one thief takes all
 	}
+	
+	private static boolean check_feasible_helper(List<Jug> jugs, int L, int H, HashSet<Pair<Integer, Integer>> c) {
+		if (L > H || c.contains(new Pair(L, H)) || (L < 0 && H < 0)) {
+			return false;
+		}
+		// Check the volume for each jug to see if it is possible
+		for (Jug j : jugs) {
+			if ((L <= j.low && j.high <= H) || // base case: j is contained in [L,H]
+				check_feasible_helper(jugs, L - j.low, H - j.high, c)) {
+				return true;
+			}
+		}
+		c.add(new Pair(L, H)); // marks this as impossible
+		return false;
+	}
+	
+	public static boolean check_feasible(List<Jug> jugs, int L, int H) {
+		HashSet<Pair<Integer, Integer>> cache = new HashSet<Pair<Integer, Integer>>();
+		return check_feasible_helper(jugs, L, H, cache);
+	}
 }

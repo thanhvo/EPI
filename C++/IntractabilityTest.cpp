@@ -24,8 +24,16 @@ void test_minimize_difference() {
     assert(minimize_difference(V) == 65 + 275 + 320 + 200 + 220 + 99);
 }
 
+void test_defective_jugs() {
+    vector<Jug> jugs = {{230, 240}, {290, 310}, {500, 520}};
+    assert(check_feasible(jugs, 2100, 2200));    
+    assert(check_feasible(jugs, 2200, 2300) == false);
+    assert(check_feasible(jugs, 2100, 2150) == false);
+}
+
 void test_intractability() {
     test_ties_election();
     test_knapsack();
     test_minimize_difference();
+    test_defective_jugs();
 }

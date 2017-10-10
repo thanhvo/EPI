@@ -11,4 +11,8 @@ public class Pair<F, S> {
 	public String toString() {
 		return "(" + first.toString() + "," + second.toString() + ")";
 	}
+	
+	public boolean equals(Pair<F, S> p) {
+		return first.equals(p.first) && second.equals(p.second);
+	}
 }
