@@ -70,4 +70,120 @@ public class Intractability {
 		HashSet<Pair<Integer, Integer>> cache = new HashSet<Pair<Integer, Integer>>();
 		return check_feasible_helper(jugs, L, H, cache);
 	}
+	
+	private static boolean valid_to_add(int[][] A, int i, int j, int val) {
+		// Check row constrains
+		for (int k = 0; k < A.length; ++k) {
+			if (val == A[k][j]) {
+				return false;
+			}
+		}
+		// Check column constrains
+		for (int k = 0; k < A.length; ++k) {
+			if (val == A[i][k]) {
+				return false;
+			}
+		}
+		// Check region constrains
+		int region_size = (int)Math.sqrt(A.length);
+		int I = i/region_size, J = j/region_size;
+		for (int a = 0; a < region_size; ++a) {
+			for (int b = 0; b < region_size; ++b) {
+				if (val == A[region_size* I + a][region_size* J + b]) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	private static boolean solve_sudoku_helper(int[][] A, int i, int j) {
+		if (i == A.length) {
+			i = 0; // start a new row
+			if (++j == A[i].length) {
+				return true; // entire matrix has been filled without conflict
+			}
+		}
+		// Skip nonempty entries
+		if (A[i][j] != 0) {
+			return solve_sudoku_helper(A,i+1,j);
+		}
+		for (int val = 1; val <= A.length; ++val) {
+			// Note: practically, it's substantially quicker to check if entryval conflicts with any of the constrains
+			// if we add it at (i,j) before adding it, rather than adding it and then calling is_valid_sudoku. The 
+			// reason is that we know we are starting with a valid configuration, and the only entry which can cause
+			// a problem is entryval at (i,j)
+			if (valid_to_add(A,i,j,val)) {
+				A[i][j] = val;
+				if (solve_sudoku_helper(A,i+1,j)) {
+					return true;
+				}
+			}
+		}
+		A[i][j] = 0; // undo assignment
+		return false;
+	}
+	
+	// Check if a partially filled matrix has any conflicts
+	public static boolean is_valid_sudoku(int[][] A) {
+		// Check row constrains
+		for(int i = 0; i < A.length; ++i) {
+			boolean[] is_present = new boolean[A.length + 1];
+			for (int j = 0; j < A.length; j++) {
+				if(A[i][j] != 0 && is_present[A[i][j]]) {
+					return false;
+				} else {
+					is_present[A[i][j]] = true;
+				}
+			}
+		}
+		// Check column constrains
+		for (int j = 0; j < A.length; ++j) {
+			boolean[] is_present = new boolean[A.length + 1];
+			for (int i = 0; i < A.length; i++) {
+				if (A[i][j] != 0 && is_present[A[i][j]]) {
+					return false;
+				} else {
+					is_present[A[i][j]] = true;
+				}
+			}
+		}
+		
+		// Check region constrains
+		int region_size = (int)Math.sqrt(A.length);
+		for (int I = 0; I < region_size; ++I) {
+			for (int J =0; J < region_size; ++J) {
+				boolean[] is_present = new boolean[A.length + 1];
+				for (int i = 0; i < region_size; ++i) {
+					for (int j = 0; j < region_size; ++j) {
+						if (A[region_size*I+i][region_size*J +j] != 0 && is_present[A[region_size*I+i][region_size*J+j]]) {
+							return false;
+						} else {
+							is_present[A[region_size*I+i][region_size*J+j]] = true;
+						}
+					}
+				}
+			}
+		}
+		return true;
+	}
+	
+	public static boolean solve_sudoku(int[][] A) {
+		if (is_valid_sudoku(A) == false) {
+			System.out.println("Intial configuration violates constrains.");
+			return false;
+		}
+		if (solve_sudoku_helper(A,0,0)) {
+			for (int i = 0; i < A.length; ++i) {
+				for (int val : A[i]) {
+					System.out.print(val + " ");
+				}
+				System.out.println();
+			}
+			return true;
+		} else {
+			System.out.println("No solution exists.");
+			return false;
+		}
+	}
 }
