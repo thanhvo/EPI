@@ -186,4 +186,94 @@ public class Intractability {
 			return false;
 		}
 	}
+	
+	private static int evaluate(LinkedList<Integer> operand_list, LinkedList<Character> oper_list) {
+		// Evaluate '*' first
+		List<Integer> last_operands = new LinkedList<Integer>(operand_list);
+		ListIterator<Integer> operand_it = last_operands.listIterator();
+		for (char oper: oper_list) {
+			if (oper == '*') {
+				int cur = operand_it.next();
+				operand_it.remove();
+				int next = operand_it.next();
+				operand_it.remove();
+				//System.out.println(cur + " " + next);
+				operand_it.add(next *cur);
+				operand_it.previous();
+			} else {
+				operand_it.next();
+			}
+		}
+		// Evaluate '+' second
+		int sum = 0;
+		for (int val: last_operands) sum += val;
+		return sum;
+	}
+	
+	// Debugging
+	private static void printOperands(LinkedList<Integer> operand_list) {
+		for (int i: operand_list) System.out.print(i + " ");
+		System.out.println();
+	}
+	
+	// Debugging
+	private static void printOperators(LinkedList<Character> oper_list) {
+		for (char c: oper_list) System.out.print(c + " ");
+		System.out.println();
+	}
+	
+	private static boolean exp_synthesis_helper(int[] A, int K, LinkedList<Integer> operand_list, LinkedList<Character> oper_list,
+			int cur, int level) {
+		cur = cur * 10 + A[level] - '0';
+		if (level == A.length -1) {
+			operand_list.add(cur);
+			if (evaluate(operand_list, oper_list) == K) {
+				ListIterator<Integer> operand_it = operand_list.listIterator();
+				System.out.print(operand_it.next());
+				for (char oper: oper_list) {
+					System.out.print(" " + oper + " " + operand_it.next());
+				}
+				System.out.println(" = " + K);
+				return true;
+			}
+			operand_list.removeLast();
+		} else {
+			// No operator
+			if (exp_synthesis_helper(A, K, operand_list, oper_list, cur, level +1)) {
+				return true;
+			}
+			// Add operator '+'
+			operand_list.add(cur);
+			String s = "";
+			for (int i = level + 1; i < A.length; i++) {
+				s += (A[i] -'0');
+			}
+			if (K - evaluate(operand_list, oper_list) <= Integer.valueOf(s)) { // pruning
+				oper_list.add('+');
+				if (exp_synthesis_helper(A, K, operand_list, oper_list, 0, level +1)) {
+					return true;
+				}
+				oper_list.removeLast(); // revert
+			}
+			operand_list.removeLast(); // revert
+			// Add operator '*'
+			operand_list.add(cur);
+			oper_list.add('*');
+			if (exp_synthesis_helper(A, K, operand_list, oper_list, 0, level +1)) {
+				return true;
+			}
+			operand_list.removeLast(); // revert
+			oper_list.removeLast(); // revert
+		}
+		return false;
+	}
+	
+	public static void exp_synthesis(int[] A, int K) {
+		LinkedList<Character> oper_list = new LinkedList<Character>();
+		LinkedList<Integer> operand_list = new LinkedList<Integer>();
+		if (exp_synthesis_helper(A, K, operand_list, oper_list, 0, 0) == false) {
+			System.out.println("No answer");
+		}
+	}
+			
 }

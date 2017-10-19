@@ -62,4 +62,17 @@ public class IntractabilityTest {
 		 System.out.println();
 		 assert(Intractability.solve_sudoku(v2));
 	}
+	
+	@Test
+	public void test_expression_synthesis() {
+	    System.out.println("Expression Synthesis");
+		int[] A = {'1','2','3','2','5','3','7','8','5','9'};
+		Intractability.exp_synthesis(A, 1109284065);
+		int k = 995;
+	    Intractability.exp_synthesis(A, k);
+	    k = 6235;
+	    Intractability.exp_synthesis(A, k);
+	}
+
+	
 }

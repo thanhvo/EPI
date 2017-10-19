@@ -59,10 +59,19 @@ void test_sudoku() {
     assert(solve_sudoku(v2));    
 }
 
+void test_expression_synthesis() {
+    vector<int> A = {'1','2','3','2','5','3','7','8','5','9'};
+    int k = 995;
+    exp_synthesis(A, k);
+    k = 6235;
+    exp_synthesis(A, k);
+}
+
 void test_intractability() {
     test_ties_election();
     test_knapsack();
     test_minimize_difference();
     test_defective_jugs();
     test_sudoku();
+    test_expression_synthesis();
 }

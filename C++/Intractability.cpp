@@ -3,6 +3,7 @@
 #include <unordered_set>
 #include <cmath>
 #include <iterator>
+#include <list>
 #include "Intractability.h"
 
 using namespace std;
@@ -179,5 +180,72 @@ bool solve_sudoku(vector<vector<int>> &A) {
     } else {
         cout << "No solution exists." << endl;
         return false;
+    }
+}
+
+int evaluate(list<int> operand_list, const list<char> &oper_list) {
+    // Evaluate '*' first
+    auto operand_it = operand_list.begin();
+    for (const char &oper: oper_list) {
+        if (oper == '*') {
+            int product = *operand_it;
+            operand_it = operand_list.erase(operand_it);
+            product *= *operand_it;
+            *operand_it = product;
+        } else {
+            ++operand_it;
+        }
+    }
+    // Evaluate '+' second 
+    return accumulate(operand_list.cbegin(), operand_list.cend(), 0);
+}
+
+bool exp_synthesis_helper(const vector<int> &A, const int &k, list<int> &operand_list, 
+    list<char> &oper_list, int cur, const int &level) {
+    cur = cur * 10 + A[level] - '0';    
+    if (level == (int)A.size() -1) {
+        operand_list.emplace_back(cur);
+        if (evaluate(operand_list, oper_list) == k) {
+            auto operand_it = operand_list.cbegin();
+            cout << *operand_it++;
+            for (const char &oper: oper_list) {
+                cout << ' ' << oper << ' ' << *operand_it++;
+            }
+            cout << " = " << k << endl;
+            return true;
+        }
+        operand_list.pop_back();
+    } else {
+        // No operator
+        if (exp_synthesis_helper(A, k, operand_list, oper_list, cur, level + 1)) {
+            return true;
+        }
+        // Add operator '+'
+        operand_list.emplace_back(cur);
+        string s(string(A.cbegin() + level +1, A.cend()));
+        if (k - evaluate(operand_list, oper_list) <= stoi(s)) { // pruning
+            oper_list.emplace_back('+');
+            if (exp_synthesis_helper(A, k, operand_list, oper_list, 0, level +1)) {
+                return true;
+            }
+            oper_list.pop_back(); // revert
+        }
+        operand_list.pop_back(); // revert
+        // Add operator '*'
+        operand_list.emplace_back(cur);
+        oper_list.emplace_back('*');
+        if (exp_synthesis_helper(A,k, operand_list, oper_list,  0, level +1)) {
+            return true;
+        }
+        operand_list.pop_back(), oper_list.pop_back(); // revert
+    }
+    return false;    
+}
+
+void exp_synthesis(const vector<int> &A, const int &k) {
+    list<char> oper_list;
+    list<int> operand_list;
+    if (exp_synthesis_helper(A, k, operand_list, oper_list, 0, 0) == false) {
+        cout << "no answer" << endl;
     }
 }

@@ -44,4 +44,6 @@ bool check_feasible(const vector<Jug>& jugs, const int& L, const int& H);
 
 bool solve_sudoku(vector<vector<int>> &A);
 
+void exp_synthesis(const vector<int> &A, const int &k);
+
 #endif
