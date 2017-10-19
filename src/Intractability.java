@@ -275,5 +275,36 @@ public class Intractability {
 			System.out.println("No answer");
 		}
 	}
+	
+	public static LinkedList<Integer> get_minimum_expression(int n) {
+		LinkedList<Integer> init_list = new LinkedList<Integer>();
+		init_list.add(1);
+		LinkedList<LinkedList<Integer>> exp_lists = new LinkedList<LinkedList<Integer>>();
+		exp_lists.add(init_list);
+		LinkedList<Integer> min_exp = null;
+		int shortest_size = Integer.MAX_VALUE;
+		while (exp_lists.isEmpty() == false) {
+			LinkedList<Integer> exp = exp_lists.getFirst();
+			exp_lists.removeFirst();
+			// Try all possible combinations in a list
+			for (int i : exp) {
+				for (int j : exp) {
+					int sum = i + j;
+					if (shortest_size > exp.size() + 1) {
+						if (sum == n) {
+							min_exp = new LinkedList<Integer>(exp);
+							min_exp.add(sum);
+							shortest_size = exp.size() + 1;
+						} else if (sum < n && sum > exp.getLast()) {
+							LinkedList<Integer> ext = new LinkedList<Integer>(exp);
+							ext.add(sum);
+							exp_lists.add(ext);
+						}
+					}
+				}
+			}
+		}
+		return min_exp;
+	}
 			
 }

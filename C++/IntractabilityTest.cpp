@@ -67,6 +67,17 @@ void test_expression_synthesis() {
     exp_synthesis(A, k);
 }
 
+void print(list<int> list) {
+    cout << "(";
+    for (int a: list) cout << a << ",";
+    cout << ")" << endl;
+}
+
+void test_get_minimum_expression() {
+    list<int> exp = get_minimum_expression(30);
+    print(exp);
+}
+
 void test_intractability() {
     test_ties_election();
     test_knapsack();
@@ -74,4 +85,5 @@ void test_intractability() {
     test_defective_jugs();
     test_sudoku();
     test_expression_synthesis();
+    test_get_minimum_expression();
 }

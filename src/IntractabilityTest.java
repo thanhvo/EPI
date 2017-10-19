@@ -74,5 +74,8 @@ public class IntractabilityTest {
 	    Intractability.exp_synthesis(A, k);
 	}
 
-	
+	@Test
+	public void test_get_minimum_expression() {
+		System.out.println(Intractability.get_minimum_expression(30));
+	}
 }

@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <unordered_set>
+#include <list>
 
 using namespace std;
 
@@ -45,5 +46,7 @@ bool check_feasible(const vector<Jug>& jugs, const int& L, const int& H);
 bool solve_sudoku(vector<vector<int>> &A);
 
 void exp_synthesis(const vector<int> &A, const int &k);
+
+list<int> get_minimum_expression(const int &n);
 
 #endif
