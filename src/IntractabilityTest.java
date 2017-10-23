@@ -78,4 +78,9 @@ public class IntractabilityTest {
 	public void test_get_minimum_expression() {
 		System.out.println(Intractability.get_minimum_expression(30));
 	}
+	
+	@Test
+	public void test_collatz() throws Exception{
+		assert(Intractability.test_collatz_conjecture(1000000));
+	}
 }

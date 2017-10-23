@@ -78,6 +78,10 @@ void test_get_minimum_expression() {
     print(exp);
 }
 
+void test_collatz() {
+    assert(test_collatz_conjecture(1000000));
+}
+
 void test_intractability() {
     test_ties_election();
     test_knapsack();
@@ -86,4 +90,5 @@ void test_intractability() {
     test_sudoku();
     test_expression_synthesis();
     test_get_minimum_expression();
+    test_collatz();
 }

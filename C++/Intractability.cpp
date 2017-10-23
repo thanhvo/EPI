@@ -281,3 +281,33 @@ list<int> get_minimum_expression(const int &n) {
     }
     return min_exp;
 }
+
+bool test_collatz_conjecture(const int &n) {
+    // Stores the odd number that converges to 1
+    unordered_set<long> table;
+    // Start from 2 since we don't need to test 1
+    for (int i = 2; i <= n; ++i) {
+        unordered_set<long> sequence;
+        long test_i = i;
+        while (test_i != 1 && test_i >= i) {
+            // A cycle means Collatz fails
+            if (sequence.emplace(test_i).second == false) {
+                return false;
+            }
+            if (test_i & 1) { // odd number
+                if (table.emplace(test_i).second == false) {
+                    break; // this number have already be proven to converge to 1
+                }
+                long next_test_i = 3 * test_i + 1; // 3n +1
+                if (next_test_i <= test_i) {
+                    throw overflow_error("Test process overflow");
+                }
+                test_i = next_test_i;
+            } else { // even number
+                test_i >>= 1; // n/2
+            }
+        }
+        table.erase(i); // remove i from table
+    }
+    return true;
+}

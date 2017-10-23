@@ -306,5 +306,36 @@ public class Intractability {
 		}
 		return min_exp;
 	}
+	
+	public static boolean test_collatz_conjecture(int n) throws Exception{
+		// Stores the odd number that converges to 1
+		HashSet<Long> table = new HashSet<Long>();
+		for (int i = 2; i <= n; ++i) {
+			HashSet<Long> sequence = new HashSet<Long>();
+			long test_i = i;
+			while (test_i != 1 && test_i >= i) {
+				// A cycle means Collatz fails
+				if (sequence.contains(test_i)) {
+					return false;
+				}
+				sequence.add(test_i);
+				if ((test_i & 1 ) != 0) { // odd number
+					if (table.contains(test_i) == false) {
+						break; // this number have already be proven to converge to 1
+					}
+					table.add(test_i);
+					long next_test_i = 3 * test_i + 1; // 3n +1
+					if (next_test_i <= test_i) {
+						throw new Exception("Test process overflow");
+					}
+					test_i = next_test_i;
+				} else {
+					test_i >>= 1; // n/2
+				}
+			}
+			table.remove(i); // remove i from table
+		}
+		return true;
+	}
 			
 }

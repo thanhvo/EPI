@@ -49,4 +49,6 @@ void exp_synthesis(const vector<int> &A, const int &k);
 
 list<int> get_minimum_expression(const int &n);
 
+bool test_collatz_conjecture(const int &n);
+
 #endif
