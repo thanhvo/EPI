@@ -12,3 +12,5 @@ Debug
 EPI.txt
 Makefile
 Release
+.metadata
+src
