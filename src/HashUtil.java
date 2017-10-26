@@ -57,6 +57,18 @@ public class HashUtil {
 		return new ArrayList(set);
 	}
 	
+	public static Set<String> getDictionaryAsSet(String filename) throws Exception{
+		Scanner scanner = new Scanner(new File(filename));
+		Set<String> set= new HashSet<String>();
+		while (scanner.hasNext()) {
+			String s = scanner.next();
+			if (s.matches("[a-z]*"))
+				set.add(s);
+		}
+		scanner.close();
+		return set;
+	} 
+	
 	public static List<String> getFrequentItems(String input, int k) {
 		Scanner scanner = new Scanner(input);
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
