@@ -2,6 +2,9 @@
 public class Reader extends Thread{
 	public void run() {
 		while (true) {
+			synchronized(RW.LW) {
+				RW.LW.notify();
+			}
 			synchronized(RW.LR) {
 				RW.readCount++;
 				RW.LR.notify();
@@ -10,12 +13,7 @@ public class Reader extends Thread{
 			synchronized(RW.LR) {
 				RW.readCount--;
 				RW.LR.notify();
-			}
-			try {
-				sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			}			
 		}
 	}
 }
