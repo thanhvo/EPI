@@ -7,6 +7,7 @@ public class RWTest {
 		RW.data = new Date().toString();
 		RW.LW = new Object();
 		RW.LR = new Object();
+		RW.lastWrite = false;
 		for (int i = 0; i <= WRITES; i++) {
 			new Writer().start();			
 		}
