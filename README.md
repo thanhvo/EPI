@@ -1,1 +1,1 @@
-A project to practice coding along the book "Elements of Programming". This project will cover all problems in the book and the code will be written in Java and C++.
+This project covers all problems in the book "Elements of Programming Interviews". The solutions for each problem are written by both Java and C++.
